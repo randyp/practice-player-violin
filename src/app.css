@@ -10,7 +10,7 @@
   --r: 3px;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; height: 100%; }
 body {
   background: var(--ebony);
   color: var(--paper);
@@ -19,9 +19,12 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
 }
-.wrap { max-width: 1120px; margin: 0 auto; padding: 22px 20px 40px; }
+.wrap {
+  max-width: 1120px; margin: 0 auto; padding: 10px 20px;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
 
-.controls { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.controls { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
 .pick { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 230px; }
 .pick.keypick { flex: 0 1 172px; min-width: 140px; }
 .pick label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -39,7 +42,7 @@ body {
 
 .paper {
   background: var(--paper); border-radius: var(--r); padding: 6px 4px 16px; position: relative;
-  max-height: 44vh; overflow-y: auto; overflow-x: hidden;
+  flex: 1 1 auto; min-height: 260px; overflow-y: auto; overflow-x: hidden;
   box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 18px 40px -24px rgba(0,0,0,.9);
 }
 #score { position: relative; }
@@ -51,9 +54,9 @@ body {
 #hl.on { opacity: 1; }
 
 .stage {
-  display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
   background: var(--ebony2); border: 1px solid var(--edge); border-radius: var(--r);
-  padding: 14px 15px; margin-top: 14px;
+  padding: 14px 15px; margin-top: 14px; flex-shrink: 0;
 }
 .play {
   background: var(--rosin); color: var(--ebony); border: 0; border-radius: var(--r);
@@ -63,22 +66,6 @@ body {
 .play:hover { filter: brightness(1.1); }
 .play.stop { background: var(--paper); }
 .play[disabled] { opacity: .5; cursor: progress; }
-.bowbox { min-width: 0; }
-.bowhead {
-  display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .14em;
-  color: var(--muted); text-transform: uppercase; margin-bottom: 7px;
-}
-.bowhead .dir { color: var(--rosin); font-weight: 600; }
-.track { position: relative; height: 16px; }
-.track .hair {
-  position: absolute; left: 0; right: 0; top: 7px; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--edge) 12%, var(--edge) 88%, transparent);
-}
-.track .frog {
-  position: absolute; top: 0; width: 14px; height: 16px; border-radius: 2px;
-  background: var(--paper); left: 0; transition: left .09s linear;
-}
-.track .frog.slow { transition: left .45s cubic-bezier(.4,0,.5,1); }
 .beats { display: flex; gap: 8px; }
 .beat {
   width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--edge);
@@ -90,7 +77,7 @@ body {
 .footbar {
   display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
   background: var(--ebony2); border: 1px solid var(--edge); border-radius: var(--r);
-  padding: 14px 15px; margin-top: 12px;
+  padding: 14px 15px; margin-top: 12px; flex-shrink: 0;
 }
 .field { display: flex; align-items: center; gap: 10px; }
 .field .lbl { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -121,7 +108,7 @@ input[type=range]::-moz-range-thumb { width: 13px; height: 13px; border: 0; bord
 .foot {
   margin-top: 16px; font-size: 12px; color: var(--muted); line-height: 1.6;
   border-top: 1px solid var(--edge); padding-top: 13px;
-  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; flex-shrink: 0;
 }
 .brand {
   font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; color: var(--paper);
@@ -141,6 +128,6 @@ kbd {
 :focus-visible { outline: 2px solid var(--string); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 700px) {
-  .stage { grid-template-columns: 1fr; gap: 14px; }
+  .stage { flex-wrap: wrap; gap: 14px; }
   .toggles { margin-left: 0; width: 100%; }
 }

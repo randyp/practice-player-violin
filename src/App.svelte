@@ -6,7 +6,7 @@
   import { buildAudio, buildTimeline, buildEventQueue, pump, log } from "./lib/audio.js";
   import { renderScore, highlight } from "./lib/notation.js";
 
-  let scoreHost, hlEl, frogEl;
+  let scoreHost, hlEl;
 
   let si = $state(0);
   let key = $state("G");
@@ -17,12 +17,9 @@
   let countIn = $state(true);
   let repeats = $state(true);
   let loop = $state(false);
-  let bowDir = $state("—");
   let activeBeat = $state(-1);
   let statusText = $state("starting audio");
   let statusBad = $state(false);
-  let frogSlow = $state(true);
-  let frogLeft = $state(0);
 
   const song = $derived(SONGS[si]);
   const tonic = $derived(song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key].tonic);
@@ -74,10 +71,7 @@
       catch (e) { try { audio.master.gain.value = 0; } catch (e2) { /* no-op */ } }
     }
     hlEl?.classList.remove("on");
-    bowDir = "—";
     activeBeat = -1;
-    frogSlow = true;
-    frogLeft = 0;
   }
 
   function tick() {
@@ -103,19 +97,7 @@
     for (let i = timeline.length - 1; i >= 0; i--) {
       if (beat >= timeline[i].t) { cur = timeline[i]; break; }
     }
-    if (cur) {
-      highlight(hlEl, placed, cur.idx);
-      if (cur.bow) {
-        bowDir = cur.bow === "down" ? "⊓  down" : "∨  up";
-        const prog = (beat - cur.t) / cur.beats;
-        const tw = frogEl.parentElement.clientWidth - frogEl.offsetWidth;
-        const pos = cur.bow === "down" ? prog * tw : (1 - prog) * tw;
-        frogSlow = false;
-        frogLeft = Math.max(0, Math.min(tw, pos));
-      } else {
-        bowDir = "rest";
-      }
-    }
+    if (cur) highlight(hlEl, placed, cur.idx);
     rafId = requestAnimationFrame(tick);
   }
 
@@ -250,26 +232,10 @@
 
   <div class="stage">
     <button class="play" class:stop={playing} onclick={handlePlayClick}>{playing ? "Stop" : "Play"}</button>
-    <div class="bowbox">
-      <div class="bowhead"><span>Bow</span><span class="dir">{bowDir}</span></div>
-      <div class="track">
-        <div class="hair"></div>
-        <div class="frog" class:slow={frogSlow} bind:this={frogEl} style="left:{frogLeft}px"></div>
-      </div>
-    </div>
     <div class="beats">
       {#each [0, 1, 2, 3] as i}
         <div class="beat" class:one={i === 0} class:hit={i === activeBeat}></div>
       {/each}
-    </div>
-  </div>
-
-  <div class="footbar">
-    <div class="field">
-      <span class="lbl">Tempo</span>
-      <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} />
-      <span class="bpm">{bpm}</span>
-      <button class="reset" hidden={bpm === song.tempo} onclick={resetTempo}>Default {song.tempo}</button>
     </div>
     <div class="toggles">
       <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
@@ -280,10 +246,19 @@
     </div>
   </div>
 
+  <div class="footbar">
+    <div class="field">
+      <span class="lbl">Tempo</span>
+      <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} />
+      <span class="bpm">{bpm}</span>
+      <button class="reset" hidden={bpm === song.tempo} onclick={resetTempo}>Default {song.tempo}</button>
+    </div>
+  </div>
+
   <p class="foot">
     <span class="brand">Practice <em>Player</em></span>
     <span class="astat" class:bad={statusBad}>{statusText}</span>
     <span class="hint"><kbd>Space</kbd> play or stop · <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change song ·
-    changing any setting stops playback · down-bow <b>&#8851;</b>, up-bow <b>&#8744;</b>.</span>
+    changing any setting stops playback.</span>
   </p>
 </div>

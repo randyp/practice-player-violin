@@ -1,16 +1,11 @@
 import * as Tone from "tone";
 import { degToMidi, midiSci, BEATS } from "./theory.js";
 
-// Solo violin, arco with vibrato, from the Versilian Community Sample
-// Library (VSCO-2 CE) -- released under CC0 / public domain.
-const SAMPLE_NAMES = ["G3", "C4", "E4", "G4", "C5", "E5", "A5"];
-const sampleUrl = (name) => `${import.meta.env.BASE_URL}samples/${name}.mp3`;
-
 export function log(...args) {
   try { console.log("[player]", ...args); } catch (e) { /* no console */ }
 }
 
-function fallbackVoice(dest) {
+function synthVoice(dest) {
   const v = new Tone.PolySynth(Tone.Synth, {
     oscillator: { type: "fatsawtooth", count: 2, spread: 8 },
     envelope: { attack: 0.09, decay: 0.2, sustain: 0.85, release: 0.3 },
@@ -31,28 +26,8 @@ export function buildAudio(onStatus) {
   }).connect(master);
   click.volume.value = -16;
 
-  const audio = { violin: null, click, master, rev };
-
-  onStatus(`violin: loading ${SAMPLE_NAMES.length} samples`);
-  const urls = {};
-  SAMPLE_NAMES.forEach((n) => { urls[n] = sampleUrl(n); });
-
-  try {
-    audio.violin = new Tone.Sampler({
-      urls,
-      release: 0.7,
-      onload: () => onStatus(`violin: ${SAMPLE_NAMES.length}/${SAMPLE_NAMES.length} samples ready`),
-      onerror: (e) => {
-        log("sample load error", e);
-        audio.violin = fallbackVoice(rev);
-        onStatus(`violin: samples failed to load - using synth tone`, true);
-      },
-    }).connect(rev);
-    audio.violin.volume.value = -7;
-  } catch (e) {
-    audio.violin = fallbackVoice(rev);
-    onStatus(`violin: ${e.message} - using synth tone`, true);
-  }
+  const audio = { violin: synthVoice(rev), click, master, rev };
+  onStatus("violin: synth tone ready");
 
   return audio;
 }
