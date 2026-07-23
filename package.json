@@ -1,0 +1,21 @@
+{
+  "name": "practice-player-violin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@11.13.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "svelte": "^5.56.4",
+    "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "tone": "^15.1.22",
+    "vexflow": "^5.0.0"
+  }
+}

@@ -1,0 +1,126 @@
+import * as Tone from "tone";
+import { degToMidi, midiSci, BEATS } from "./theory.js";
+
+// Solo violin, arco with vibrato, from the Versilian Community Sample
+// Library (VSCO-2 CE) -- released under CC0 / public domain.
+const SAMPLE_NAMES = ["G3", "C4", "E4", "G4", "C5", "E5", "A5"];
+const sampleUrl = (name) => `${import.meta.env.BASE_URL}samples/${name}.mp3`;
+
+export function log(...args) {
+  try { console.log("[player]", ...args); } catch (e) { /* no console */ }
+}
+
+function fallbackVoice(dest) {
+  const v = new Tone.PolySynth(Tone.Synth, {
+    oscillator: { type: "fatsawtooth", count: 2, spread: 8 },
+    envelope: { attack: 0.09, decay: 0.2, sustain: 0.85, release: 0.3 },
+  }).connect(dest);
+  v.volume.value = -14;
+  return v;
+}
+
+export function buildAudio(onStatus) {
+  log("building audio graph");
+
+  const master = new Tone.Gain(1).toDestination();
+  const rev = new Tone.Freeverb({ roomSize: 0.5, dampening: 3000, wet: 0.11 }).connect(master);
+
+  const click = new Tone.Synth({
+    oscillator: { type: "triangle" },
+    envelope: { attack: 0.001, decay: 0.035, sustain: 0, release: 0.02 },
+  }).connect(master);
+  click.volume.value = -16;
+
+  const audio = { violin: null, click, master, rev };
+
+  onStatus(`violin: loading ${SAMPLE_NAMES.length} samples`);
+  const urls = {};
+  SAMPLE_NAMES.forEach((n) => { urls[n] = sampleUrl(n); });
+
+  try {
+    audio.violin = new Tone.Sampler({
+      urls,
+      release: 0.7,
+      onload: () => onStatus(`violin: ${SAMPLE_NAMES.length}/${SAMPLE_NAMES.length} samples ready`),
+      onerror: (e) => {
+        log("sample load error", e);
+        audio.violin = fallbackVoice(rev);
+        onStatus(`violin: samples failed to load - using synth tone`, true);
+      },
+    }).connect(rev);
+    audio.violin.volume.value = -7;
+  } catch (e) {
+    audio.violin = fallbackVoice(rev);
+    onStatus(`violin: ${e.message} - using synth tone`, true);
+  }
+
+  return audio;
+}
+
+/* ---------- timeline ---------- */
+export function buildTimeline(song, repeats) {
+  const timeline = [];
+  const passes = (song.repeat && repeats) ? 2 : 1;
+  let t = 0, bow = 0;
+  for (let p = 0; p < passes; p++) {
+    let idx = 0;
+    for (let m = 0; m < song.measures.length; m++) {
+      for (let k = 0; k < song.measures[m].length; k++) {
+        const ev = song.measures[m][k], b = BEATS[ev.dur];
+        let dir = null;
+        if (!ev.rest) { dir = (bow % 2 === 0) ? "down" : "up"; if (!ev.slur) bow++; }
+        timeline.push({ t, beats: b, idx, measure: m, deg: ev.deg, rest: !!ev.rest, bow: dir });
+        t += b; idx++;
+      }
+    }
+  }
+  return { timeline, totalBeats: t };
+}
+
+/* ---------- event queue / transport ---------- */
+const LOOKAHEAD = 0.2; // seconds of audio queued at a time
+
+export function buildEventQueue({ song, tonic, bpm, countIn, metro, violin, timeline }) {
+  const sec = 60 / bpm;
+  const now = Tone.now() + 0.12;
+  const leadBeats = countIn ? (4 - song.pickup) : 0;
+  const startAt = now + leadBeats * sec;
+  const evq = [];
+
+  if (countIn && metro) {
+    for (let i = 0; i < 4; i++) evq.push({ t: now + i * sec, kind: "click", freq: i === 0 ? 1760 : 1320 });
+  }
+  if (metro) {
+    const totalBeats = timeline.length ? timeline[timeline.length - 1].t + timeline[timeline.length - 1].beats : 0;
+    const nb = Math.ceil(totalBeats);
+    for (let b = 0; b < nb; b++) {
+      const isDown = ((b - song.pickup) % 4 + 4) % 4 === 0;
+      evq.push({ t: startAt + b * sec, kind: "click", freq: isDown ? 1760 : 1320 });
+    }
+  }
+  if (violin) {
+    timeline.forEach((ev) => {
+      if (ev.rest) return;
+      evq.push({
+        t: startAt + ev.t * sec, kind: "note",
+        note: midiSci(degToMidi(tonic, ev.deg)),
+        dur: Math.max(0.08, ev.beats * sec * 0.92),
+        vel: 0.68 + Math.random() * 0.10,
+      });
+    });
+  }
+  evq.sort((a, b) => a.t - b.t);
+  return { evq, startAt };
+}
+
+// only hand the audio clock a short slice at a time, so Stop can actually stop
+export function pump(audio, evq, evi) {
+  const horizon = Tone.now() + LOOKAHEAD;
+  while (evi.i < evq.length && evq[evi.i].t < horizon) {
+    const e = evq[evi.i++];
+    try {
+      if (e.kind === "click") audio.click.triggerAttackRelease(e.freq, 0.03, e.t);
+      else if (audio.violin) audio.violin.triggerAttackRelease(e.note, e.dur, e.t, e.vel);
+    } catch (err) { /* scheduling past events throws harmlessly */ }
+  }
+}

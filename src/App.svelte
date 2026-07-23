@@ -1,0 +1,289 @@
+<script>
+  import { onMount, onDestroy } from "svelte";
+  import * as Tone from "tone";
+  import { KEYS } from "./lib/theory.js";
+  import { SONGS } from "./lib/songs.js";
+  import { buildAudio, buildTimeline, buildEventQueue, pump, log } from "./lib/audio.js";
+  import { renderScore, highlight } from "./lib/notation.js";
+
+  let scoreHost, hlEl, frogEl;
+
+  let si = $state(0);
+  let key = $state("G");
+  let bpm = $state(120);
+  let playing = $state(false);
+  let metro = $state(true);
+  let violin = $state(true);
+  let countIn = $state(true);
+  let repeats = $state(true);
+  let loop = $state(false);
+  let bowDir = $state("—");
+  let activeBeat = $state(-1);
+  let statusText = $state("starting audio");
+  let statusBad = $state(false);
+  let frogSlow = $state(true);
+  let frogLeft = $state(0);
+
+  const song = $derived(SONGS[si]);
+  const tonic = $derived(song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key].tonic);
+  const songGroups = $derived.by(() => {
+    const groups = [];
+    const byName = new Map();
+    SONGS.forEach((s, i) => {
+      let g = byName.get(s.group);
+      if (!g) { g = { group: s.group, items: [] }; byName.set(s.group, g); groups.push(g); }
+      g.items.push({ ...s, i });
+    });
+    return groups;
+  });
+
+  let placed = [];
+  let timeline = [];
+  let totalBeats = 0;
+  let audio = null;
+  let startAt = 0;
+  let rafId = null;
+  let schedTimer = null;
+  let evq = [];
+  const evi = { i: 0 };
+
+  function setStatus(txt, bad) {
+    statusText = txt;
+    statusBad = !!bad;
+    log("status:", txt);
+  }
+
+  function spb() {
+    return 60 / bpm;
+  }
+
+  function doRenderScore() {
+    if (!scoreHost || !hlEl) return;
+    placed = renderScore(scoreHost, hlEl, song, KEYS[key], tonic);
+  }
+
+  function stop() {
+    playing = false;
+    if (schedTimer) { clearInterval(schedTimer); schedTimer = null; }
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    evq = []; evi.i = 0;
+    if (audio) {
+      try { audio.violin.releaseAll(); } catch (e) { /* not ready yet */ }
+      try { audio.master.gain.cancelScheduledValues(Tone.now()); } catch (e) { /* no-op */ }
+      try { audio.master.gain.rampTo(0, 0.02); }
+      catch (e) { try { audio.master.gain.value = 0; } catch (e2) { /* no-op */ } }
+    }
+    hlEl?.classList.remove("on");
+    bowDir = "—";
+    activeBeat = -1;
+    frogSlow = true;
+    frogLeft = 0;
+  }
+
+  function tick() {
+    if (!playing) return;
+    const sec = spb(), elapsed = Tone.now() - startAt;
+
+    if (elapsed < 0) {
+      const lead = countIn ? (4 - song.pickup) : 0;
+      const ci = Math.floor((elapsed + lead * sec) / sec);
+      activeBeat = Math.max(0, Math.min(3, ci));
+      rafId = requestAnimationFrame(tick);
+      return;
+    }
+    const beat = elapsed / sec;
+    if (beat >= totalBeats) {
+      if (loop) { play(); return; }
+      stop();
+      return;
+    }
+    activeBeat = ((Math.floor(beat) - song.pickup) % 4 + 4) % 4;
+
+    let cur = null;
+    for (let i = timeline.length - 1; i >= 0; i--) {
+      if (beat >= timeline[i].t) { cur = timeline[i]; break; }
+    }
+    if (cur) {
+      highlight(hlEl, placed, cur.idx);
+      if (cur.bow) {
+        bowDir = cur.bow === "down" ? "⊓  down" : "∨  up";
+        const prog = (beat - cur.t) / cur.beats;
+        const tw = frogEl.parentElement.clientWidth - frogEl.offsetWidth;
+        const pos = cur.bow === "down" ? prog * tw : (1 - prog) * tw;
+        frogSlow = false;
+        frogLeft = Math.max(0, Math.min(tw, pos));
+      } else {
+        bowDir = "rest";
+      }
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function play() {
+    if (!audio) audio = buildAudio(setStatus);
+    ({ timeline, totalBeats } = buildTimeline(song, repeats));
+    ({ evq, startAt } = buildEventQueue({ song, tonic, bpm, countIn, metro, violin, timeline }));
+    evi.i = 0;
+    try { audio.master.gain.cancelScheduledValues(Tone.now()); } catch (e) { /* no-op */ }
+    try { audio.master.gain.value = 1; } catch (e) { /* no-op */ }
+
+    playing = true;
+
+    if (schedTimer) clearInterval(schedTimer);
+    schedTimer = setInterval(() => pump(audio, evq, evi), 50);
+    pump(audio, evq, evi);
+    tick();
+  }
+
+  function handlePlayClick() {
+    if (playing) { stop(); return; }
+    let st = "?";
+    try { st = Tone.getContext().state; } catch (e) { /* no-op */ }
+    log("play pressed; context =", st, "| violin =", audio && audio.violin ? "ready" : "not ready yet");
+    if (st !== "running") {
+      Tone.start()
+        .then(() => { log("context started ->", Tone.getContext().state); play(); })
+        .catch((e) => setStatus("could not start audio: " + e.message, true));
+    } else {
+      play();
+    }
+  }
+
+  function selectSong(i) {
+    stop();
+    si = i;
+    if (song.keys.indexOf(key) === -1) key = song.defKey;
+    bpm = song.tempo;
+    doRenderScore();
+  }
+
+  function onSongChange(e) {
+    selectSong(+e.target.value);
+  }
+
+  function onKeyChange(e) {
+    stop();
+    key = e.target.value;
+    doRenderScore();
+  }
+
+  function onTempoInput(e) {
+    stop();
+    bpm = +e.target.value;
+  }
+
+  function resetTempo() {
+    stop();
+    bpm = song.tempo;
+  }
+
+  function toggle(field) {
+    return () => {
+      stop();
+      switch (field) {
+        case "metro": metro = !metro; break;
+        case "violin": violin = !violin; break;
+        case "countIn": countIn = !countIn; break;
+        case "repeats": repeats = !repeats; break;
+        case "loop": loop = !loop; break;
+      }
+    };
+  }
+
+  function onKeydown(e) {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+    if (e.code === "Space") { e.preventDefault(); handlePlayClick(); }
+    if (e.key === "ArrowRight" && si < SONGS.length - 1) selectSong(si + 1);
+    if (e.key === "ArrowLeft" && si > 0) selectSong(si - 1);
+  }
+
+  let resizeTimer;
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { stop(); doRenderScore(); }, 180);
+  }
+
+  onMount(() => {
+    doRenderScore();
+    try { audio = buildAudio(setStatus); } catch (e) { setStatus("audio setup failed: " + e.message, true); }
+
+    window.addEventListener("resize", onResize);
+    document.addEventListener("keydown", onKeydown);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("keydown", onKeydown);
+    };
+  });
+
+  onDestroy(() => {
+    if (schedTimer) clearInterval(schedTimer);
+    if (rafId) cancelAnimationFrame(rafId);
+    clearTimeout(resizeTimer);
+  });
+</script>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="pick">
+      <label for="song">Song</label>
+      <select id="song" value={si} onchange={onSongChange}>
+        {#each songGroups as { group, items }}
+          <optgroup label={group}>
+            {#each items as s}
+              <option value={s.i}>{s.title}{s.sub ? ` · ${s.sub}` : ""}</option>
+            {/each}
+          </optgroup>
+        {/each}
+      </select>
+    </div>
+    <div class="pick keypick">
+      <label for="key">Key</label>
+      <select id="key" value={key} onchange={onKeyChange}>
+        {#each song.keys as k}
+          <option value={k}>{KEYS[k].name}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
+
+  <div class="paper"><div id="score" bind:this={scoreHost}><div id="hl" bind:this={hlEl}></div></div></div>
+
+  <div class="stage">
+    <button class="play" class:stop={playing} onclick={handlePlayClick}>{playing ? "Stop" : "Play"}</button>
+    <div class="bowbox">
+      <div class="bowhead"><span>Bow</span><span class="dir">{bowDir}</span></div>
+      <div class="track">
+        <div class="hair"></div>
+        <div class="frog" class:slow={frogSlow} bind:this={frogEl} style="left:{frogLeft}px"></div>
+      </div>
+    </div>
+    <div class="beats">
+      {#each [0, 1, 2, 3] as i}
+        <div class="beat" class:one={i === 0} class:hit={i === activeBeat}></div>
+      {/each}
+    </div>
+  </div>
+
+  <div class="footbar">
+    <div class="field">
+      <span class="lbl">Tempo</span>
+      <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} />
+      <span class="bpm">{bpm}</span>
+      <button class="reset" hidden={bpm === song.tempo} onclick={resetTempo}>Default {song.tempo}</button>
+    </div>
+    <div class="toggles">
+      <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
+      <button class="tg" aria-pressed={violin} onclick={toggle("violin")}>Violin</button>
+      <button class="tg" aria-pressed={countIn} onclick={toggle("countIn")}>Count-in</button>
+      <button class="tg" aria-pressed={repeats} disabled={!song.repeat} onclick={toggle("repeats")}>Repeats</button>
+      <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
+    </div>
+  </div>
+
+  <p class="foot">
+    <span class="brand">Practice <em>Player</em></span>
+    <span class="astat" class:bad={statusBad}>{statusText}</span>
+    <span class="hint"><kbd>Space</kbd> play or stop · <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change song ·
+    changing any setting stops playback · down-bow <b>&#8851;</b>, up-bow <b>&#8744;</b>.</span>
+  </p>
+</div>
