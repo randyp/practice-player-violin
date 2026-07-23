@@ -10,10 +10,12 @@
 
   let si = $state(0);
   let key = $state("G");
+  let notationVoice = $state("melody");
   let bpm = $state(120);
   let playing = $state(false);
   let metro = $state(true);
-  let violin = $state(true);
+  let melodyPlay = $state(true);
+  let harmonyPlay = $state(false);
   let countIn = $state(true);
   let repeats = $state(true);
   let loop = $state(false);
@@ -56,7 +58,9 @@
 
   function doRenderScore() {
     if (!scoreHost || !hlEl) return;
-    placed = renderScore(scoreHost, hlEl, song, KEYS[key], tonic);
+    const showMelody = notationVoice === "melody";
+    const showHarmony = notationVoice === "harmony";
+    placed = renderScore(scoreHost, hlEl, song, KEYS[key], tonic, showMelody, showHarmony);
   }
 
   function stop() {
@@ -65,7 +69,8 @@
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     evq = []; evi.i = 0;
     if (audio) {
-      try { audio.violin.releaseAll(); } catch (e) { /* not ready yet */ }
+      try { audio.melody.releaseAll(); } catch (e) { /* not ready yet */ }
+      try { audio.harmony.releaseAll(); } catch (e) { /* not ready yet */ }
       try { audio.master.gain.cancelScheduledValues(Tone.now()); } catch (e) { /* no-op */ }
       try { audio.master.gain.rampTo(0, 0.02); }
       catch (e) { try { audio.master.gain.value = 0; } catch (e2) { /* no-op */ } }
@@ -103,8 +108,11 @@
 
   function play() {
     if (!audio) audio = buildAudio(setStatus);
-    ({ timeline, totalBeats } = buildTimeline(song, repeats));
-    ({ evq, startAt } = buildEventQueue({ song, tonic, bpm, countIn, metro, violin, timeline }));
+    let harmonyTimeline;
+    ({ timeline, totalBeats, harmonyTimeline } = buildTimeline(song, repeats));
+    ({ evq, startAt } = buildEventQueue({
+      song, tonic, bpm, countIn, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline,
+    }));
     evi.i = 0;
     try { audio.master.gain.cancelScheduledValues(Tone.now()); } catch (e) { /* no-op */ }
     try { audio.master.gain.value = 1; } catch (e) { /* no-op */ }
@@ -121,7 +129,7 @@
     if (playing) { stop(); return; }
     let st = "?";
     try { st = Tone.getContext().state; } catch (e) { /* no-op */ }
-    log("play pressed; context =", st, "| violin =", audio && audio.violin ? "ready" : "not ready yet");
+    log("play pressed; context =", st, "| audio =", audio ? "ready" : "not ready yet");
     if (st !== "running") {
       Tone.start()
         .then(() => { log("context started ->", Tone.getContext().state); play(); })
@@ -134,8 +142,9 @@
   function selectSong(i) {
     stop();
     si = i;
-    if (song.keys.indexOf(key) === -1) key = song.defKey;
-    bpm = song.tempo;
+    if (song.keys.indexOf(key) === -1) key = song.defaultKey;
+    if (notationVoice === "harmony" && !song.harmony) notationVoice = "melody";
+    bpm = song.defaultTempo;
     doRenderScore();
   }
 
@@ -149,6 +158,11 @@
     doRenderScore();
   }
 
+  function onNotationVoiceChange(e) {
+    notationVoice = e.target.value;
+    doRenderScore();
+  }
+
   function onTempoInput(e) {
     stop();
     bpm = +e.target.value;
@@ -156,7 +170,7 @@
 
   function resetTempo() {
     stop();
-    bpm = song.tempo;
+    bpm = song.defaultTempo;
   }
 
   function toggle(field) {
@@ -164,10 +178,20 @@
       stop();
       switch (field) {
         case "metro": metro = !metro; break;
-        case "violin": violin = !violin; break;
         case "countIn": countIn = !countIn; break;
         case "repeats": repeats = !repeats; break;
         case "loop": loop = !loop; break;
+      }
+    };
+  }
+
+  function toggleVoice(field) {
+    return (e) => {
+      e.target.blur(); // otherwise the checkbox keeps focus and Space re-toggles it instead of playing
+      stop();
+      switch (field) {
+        case "melodyPlay": melodyPlay = !melodyPlay; break;
+        case "harmonyPlay": harmonyPlay = !harmonyPlay; break;
       }
     };
   }
@@ -186,7 +210,10 @@
   }
 
   onMount(() => {
-    doRenderScore();
+    // VexFlow's music font (Bravura) loads asynchronously; rendering before it's
+    // ready produces wrong glyph metrics (offset stems, oversized ledger lines).
+    document.fonts.ready.then(doRenderScore);
+
     try { audio = buildAudio(setStatus); } catch (e) { setStatus("audio setup failed: " + e.message, true); }
 
     window.addEventListener("resize", onResize);
@@ -218,6 +245,13 @@
         {/each}
       </select>
     </div>
+    <div class="pick notationpick">
+      <label for="notation">Sheet music</label>
+      <select id="notation" value={notationVoice} onchange={onNotationVoiceChange}>
+        <option value="melody">Melody</option>
+        <option value="harmony" disabled={!song.harmony}>Harmony</option>
+      </select>
+    </div>
     <div class="pick keypick">
       <label for="key">Key</label>
       <select id="key" value={key} onchange={onKeyChange}>
@@ -239,7 +273,6 @@
     </div>
     <div class="toggles">
       <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
-      <button class="tg" aria-pressed={violin} onclick={toggle("violin")}>Violin</button>
       <button class="tg" aria-pressed={countIn} onclick={toggle("countIn")}>Count-in</button>
       <button class="tg" aria-pressed={repeats} disabled={!song.repeat} onclick={toggle("repeats")}>Repeats</button>
       <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
@@ -251,7 +284,12 @@
       <span class="lbl">Tempo</span>
       <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} />
       <span class="bpm">{bpm}</span>
-      <button class="reset" hidden={bpm === song.tempo} onclick={resetTempo}>Default {song.tempo}</button>
+      <button class="reset" hidden={bpm === song.defaultTempo} onclick={resetTempo}>Default {song.defaultTempo}</button>
+    </div>
+    <div class="voices">
+      <span class="lbl">Play</span>
+      <label><input type="checkbox" tabindex="-1" checked={melodyPlay} onchange={toggleVoice("melodyPlay")} /> Melody</label>
+      <label><input type="checkbox" tabindex="-1" checked={harmonyPlay} disabled={!song.harmony} onchange={toggleVoice("harmonyPlay")} /> Harmony</label>
     </div>
   </div>
 

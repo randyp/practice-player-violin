@@ -26,22 +26,23 @@ export function buildAudio(onStatus) {
   }).connect(master);
   click.volume.value = -16;
 
-  const audio = { violin: synthVoice(rev), click, master, rev };
-  onStatus("violin: synth tone ready");
+  const audio = { melody: synthVoice(rev), harmony: synthVoice(rev), click, master, rev };
+  onStatus("synth tone ready");
 
   return audio;
 }
 
 /* ---------- timeline ---------- */
-export function buildTimeline(song, repeats) {
+// Builds a flat, repeat-expanded event list for one voice's measures.
+function buildVoiceTimeline(measures, repeat, repeats) {
   const timeline = [];
-  const passes = (song.repeat && repeats) ? 2 : 1;
+  const passes = (repeat && repeats) ? 2 : 1;
   let t = 0, bow = 0;
   for (let p = 0; p < passes; p++) {
     let idx = 0;
-    for (let m = 0; m < song.measures.length; m++) {
-      for (let k = 0; k < song.measures[m].length; k++) {
-        const ev = song.measures[m][k], b = BEATS[ev.dur];
+    for (let m = 0; m < measures.length; m++) {
+      for (let k = 0; k < measures[m].length; k++) {
+        const ev = measures[m][k], b = BEATS[ev.dur];
         let dir = null;
         if (!ev.rest) { dir = (bow % 2 === 0) ? "down" : "up"; if (!ev.slur) bow++; }
         timeline.push({ t, beats: b, idx, measure: m, deg: ev.deg, rest: !!ev.rest, bow: dir });
@@ -52,10 +53,34 @@ export function buildTimeline(song, repeats) {
   return { timeline, totalBeats: t };
 }
 
+export function buildTimeline(song, repeats) {
+  const melody = buildVoiceTimeline(song.melody.measures, song.repeat, repeats);
+  const harmony = song.harmony
+    ? buildVoiceTimeline(song.harmony.measures, song.repeat, repeats)
+    : { timeline: [], totalBeats: 0 };
+  return {
+    timeline: melody.timeline,
+    totalBeats: Math.max(melody.totalBeats, harmony.totalBeats),
+    harmonyTimeline: harmony.timeline,
+  };
+}
+
 /* ---------- event queue / transport ---------- */
 const LOOKAHEAD = 0.2; // seconds of audio queued at a time
 
-export function buildEventQueue({ song, tonic, bpm, countIn, metro, violin, timeline }) {
+function scheduleVoiceNotes(evq, voiceTimeline, tonic, startAt, sec, kind) {
+  voiceTimeline.forEach((ev) => {
+    if (ev.rest) return;
+    evq.push({
+      t: startAt + ev.t * sec, kind,
+      note: midiSci(degToMidi(tonic, ev.deg)),
+      dur: Math.max(0.08, ev.beats * sec * 0.92),
+      vel: 0.68 + Math.random() * 0.10,
+    });
+  });
+}
+
+export function buildEventQueue({ song, tonic, bpm, countIn, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline }) {
   const sec = 60 / bpm;
   const now = Tone.now() + 0.12;
   const leadBeats = countIn ? (4 - song.pickup) : 0;
@@ -73,17 +98,8 @@ export function buildEventQueue({ song, tonic, bpm, countIn, metro, violin, time
       evq.push({ t: startAt + b * sec, kind: "click", freq: isDown ? 1760 : 1320 });
     }
   }
-  if (violin) {
-    timeline.forEach((ev) => {
-      if (ev.rest) return;
-      evq.push({
-        t: startAt + ev.t * sec, kind: "note",
-        note: midiSci(degToMidi(tonic, ev.deg)),
-        dur: Math.max(0.08, ev.beats * sec * 0.92),
-        vel: 0.68 + Math.random() * 0.10,
-      });
-    });
-  }
+  if (melodyPlay) scheduleVoiceNotes(evq, timeline, tonic, startAt, sec, "melody");
+  if (harmonyPlay) scheduleVoiceNotes(evq, harmonyTimeline, tonic, startAt, sec, "harmony");
   evq.sort((a, b) => a.t - b.t);
   return { evq, startAt };
 }
@@ -95,7 +111,8 @@ export function pump(audio, evq, evi) {
     const e = evq[evi.i++];
     try {
       if (e.kind === "click") audio.click.triggerAttackRelease(e.freq, 0.03, e.t);
-      else if (audio.violin) audio.violin.triggerAttackRelease(e.note, e.dur, e.t, e.vel);
+      else if (e.kind === "melody" && audio.melody) audio.melody.triggerAttackRelease(e.note, e.dur, e.t, e.vel);
+      else if (e.kind === "harmony" && audio.harmony) audio.harmony.triggerAttackRelease(e.note, e.dur, e.t, e.vel);
     } catch (err) { /* scheduling past events throws harmlessly */ }
   }
 }
