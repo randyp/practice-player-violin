@@ -24,6 +24,10 @@ export const KEYS = {
 
 export const BEATS = { h: 2, q: 1, "8": 0.5, qd: 1.5, hd: 3 };
 
+// Only 4/4 is implemented (see songs.js's timeSignature validation), so
+// beats-per-measure is a constant rather than derived per-song.
+export const BEATS_PER_MEASURE = 4;
+
 export function N(d, u, slur) {
   return { deg: d, dur: u || "q", slur: !!slur };
 }

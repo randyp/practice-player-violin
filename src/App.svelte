@@ -1,10 +1,13 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import * as Tone from "tone";
-  import { KEYS } from "./lib/theory.js";
+  import { KEYS, BEATS_PER_MEASURE } from "./lib/theory.js";
   import { SONGS } from "./lib/songs.js";
   import { buildAudio, buildTimeline, buildEventQueue, pump, log } from "./lib/audio.js";
   import { renderScore, highlight } from "./lib/notation.js";
+  import { loadPrefs, savePrefs } from "./lib/prefs.js";
+
+  const prefs = loadPrefs();
 
   let scoreHost, hlEl;
 
@@ -16,7 +19,7 @@
   let metro = $state(true);
   let melodyPlay = $state(true);
   let harmonyPlay = $state(false);
-  let countIn = $state(true);
+  let countInMeasures = $state(prefs.countInMeasures);
   let repeats = $state(true);
   let loop = $state(false);
   let activeBeat = $state(-1);
@@ -84,7 +87,8 @@
     const sec = spb(), elapsed = Tone.now() - startAt;
 
     if (elapsed < 0) {
-      const lead = countIn ? (4 - song.pickup) : 0;
+      const countInBeats = countInMeasures * BEATS_PER_MEASURE;
+      const lead = countInBeats ? (countInBeats - song.pickup) : 0;
       const ci = Math.floor((elapsed + lead * sec) / sec);
       activeBeat = Math.max(0, Math.min(3, ci));
       rafId = requestAnimationFrame(tick);
@@ -96,7 +100,7 @@
       stop();
       return;
     }
-    activeBeat = ((Math.floor(beat) - song.pickup) % 4 + 4) % 4;
+    activeBeat = ((Math.floor(beat) - song.pickup) % BEATS_PER_MEASURE + BEATS_PER_MEASURE) % BEATS_PER_MEASURE;
 
     let cur = null;
     for (let i = timeline.length - 1; i >= 0; i--) {
@@ -111,7 +115,7 @@
     let harmonyTimeline;
     ({ timeline, totalBeats, harmonyTimeline } = buildTimeline(song, repeats));
     ({ evq, startAt } = buildEventQueue({
-      song, tonic, bpm, countIn, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline,
+      song, tonic, bpm, countInMeasures, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline,
     }));
     evi.i = 0;
     try { audio.master.gain.cancelScheduledValues(Tone.now()); } catch (e) { /* no-op */ }
@@ -178,11 +182,16 @@
       stop();
       switch (field) {
         case "metro": metro = !metro; break;
-        case "countIn": countIn = !countIn; break;
         case "repeats": repeats = !repeats; break;
         case "loop": loop = !loop; break;
       }
     };
+  }
+
+  function cycleCountIn() {
+    stop();
+    countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
+    savePrefs({ ...prefs, countInMeasures });
   }
 
   function toggleVoice(field) {
@@ -273,7 +282,7 @@
     </div>
     <div class="toggles">
       <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
-      <button class="tg" aria-pressed={countIn} onclick={toggle("countIn")}>Count-in</button>
+      <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
       <button class="tg" aria-pressed={repeats} disabled={!song.repeat} onclick={toggle("repeats")}>Repeats</button>
       <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
     </div>

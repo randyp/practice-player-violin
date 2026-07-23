@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { degToMidi, midiSci, BEATS } from "./theory.js";
+import { degToMidi, midiSci, BEATS, BEATS_PER_MEASURE } from "./theory.js";
 
 export function log(...args) {
   try { console.log("[player]", ...args); } catch (e) { /* no console */ }
@@ -80,21 +80,24 @@ function scheduleVoiceNotes(evq, voiceTimeline, tonic, startAt, sec, kind) {
   });
 }
 
-export function buildEventQueue({ song, tonic, bpm, countIn, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline }) {
+export function buildEventQueue({ song, tonic, bpm, countInMeasures, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline }) {
   const sec = 60 / bpm;
   const now = Tone.now() + 0.12;
-  const leadBeats = countIn ? (4 - song.pickup) : 0;
+  const countInBeats = countInMeasures * BEATS_PER_MEASURE;
+  const leadBeats = countInBeats ? (countInBeats - song.pickup) : 0;
   const startAt = now + leadBeats * sec;
   const evq = [];
 
-  if (countIn && metro) {
-    for (let i = 0; i < 4; i++) evq.push({ t: now + i * sec, kind: "click", freq: i === 0 ? 1760 : 1320 });
+  if (countInBeats && metro) {
+    for (let i = 0; i < countInBeats; i++) {
+      evq.push({ t: now + i * sec, kind: "click", freq: i % BEATS_PER_MEASURE === 0 ? 1760 : 1320 });
+    }
   }
   if (metro) {
     const totalBeats = timeline.length ? timeline[timeline.length - 1].t + timeline[timeline.length - 1].beats : 0;
     const nb = Math.ceil(totalBeats);
     for (let b = 0; b < nb; b++) {
-      const isDown = ((b - song.pickup) % 4 + 4) % 4 === 0;
+      const isDown = ((b - song.pickup) % BEATS_PER_MEASURE + BEATS_PER_MEASURE) % BEATS_PER_MEASURE === 0;
       evq.push({ t: startAt + b * sec, kind: "click", freq: isDown ? 1760 : 1320 });
     }
   }
