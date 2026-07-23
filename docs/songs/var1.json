@@ -1,0 +1,407 @@
+{
+  "group": "Scale variations",
+  "title": "Var. 1 — Long tones",
+  "sub": "two half notes per note",
+  "defaultTempo": 120,
+  "keys": [
+    "G",
+    "D",
+    "A"
+  ],
+  "defaultKey": "G",
+  "pickup": 0,
+  "repeat": true,
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 6,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 7,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 7,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 7,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 7,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 6,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        }
+      ]
+    ]
+  },
+  "harmony": {
+    "measures": [
+      [
+        {
+          "deg": -2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": -2,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": -1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": -1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": -1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": -1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": -2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": -2,
+          "dur": "h",
+          "slur": false
+        }
+      ]
+    ]
+  }
+}

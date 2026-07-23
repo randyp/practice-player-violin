@@ -1,0 +1,331 @@
+{
+  "group": "Tunes",
+  "title": "Auld Lang Syne",
+  "sub": "traditional",
+  "defaultTempo": 80,
+  "keys": [
+    "D"
+  ],
+  "defaultKey": "D",
+  "pickup": 1,
+  "repeat": false,
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": -3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": -1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "qd",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "hd",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "qd",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": -2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": -2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": -3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "hd",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "hd",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "qd",
+          "slur": true
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "qd",
+          "slur": false
+        },
+        {
+          "deg": -2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": -2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": -3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "hd",
+          "slur": false
+        }
+      ]
+    ]
+  }
+}

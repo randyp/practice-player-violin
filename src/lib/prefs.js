@@ -1,4 +1,4 @@
-const STORAGE_KEY = "practice-player:prefs";
+const STORAGE_KEY = "practice-player-violin:prefs";
 
 // Global, session-independent user preferences. Versioned so a future
 // shape change can migrate old localStorage values instead of discarding them.

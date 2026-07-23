@@ -1,7 +1,10 @@
-.PHONY: dev build preview install
+.PHONY: dev build preview install songs
 
 install:
 	pnpm install
+
+songs:
+	node scripts/generate-songs.mjs
 
 dev:
 	pnpm run dev --port 8282

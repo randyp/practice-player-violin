@@ -1,0 +1,23 @@
+[
+  {
+    "id": "var1",
+    "group": "Scale variations",
+    "title": "Var. 1 — Long tones",
+    "sub": "two half notes per note",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "var2",
+    "group": "Scale variations",
+    "title": "Var. 2 — Long tones",
+    "sub": "one half note per note",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "auld-lang-syne",
+    "group": "Tunes",
+    "title": "Auld Lang Syne",
+    "sub": "traditional",
+    "timeSignature": "4/4"
+  }
+]

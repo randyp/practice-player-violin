@@ -89,14 +89,21 @@ export function buildEventQueue({ song, tonic, bpm, countInMeasures, metro, melo
   const evq = [];
 
   if (countInBeats && metro) {
-    for (let i = 0; i < countInBeats; i++) {
+    // The pickup note plays over the count-in's final song.pickup beats (see
+    // leadBeats above) — click there too and the two audibly collide, so
+    // those beats get silence instead of a click.
+    const clickBeats = countInBeats - song.pickup;
+    for (let i = 0; i < clickBeats; i++) {
       evq.push({ t: now + i * sec, kind: "click", freq: i % BEATS_PER_MEASURE === 0 ? 1760 : 1320 });
     }
   }
   if (metro) {
     const totalBeats = timeline.length ? timeline[timeline.length - 1].t + timeline[timeline.length - 1].beats : 0;
     const nb = Math.ceil(totalBeats);
-    for (let b = 0; b < nb; b++) {
+    // Beats before song.pickup are the pickup note itself playing (see
+    // startAt above) — clicking there collides with it audibly, so the
+    // ongoing metronome only starts once the pickup has played out.
+    for (let b = song.pickup; b < nb; b++) {
       const isDown = ((b - song.pickup) % BEATS_PER_MEASURE + BEATS_PER_MEASURE) % BEATS_PER_MEASURE === 0;
       evq.push({ t: startAt + b * sec, kind: "click", freq: isDown ? 1760 : 1320 });
     }

@@ -2,16 +2,20 @@
   import { onMount, onDestroy } from "svelte";
   import * as Tone from "tone";
   import { KEYS, BEATS_PER_MEASURE } from "./lib/theory.js";
-  import { SONGS } from "./lib/songs.js";
+  import { loadCatalog, loadSong } from "./lib/songs.js";
   import { buildAudio, buildTimeline, buildEventQueue, pump, log } from "./lib/audio.js";
   import { renderScore, highlight } from "./lib/notation.js";
   import { loadPrefs, savePrefs } from "./lib/prefs.js";
+  import { driveAuth, listDriveFiles } from "./lib/drive-auth.js";
 
   const prefs = loadPrefs();
 
   let scoreHost, hlEl;
 
+  let catalog = $state([]);
+  let song = $state(null);
   let si = $state(0);
+  let songReqId = 0; // guards against an in-flight fetch resolving after a newer selection
   let key = $state("G");
   let notationVoice = $state("melody");
   let bpm = $state(120);
@@ -25,13 +29,14 @@
   let activeBeat = $state(-1);
   let statusText = $state("starting audio");
   let statusBad = $state(false);
+  let driveSignedIn = $state(driveAuth.isSignedIn());
+  let driveIdentity = $state(driveAuth.getIdentity());
 
-  const song = $derived(SONGS[si]);
-  const tonic = $derived(song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key].tonic);
+  const tonic = $derived(song && song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key]?.tonic);
   const songGroups = $derived.by(() => {
     const groups = [];
     const byName = new Map();
-    SONGS.forEach((s, i) => {
+    catalog.forEach((s, i) => {
       let g = byName.get(s.group);
       if (!g) { g = { group: s.group, items: [] }; byName.set(s.group, g); groups.push(g); }
       g.items.push({ ...s, i });
@@ -60,7 +65,7 @@
   }
 
   function doRenderScore() {
-    if (!scoreHost || !hlEl) return;
+    if (!scoreHost || !hlEl || !song) return;
     const showMelody = notationVoice === "melody";
     const showHarmony = notationVoice === "harmony";
     placed = renderScore(scoreHost, hlEl, song, KEYS[key], tonic, showMelody, showHarmony);
@@ -143,26 +148,45 @@
     }
   }
 
-  function selectSong(i) {
+  async function selectSong(i) {
     stop();
+    const prevSi = si;
     si = i;
+    const entry = catalog[i];
+    const reqId = ++songReqId;
+    setStatus(`loading "${entry.title}"…`);
+    let loaded;
+    try {
+      loaded = await loadSong(entry.id);
+    } catch (e) {
+      if (reqId === songReqId) si = prevSi; // keep the dropdown in sync with the song actually loaded
+      setStatus(`failed to load "${entry.title}": ${e.message}`, true);
+      return;
+    }
+    if (reqId !== songReqId) return; // a newer selectSong() call superseded this one
+
+    song = loaded;
     if (song.keys.indexOf(key) === -1) key = song.defaultKey;
     if (notationVoice === "harmony" && !song.harmony) notationVoice = "melody";
     bpm = song.defaultTempo;
+    setStatus("ready");
     doRenderScore();
   }
 
   function onSongChange(e) {
+    e.target.blur(); // otherwise focus stays on the select and Space reopens it instead of playing
     selectSong(+e.target.value);
   }
 
   function onKeyChange(e) {
+    e.target.blur();
     stop();
     key = e.target.value;
     doRenderScore();
   }
 
   function onNotationVoiceChange(e) {
+    e.target.blur();
     notationVoice = e.target.value;
     doRenderScore();
   }
@@ -188,6 +212,26 @@
     };
   }
 
+  async function handleDriveSignIn() {
+    setStatus("signing in with Google…");
+    try {
+      const identity = await driveAuth.signIn();
+      driveSignedIn = true;
+      driveIdentity = identity;
+      await listDriveFiles();
+      setStatus("ready");
+    } catch (e) {
+      setStatus(`Google sign-in failed: ${e.message}`, true);
+    }
+  }
+
+  function handleDriveSignOut() {
+    driveAuth.signOut();
+    driveSignedIn = false;
+    driveIdentity = null;
+    setStatus("signed out of Google");
+  }
+
   function cycleCountIn() {
     stop();
     countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
@@ -208,7 +252,7 @@
   function onKeydown(e) {
     if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
     if (e.code === "Space") { e.preventDefault(); handlePlayClick(); }
-    if (e.key === "ArrowRight" && si < SONGS.length - 1) selectSong(si + 1);
+    if (e.key === "ArrowRight" && si < catalog.length - 1) selectSong(si + 1);
     if (e.key === "ArrowLeft" && si > 0) selectSong(si - 1);
   }
 
@@ -224,6 +268,15 @@
     document.fonts.ready.then(doRenderScore);
 
     try { audio = buildAudio(setStatus); } catch (e) { setStatus("audio setup failed: " + e.message, true); }
+
+    setStatus("loading songs…");
+    loadCatalog()
+      .then((entries) => {
+        catalog = entries;
+        if (entries.length) return selectSong(0);
+        setStatus("no songs available", true);
+      })
+      .catch((e) => setStatus("failed to load song catalog: " + e.message, true));
 
     window.addEventListener("resize", onResize);
     document.addEventListener("keydown", onKeydown);
@@ -256,15 +309,15 @@
     </div>
     <div class="pick notationpick">
       <label for="notation">Sheet music</label>
-      <select id="notation" value={notationVoice} onchange={onNotationVoiceChange}>
+      <select id="notation" value={notationVoice} onchange={onNotationVoiceChange} disabled={!song}>
         <option value="melody">Melody</option>
-        <option value="harmony" disabled={!song.harmony}>Harmony</option>
+        <option value="harmony" disabled={!song?.harmony}>Harmony</option>
       </select>
     </div>
     <div class="pick keypick">
       <label for="key">Key</label>
-      <select id="key" value={key} onchange={onKeyChange}>
-        {#each song.keys as k}
+      <select id="key" value={key} onchange={onKeyChange} disabled={!song}>
+        {#each song?.keys ?? [] as k}
           <option value={k}>{KEYS[k].name}</option>
         {/each}
       </select>
@@ -274,7 +327,7 @@
   <div class="paper"><div id="score" bind:this={scoreHost}><div id="hl" bind:this={hlEl}></div></div></div>
 
   <div class="stage">
-    <button class="play" class:stop={playing} onclick={handlePlayClick}>{playing ? "Stop" : "Play"}</button>
+    <button class="play" class:stop={playing} disabled={!song} onclick={handlePlayClick}>{playing ? "Stop" : "Play"}</button>
     <div class="beats">
       {#each [0, 1, 2, 3] as i}
         <div class="beat" class:one={i === 0} class:hit={i === activeBeat}></div>
@@ -283,7 +336,7 @@
     <div class="toggles">
       <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
       <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
-      <button class="tg" aria-pressed={repeats} disabled={!song.repeat} onclick={toggle("repeats")}>Repeats</button>
+      <button class="tg" aria-pressed={repeats} disabled={!song?.repeat} onclick={toggle("repeats")}>Repeats</button>
       <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
     </div>
   </div>
@@ -291,21 +344,38 @@
   <div class="footbar">
     <div class="field">
       <span class="lbl">Tempo</span>
-      <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} />
+      <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} disabled={!song} />
       <span class="bpm">{bpm}</span>
-      <button class="reset" hidden={bpm === song.defaultTempo} onclick={resetTempo}>Default {song.defaultTempo}</button>
+      <button class="reset" hidden={!song || bpm === song.defaultTempo} onclick={resetTempo}>Default {song?.defaultTempo}</button>
     </div>
     <div class="voices">
       <span class="lbl">Play</span>
       <label><input type="checkbox" tabindex="-1" checked={melodyPlay} onchange={toggleVoice("melodyPlay")} /> Melody</label>
-      <label><input type="checkbox" tabindex="-1" checked={harmonyPlay} disabled={!song.harmony} onchange={toggleVoice("harmonyPlay")} /> Harmony</label>
+      <label><input type="checkbox" tabindex="-1" checked={harmonyPlay} disabled={!song?.harmony} onchange={toggleVoice("harmonyPlay")} /> Harmony</label>
     </div>
   </div>
 
-  <p class="foot">
+  <div class="foot">
     <span class="brand">Practice <em>Player</em></span>
     <span class="astat" class:bad={statusBad}>{statusText}</span>
     <span class="hint"><kbd>Space</kbd> play or stop · <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change song ·
     changing any setting stops playback.</span>
-  </p>
+    <div class="account">
+      {#if driveSignedIn && driveIdentity}
+        <img class="avatar" src={driveIdentity.picture} alt="" referrerpolicy="no-referrer" />
+        <span class="email">{driveIdentity.email}</span>
+        <button class="signout" onclick={handleDriveSignOut}>Sign out</button>
+      {:else}
+        <button class="google-signin" onclick={handleDriveSignIn}>
+          <svg viewBox="0 0 18 18" width="16" height="16" aria-hidden="true">
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.85.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+          </svg>
+          Sign in with Google
+        </button>
+      {/if}
+    </div>
+  </div>
 </div>

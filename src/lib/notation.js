@@ -1,11 +1,36 @@
-import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline } from "vexflow";
+import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline, Dot, Curve } from "vexflow";
 import { degToMidi, midiVf, measureBeats } from "./theory.js";
+
+// VexFlow durations don't have a "dotted" letter of their own (our "qd"/"hd")
+// — the base duration and the augmentation dot are separate: a duration
+// string plus a Dot built and attached to the note.
+function splitDur(dur) {
+  return dur.endsWith("d") ? { base: dur.slice(0, -1), dotted: true } : { base: dur, dotted: false };
+}
 
 function buildNotes(measure, tonic) {
   return measure.map((ev) => {
-    if (ev.rest) return new StaveNote({ keys: ["b/4"], duration: ev.dur.replace("d", "") + "r" });
-    return new StaveNote({ keys: [midiVf(degToMidi(tonic, ev.deg))], duration: ev.dur });
+    const { base, dotted } = splitDur(ev.dur);
+    const note = ev.rest
+      ? new StaveNote({ keys: ["b/4"], duration: base + "r" })
+      : new StaveNote({ keys: [midiVf(degToMidi(tonic, ev.deg))], duration: base });
+    if (dotted) Dot.buildAndAttach([note], { all: true });
+    return note;
   });
+}
+
+// Slurs connect a note to the next one (ev.slur means "slurred to the note
+// that follows"), so they're built from a flat, in-order note list per
+// voice rather than per-measure — a slur can span a measure/line break.
+function buildSlurs(events, notes, ctx) {
+  const curves = [];
+  for (let i = 0; i < events.length - 1; i++) {
+    if (!events[i].slur || events[i].rest || events[i + 1].rest) continue;
+    const curve = new Curve(notes[i], notes[i + 1], {});
+    curve.setContext(ctx);
+    curves.push(curve);
+  }
+  return curves;
 }
 
 // Builds a tight highlight box from the note's own notehead geometry (post-draw()),
@@ -49,7 +74,11 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
   for (let L = 0; L < lines.length; L++) {
     const row = lines[L];
     const extra = 74;
-    const avail = width - padX * 2 - extra;
+    // A short last row (fewer measures than a full line) shouldn't stretch to
+    // the full page width — scale it down proportionally, so a lone leftover
+    // measure isn't blown up to fill the same space as a 4-measure row.
+    const rowFrac = row.length / perLine;
+    const avail = (width - padX * 2 - extra) * rowFrac;
     const rowBeats = row.reduce((a, m) => a + measureBeats(m), 0);
     let x = padX;
     const y = topPad + L * lineH;
@@ -92,6 +121,13 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
         try { beams = Beam.generateBeams(notes); } catch (e) { beams = []; }
         beams.forEach((b) => { try { b.setContext(ctx).draw(); } catch (e) { /* skip unbeamable */ } });
       });
+
+      if (showMelody) {
+        buildSlurs(row[c], melodyNotes, ctx).forEach((curve) => { try { curve.draw(); } catch (e) { /* skip */ } });
+      }
+      if (harmonyMeasures) {
+        buildSlurs(harmonyMeasures[mi], harmonyNotes, ctx).forEach((curve) => { try { curve.draw(); } catch (e) { /* skip */ } });
+      }
 
       melodyNotes.forEach((nt) => {
         placed.push(noteBox(nt, y));
