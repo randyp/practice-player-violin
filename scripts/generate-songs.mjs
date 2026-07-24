@@ -12,13 +12,17 @@ const outDir = join(dirname(fileURLToPath(import.meta.url)), "../public/songs");
 const UPDOWN = [0, 1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1, 0];
 const SCALE_KEYS = ["G", "D", "A"];
 
+// Open-string degrees relative to a C-major tonic (degToMidi(60, deg)):
+// G3=-3, D4=1, A4=5, E5=9.
+const OPEN_G = -3, OPEN_D = 1, OPEN_A = 5, OPEN_E = 9;
+
 // diatonic third below each melody degree — the standard "harmonize the scale" treatment
 const THIRD_BELOW = (d) => d - 2;
 
-function scaleSong(id, n, title, sub, melodyMeasures, harmonyMeasures) {
+function scaleSong(id, title, sub, melodyMeasures, harmonyMeasures, repeats) {
   return {
-    id, group: "Scale variations", title: `Var. ${n} — ${title}`, sub,
-    defaultTempo: 120, keys: SCALE_KEYS, defaultKey: "G", pickup: 0, repeat: true,
+    id, group: "Scale variations", title, sub,
+    defaultTempo: 120, keys: SCALE_KEYS, defaultKey: "G", pickup: 0, repeats,
     timeSignature: "4/4",
     melody: { measures: melodyMeasures },
     harmony: { measures: harmonyMeasures },
@@ -31,7 +35,7 @@ function scaleSong(id, n, title, sub, melodyMeasures, harmonyMeasures) {
 // audio-transcription attempt.
 const AULD_LANG_SYNE = {
   id: "auld-lang-syne", group: "Tunes", title: "Auld Lang Syne", sub: "traditional",
-  defaultTempo: 80, keys: ["D"], defaultKey: "D", pickup: 1, repeat: false,
+  defaultTempo: 80, keys: ["D"], defaultKey: "D", pickup: 1, repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
     [N(-3, "q")], // pickup
@@ -54,24 +58,72 @@ const AULD_LANG_SYNE = {
   ] },
 };
 
-const SONGS = [
-  scaleSong("var1", 1, "Long tones", "two half notes per note",
-    UPDOWN.map((d) => [N(d, "h"), N(d, "h")]),
-    UPDOWN.map((d) => [N(THIRD_BELOW(d), "h"), N(THIRD_BELOW(d), "h")])),
+const BOW_WARMUP = {
+  id: "bow-warmup", group: "Warmups", title: "Beginner Bow Warmup", sub: "open strings only",
+  defaultTempo: 120, keys: ["C"], defaultKey: "C", pickup: 0, repeats: [],
+  timeSignature: "4/4",
+  melody: { measures: [
+    // whole notes: G G D D A A E E
+    [N(OPEN_G, "w")], [N(OPEN_G, "w")], [N(OPEN_D, "w")], [N(OPEN_D, "w")],
+    [N(OPEN_A, "w")], [N(OPEN_A, "w")], [N(OPEN_E, "w")], [N(OPEN_E, "w")],
+    // half notes: E E A A D D G G
+    [N(OPEN_E, "h"), N(OPEN_E, "h")], [N(OPEN_A, "h"), N(OPEN_A, "h")],
+    [N(OPEN_D, "h"), N(OPEN_D, "h")], [N(OPEN_G, "h"), N(OPEN_G, "h")],
+    // quarter notes, 4x each: G D A E A D
+    [N(OPEN_G, "q"), N(OPEN_G, "q"), N(OPEN_G, "q"), N(OPEN_G, "q")],
+    [N(OPEN_D, "q"), N(OPEN_D, "q"), N(OPEN_D, "q"), N(OPEN_D, "q")],
+    [N(OPEN_A, "q"), N(OPEN_A, "q"), N(OPEN_A, "q"), N(OPEN_A, "q")],
+    [N(OPEN_E, "q"), N(OPEN_E, "q"), N(OPEN_E, "q"), N(OPEN_E, "q")],
+    [N(OPEN_A, "q"), N(OPEN_A, "q"), N(OPEN_A, "q"), N(OPEN_A, "q")],
+    [N(OPEN_D, "q"), N(OPEN_D, "q"), N(OPEN_D, "q"), N(OPEN_D, "q")],
+    // mixed quarter/half phrases
+    [N(OPEN_G, "q"), N(OPEN_G, "q"), N(OPEN_D, "h")],
+    [N(OPEN_A, "q"), N(OPEN_A, "q"), N(OPEN_E, "h")],
+    [N(OPEN_E, "q"), N(OPEN_E, "q"), N(OPEN_A, "h")],
+    [N(OPEN_D, "q"), N(OPEN_D, "q"), N(OPEN_G, "h")],
+    [N(OPEN_G, "h"), N(OPEN_D, "q"), N(OPEN_D, "q")],
+    [N(OPEN_A, "h"), N(OPEN_E, "q"), N(OPEN_E, "q")],
+    [N(OPEN_E, "h"), N(OPEN_A, "q"), N(OPEN_A, "q")],
+    [N(OPEN_D, "h"), N(OPEN_G, "q"), N(OPEN_G, "q")],
+    // quarter-note phrases, 4 beats each
+    [N(OPEN_G, "q"), N(OPEN_D, "q"), N(OPEN_A, "q"), N(OPEN_E, "q")],
+    [N(OPEN_E, "q"), N(OPEN_A, "q"), N(OPEN_D, "q"), N(OPEN_G, "q")],
+    [N(OPEN_G, "q"), N(OPEN_D, "q"), N(OPEN_G, "q"), N(OPEN_D, "q")],
+    [N(OPEN_D, "q"), N(OPEN_A, "q"), N(OPEN_D, "q"), N(OPEN_A, "q")],
+    [N(OPEN_A, "q"), N(OPEN_D, "q"), N(OPEN_A, "q"), N(OPEN_D, "q")],
+    [N(OPEN_D, "q"), N(OPEN_A, "q"), N(OPEN_D, "q"), N(OPEN_A, "q")],
+    [N(OPEN_A, "q"), N(OPEN_E, "q"), N(OPEN_A, "q"), N(OPEN_E, "q")],
+    [N(OPEN_E, "q"), N(OPEN_A, "q"), N(OPEN_D, "q"), N(OPEN_G, "q")],
+    [N(OPEN_G, "q"), N(OPEN_D, "q"), N(OPEN_A, "q"), N(OPEN_E, "q")],
+    [N(OPEN_E, "q"), N(OPEN_A, "q"), N(OPEN_D, "q"), N(OPEN_A, "q")],
+  ] },
+};
 
-  scaleSong("var2", 2, "Long tones", "one half note per note",
-    (() => {
-      const m = [];
-      for (let i = 0; i < UPDOWN.length; i += 2) m.push([N(UPDOWN[i], "h"), N(UPDOWN[i + 1], "h")]);
-      return m;
-    })(),
-    (() => {
-      const m = [];
-      for (let i = 0; i < UPDOWN.length; i += 2) {
-        m.push([N(THIRD_BELOW(UPDOWN[i]), "h"), N(THIRD_BELOW(UPDOWN[i + 1]), "h")]);
-      }
-      return m;
-    })()),
+const SONGS = [
+  BOW_WARMUP,
+
+  scaleSong("var1", "Half Notes Var. 1", null,
+    [
+      ...UPDOWN.map((d) => [N(d, "h"), N(d, "h")]),
+      ...(() => {
+        const m = [];
+        for (let i = 0; i < UPDOWN.length; i += 2) m.push([N(UPDOWN[i], "h"), N(UPDOWN[i + 1], "h")]);
+        return m;
+      })(),
+    ],
+    [
+      ...UPDOWN.map((d) => [N(THIRD_BELOW(d), "h"), N(THIRD_BELOW(d), "h")]),
+      ...(() => {
+        const m = [];
+        for (let i = 0; i < UPDOWN.length; i += 2) {
+          m.push([N(THIRD_BELOW(UPDOWN[i]), "h"), N(THIRD_BELOW(UPDOWN[i + 1]), "h")]);
+        }
+        return m;
+      })(),
+    ],
+    // two independent repeated sections: the double-half-notes-per-note
+    // pass (measures 0-15), then the one-half-note-per-note pass (16-23)
+    [{ from: 0, to: UPDOWN.length - 1 }, { from: UPDOWN.length, to: UPDOWN.length + UPDOWN.length / 2 - 1 }]),
 
   AULD_LANG_SYNE,
 ];
@@ -82,6 +134,14 @@ for (const s of SONGS) {
   ids.add(s.id);
   if (s.timeSignature !== "4/4") {
     throw new Error(`Song "${s.title}" has unsupported time signature "${s.timeSignature}" — only "4/4" is implemented`);
+  }
+  const lastMeasure = s.melody.measures.length - 1;
+  let prevTo = -1;
+  for (const r of s.repeats) {
+    if (r.from > r.to || r.from <= prevTo || r.to > lastMeasure) {
+      throw new Error(`Song "${s.title}" has an invalid repeat range {from: ${r.from}, to: ${r.to}} — ranges must be ascending, in bounds (0-${lastMeasure}), and non-overlapping`);
+    }
+    prevTo = r.to;
   }
 }
 

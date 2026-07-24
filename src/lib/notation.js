@@ -8,6 +8,10 @@ function splitDur(dur) {
   return dur.endsWith("d") ? { base: dur.slice(0, -1), dotted: true } : { base: dur, dotted: false };
 }
 
+// Vertical spacing between staff lines, shared between renderScore's layout
+// and highlight()'s scroll-to-current-line math.
+const LINE_H = 96;
+
 function buildNotes(measure, tonic) {
   return measure.map((ev) => {
     const { base, dotted } = splitDur(ev.dur);
@@ -63,11 +67,11 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
   const lines = [];
   for (let i = 0; i < melodyMeasures.length; i += perLine) lines.push(melodyMeasures.slice(i, i + perLine));
 
-  const lineH = 96, padX = 8, topPad = 14, bottomPad = 28;
+  const padX = 8, topPad = 14, bottomPad = 28;
   const holder = document.createElement("div");
   host.insertBefore(holder, hl);
   const renderer = new Renderer(holder, Renderer.Backends.SVG);
-  renderer.resize(width, lines.length * lineH + topPad + bottomPad);
+  renderer.resize(width, lines.length * LINE_H + topPad + bottomPad);
   const ctx = renderer.getContext();
 
   let mi = 0;
@@ -81,7 +85,7 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
     const avail = (width - padX * 2 - extra) * rowFrac;
     const rowBeats = row.reduce((a, m) => a + measureBeats(m), 0);
     let x = padX;
-    const y = topPad + L * lineH;
+    const y = topPad + L * LINE_H;
 
     for (let c = 0; c < row.length; c++, mi++) {
       const mb = measureBeats(row[c]);
@@ -91,8 +95,10 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
         stave.addClef("treble").addKeySignature(key.sig);
         if (L === 0) stave.addTimeSignature("4/4");
       }
-      if (song.repeat && mi === 0) stave.setBegBarType(Barline.type.REPEAT_BEGIN);
-      if (song.repeat && mi === melodyMeasures.length - 1) stave.setEndBarType(Barline.type.REPEAT_END);
+      for (const r of song.repeats) {
+        if (mi === r.from) stave.setBegBarType(Barline.type.REPEAT_BEGIN);
+        if (mi === r.to) stave.setEndBarType(Barline.type.REPEAT_END);
+      }
       stave.setContext(ctx).draw();
 
       const melodyNotes = showMelody ? buildNotes(row[c], tonic) : [];
@@ -130,7 +136,7 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
       }
 
       melodyNotes.forEach((nt) => {
-        placed.push(noteBox(nt, y));
+        placed.push({ ...noteBox(nt, y), lineY: y });
       });
       x += w;
     }
@@ -147,7 +153,14 @@ export function highlight(hl, placed, i) {
   hl.style.height = (p.h + 12) + "px";
   hl.classList.add("on");
   const paper = hl.parentElement.parentElement;
-  if (p.y < paper.scrollTop + 8 || p.y + p.h > paper.scrollTop + paper.clientHeight - 8) {
-    paper.scrollTo({ top: Math.max(0, p.y - 40), behavior: "smooth" });
-  }
+  // Only scroll if the sheet doesn't already fit entirely on screen. Otherwise
+  // center the current *line* — using lineY (constant for every note on that
+  // line) rather than the note's own y/h, which varies note-to-note by pitch
+  // and would otherwise jitter the scroll position within a single line.
+  // Clamped to [0, max scroll] so lines near the start/end pin to the
+  // top/bottom rather than leaving dead margin just to keep the line centered.
+  const maxScroll = paper.scrollHeight - paper.clientHeight;
+  if (maxScroll <= 0) return;
+  const target = Math.min(maxScroll, Math.max(0, p.lineY + LINE_H / 2 - paper.clientHeight / 2));
+  paper.scrollTo({ top: target, behavior: "smooth" });
 }

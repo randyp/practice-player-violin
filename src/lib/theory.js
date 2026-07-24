@@ -17,12 +17,13 @@ export function midiVf(m) {
 }
 
 export const KEYS = {
+  C: { name: "C Major", sig: "C", tonic: 60 },
   G: { name: "G Major", sig: "G", tonic: 55 },
   D: { name: "D Major", sig: "D", tonic: 62 },
   A: { name: "A Major", sig: "A", tonic: 69 },
 };
 
-export const BEATS = { h: 2, q: 1, "8": 0.5, qd: 1.5, hd: 3 };
+export const BEATS = { w: 4, h: 2, q: 1, "8": 0.5, qd: 1.5, hd: 3 };
 
 // Only 4/4 is implemented (see songs.js's timeSignature validation), so
 // beats-per-measure is a constant rather than derived per-song.

@@ -21,7 +21,7 @@ body {
 }
 .wrap {
   max-width: 1120px; margin: 0 auto; padding: 10px 20px;
-  min-height: 100vh; display: flex; flex-direction: column;
+  height: 100vh; display: flex; flex-direction: column;
 }
 
 .controls { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
@@ -42,7 +42,7 @@ body {
 
 .paper {
   background: var(--paper); border-radius: var(--r); padding: 6px 4px 16px; position: relative;
-  flex: 1 1 auto; min-height: 260px; overflow-y: auto; overflow-x: hidden;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden;
   box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 18px 40px -24px rgba(0,0,0,.9);
 }
 #score { position: relative; }
@@ -105,7 +105,7 @@ input[type=range]::-moz-range-thumb { width: 13px; height: 13px; border: 0; bord
 .tg:hover { color: var(--paper); }
 .tg[disabled] { opacity: .35; cursor: not-allowed; }
 
-.voices { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-left: auto; }
+.voices { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .voices label {
   display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--muted); cursor: pointer;
 }

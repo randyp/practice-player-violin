@@ -24,7 +24,6 @@
   let melodyPlay = $state(true);
   let harmonyPlay = $state(false);
   let countInMeasures = $state(prefs.countInMeasures);
-  let repeats = $state(true);
   let loop = $state(false);
   let activeBeat = $state(-1);
   let statusText = $state("starting audio");
@@ -95,7 +94,7 @@
       const countInBeats = countInMeasures * BEATS_PER_MEASURE;
       const lead = countInBeats ? (countInBeats - song.pickup) : 0;
       const ci = Math.floor((elapsed + lead * sec) / sec);
-      activeBeat = Math.max(0, Math.min(3, ci));
+      activeBeat = ((Math.max(0, ci) % BEATS_PER_MEASURE) + BEATS_PER_MEASURE) % BEATS_PER_MEASURE;
       rafId = requestAnimationFrame(tick);
       return;
     }
@@ -118,7 +117,7 @@
   function play() {
     if (!audio) audio = buildAudio(setStatus);
     let harmonyTimeline;
-    ({ timeline, totalBeats, harmonyTimeline } = buildTimeline(song, repeats));
+    ({ timeline, totalBeats, harmonyTimeline } = buildTimeline(song));
     ({ evq, startAt } = buildEventQueue({
       song, tonic, bpm, countInMeasures, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline,
     }));
@@ -171,6 +170,7 @@
     bpm = song.defaultTempo;
     setStatus("ready");
     doRenderScore();
+    savePrefs({ ...loadPrefs(), lastSongId: entry.id });
   }
 
   function onSongChange(e) {
@@ -206,7 +206,6 @@
       stop();
       switch (field) {
         case "metro": metro = !metro; break;
-        case "repeats": repeats = !repeats; break;
         case "loop": loop = !loop; break;
       }
     };
@@ -235,7 +234,7 @@
   function cycleCountIn() {
     stop();
     countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
-    savePrefs({ ...prefs, countInMeasures });
+    savePrefs({ ...loadPrefs(), countInMeasures });
   }
 
   function toggleVoice(field) {
@@ -273,8 +272,9 @@
     loadCatalog()
       .then((entries) => {
         catalog = entries;
-        if (entries.length) return selectSong(0);
-        setStatus("no songs available", true);
+        if (!entries.length) { setStatus("no songs available", true); return; }
+        const lastIdx = entries.findIndex((s) => s.id === prefs.lastSongId);
+        return selectSong(lastIdx !== -1 ? lastIdx : 0);
       })
       .catch((e) => setStatus("failed to load song catalog: " + e.message, true));
 
@@ -333,15 +333,6 @@
         <div class="beat" class:one={i === 0} class:hit={i === activeBeat}></div>
       {/each}
     </div>
-    <div class="toggles">
-      <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
-      <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
-      <button class="tg" aria-pressed={repeats} disabled={!song?.repeat} onclick={toggle("repeats")}>Repeats</button>
-      <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
-    </div>
-  </div>
-
-  <div class="footbar">
     <div class="field">
       <span class="lbl">Tempo</span>
       <input type="range" min="40" max="180" step="2" value={bpm} oninput={onTempoInput} disabled={!song} />
@@ -352,6 +343,16 @@
       <span class="lbl">Play</span>
       <label><input type="checkbox" tabindex="-1" checked={melodyPlay} onchange={toggleVoice("melodyPlay")} /> Melody</label>
       <label><input type="checkbox" tabindex="-1" checked={harmonyPlay} disabled={!song?.harmony} onchange={toggleVoice("harmonyPlay")} /> Harmony</label>
+    </div>
+    <div class="toggles">
+      <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
+      <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
+    </div>
+  </div>
+
+  <div class="footbar">
+    <div class="toggles">
+      <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
     </div>
   </div>
 

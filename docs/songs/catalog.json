@@ -1,16 +1,16 @@
 [
   {
-    "id": "var1",
-    "group": "Scale variations",
-    "title": "Var. 1 — Long tones",
-    "sub": "two half notes per note",
+    "id": "bow-warmup",
+    "group": "Warmups",
+    "title": "Beginner Bow Warmup",
+    "sub": "open strings only",
     "timeSignature": "4/4"
   },
   {
-    "id": "var2",
+    "id": "var1",
     "group": "Scale variations",
-    "title": "Var. 2 — Long tones",
-    "sub": "one half note per note",
+    "title": "Half Notes Var. 1",
+    "sub": null,
     "timeSignature": "4/4"
   },
   {

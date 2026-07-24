@@ -5,6 +5,7 @@ const STORAGE_KEY = "practice-player-violin:prefs";
 const DEFAULTS = {
   version: 1,
   countInMeasures: 1, // 0 = off, 1 or 2 measures of count-in
+  lastSongId: null, // last-selected song's catalog id, or null (use the default first song)
 };
 
 export function loadPrefs() {

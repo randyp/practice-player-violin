@@ -8,7 +8,7 @@
   ],
   "defaultKey": "D",
   "pickup": 1,
-  "repeat": false,
+  "repeats": [],
   "timeSignature": "4/4",
   "melody": {
     "measures": [

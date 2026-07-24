@@ -33,14 +33,19 @@ export function buildAudio(onStatus) {
 }
 
 /* ---------- timeline ---------- */
-// Builds a flat, repeat-expanded event list for one voice's measures.
-function buildVoiceTimeline(measures, repeat, repeats) {
+// Builds a flat, repeat-expanded event list for one voice's measures. Each
+// {from, to} in `repeats` replays that measure range again immediately after
+// it's first played — idx/measure are reused from the original pass (rather
+// than counting up past them) so highlight() keeps pointing at the same
+// notation.js-rendered noteheads on the repeat instead of running off the
+// end of `placed`.
+function buildVoiceTimeline(measures, repeats) {
   const timeline = [];
-  const passes = (repeat && repeats) ? 2 : 1;
   let t = 0, bow = 0;
-  for (let p = 0; p < passes; p++) {
-    let idx = 0;
-    for (let m = 0; m < measures.length; m++) {
+
+  function playMeasures(from, to) {
+    let idx = measures.slice(0, from).reduce((n, m) => n + m.length, 0);
+    for (let m = from; m <= to; m++) {
       for (let k = 0; k < measures[m].length; k++) {
         const ev = measures[m][k], b = BEATS[ev.dur];
         let dir = null;
@@ -50,13 +55,23 @@ function buildVoiceTimeline(measures, repeat, repeats) {
       }
     }
   }
+
+  let m = 0;
+  for (const r of repeats) {
+    if (m < r.from) playMeasures(m, r.from - 1);
+    playMeasures(r.from, r.to);
+    playMeasures(r.from, r.to);
+    m = r.to + 1;
+  }
+  if (m < measures.length) playMeasures(m, measures.length - 1);
+
   return { timeline, totalBeats: t };
 }
 
-export function buildTimeline(song, repeats) {
-  const melody = buildVoiceTimeline(song.melody.measures, song.repeat, repeats);
+export function buildTimeline(song) {
+  const melody = buildVoiceTimeline(song.melody.measures, song.repeats);
   const harmony = song.harmony
-    ? buildVoiceTimeline(song.harmony.measures, song.repeat, repeats)
+    ? buildVoiceTimeline(song.harmony.measures, song.repeats)
     : { timeline: [], totalBeats: 0 };
   return {
     timeline: melody.timeline,
