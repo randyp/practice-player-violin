@@ -1,0 +1,266 @@
+{
+  "group": "Introductory songs",
+  "title": "Old MacDonald",
+  "sub": "traditional",
+  "defaultTempo": 110,
+  "keys": [
+    "D"
+  ],
+  "defaultKey": "D",
+  "pickup": 0,
+  "repeats": [
+    {
+      "from": 0,
+      "to": 3
+    }
+  ],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "h"
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "hd",
+          "slur": false
+        }
+      ]
+    ]
+  }
+}

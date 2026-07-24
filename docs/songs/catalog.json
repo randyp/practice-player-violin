@@ -14,6 +14,27 @@
     "timeSignature": "4/4"
   },
   {
+    "id": "hot-cross-buns",
+    "group": "Introductory songs",
+    "title": "Hot Cross Buns",
+    "sub": "with rests",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "jingle-bells",
+    "group": "Introductory songs",
+    "title": "Jingle Bells",
+    "sub": "traditional",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "old-macdonald",
+    "group": "Introductory songs",
+    "title": "Old MacDonald",
+    "sub": "traditional",
+    "timeSignature": "4/4"
+  },
+  {
     "id": "auld-lang-syne",
     "group": "Tunes",
     "title": "Auld Lang Syne",

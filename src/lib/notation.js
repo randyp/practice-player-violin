@@ -89,7 +89,13 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
 
     for (let c = 0; c < row.length; c++, mi++) {
       const mb = measureBeats(row[c]);
-      const w = Math.max(58, avail * (mb / rowBeats)) + (c === 0 ? extra : 0);
+      // A repeat-begin barline draws its own double-bar-and-dots glyph, which
+      // needs extra reserved width on top of the usual clef/key/time-signature
+      // budget — otherwise its notes get squeezed and spill toward the next
+      // measure's barline.
+      const hasBegRepeat = song.repeats.some((r) => mi === r.from);
+      const extraHere = (c === 0 ? extra : 0) + (hasBegRepeat ? 18 : 0);
+      const w = Math.max(58, avail * (mb / rowBeats)) + extraHere;
       const stave = new Stave(x, y, w);
       if (c === 0) {
         stave.addClef("treble").addKeySignature(key.sig);
@@ -118,7 +124,7 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
         voices.push(v);
       }
 
-      const fmtW = w - (c === 0 ? extra + 18 : 22);
+      const fmtW = w - extraHere - (c === 0 ? extra + 18 : 22);
       if (voices.length) new Formatter().joinVoices(voices).format(voices, Math.max(40, fmtW));
       voices.forEach((v) => v.draw(ctx, stave));
 

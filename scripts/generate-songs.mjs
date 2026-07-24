@@ -5,7 +5,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { N } from "../src/lib/theory.js";
+import { N, R } from "../src/lib/theory.js";
 
 const outDir = join(dirname(fileURLToPath(import.meta.url)), "../public/songs");
 
@@ -55,6 +55,67 @@ const AULD_LANG_SYNE = {
     [N(1, "qd", true), N(0, "8"), N(1, "q"), N(2, "q")],
     [N(0, "qd"), N(-2, "8"), N(-2, "q"), N(-3, "q")],
     [N(0, "hd")],
+  ] },
+};
+
+const JINGLE_BELLS = {
+  id: "jingle-bells", group: "Introductory songs", title: "Jingle Bells", sub: "traditional",
+  defaultTempo: 120, keys: ["D"], defaultKey: "D", pickup: 0, repeats: [],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(2, "q"), N(2, "q"), N(2, "q"), R("q")],
+    [N(2, "q"), N(2, "q"), N(2, "q"), R("q")],
+    [N(2, "q"), N(4, "q"), N(0, "q"), N(1, "q")],
+    [N(2, "q"), R("hd")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), N(3, "q")],
+    [N(3, "q"), N(2, "q"), N(2, "q"), N(2, "q")],
+    [N(2, "q"), N(1, "q"), N(1, "q"), N(2, "q")],
+    [N(1, "q"), R("q"), N(4, "q"), R("q")],
+    [N(2, "q"), N(2, "q"), N(2, "q"), R("q")],
+    [N(2, "q"), N(2, "q"), N(2, "q"), R("q")],
+    [N(2, "q"), N(4, "q"), N(0, "q"), N(1, "q")],
+    [N(2, "q"), R("hd")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), N(3, "q")],
+    [N(3, "q"), N(2, "q"), N(2, "q"), N(2, "q")],
+    [N(4, "q"), N(4, "q"), N(3, "q"), N(1, "q")],
+    [N(0, "q")],
+  ] },
+};
+
+const OLD_MACDONALD = {
+  id: "old-macdonald", group: "Introductory songs", title: "Old MacDonald", sub: "traditional",
+  defaultTempo: 110, keys: ["D"], defaultKey: "D", pickup: 0,
+  repeats: [{ from: 0, to: 3 }],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(3, "q"), N(3, "q"), N(3, "q"), N(0, "q")],
+    [N(1, "q"), N(1, "q"), N(0, "q"), R("q")],
+    [N(5, "q"), N(5, "q"), N(4, "q"), N(4, "q")],
+    [N(3, "q"), R("h"), N(0, "q")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), R("q")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), R("q")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), N(3, "q")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), N(0, "q")],
+    [N(3, "q"), N(3, "q"), N(3, "q"), N(0, "q")],
+    [N(1, "q"), N(1, "q"), N(0, "q"), R("q")],
+    [N(5, "q"), N(5, "q"), N(4, "q"), N(4, "q")],
+    [N(3, "q"), N(3, "hd")],
+  ] },
+};
+
+const HOT_CROSS_BUNS = {
+  id: "hot-cross-buns", group: "Introductory songs", title: "Hot Cross Buns", sub: "with rests",
+  defaultTempo: 100, keys: ["D"], defaultKey: "D", pickup: 0, repeats: [],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(2, "q"), R("q"), N(1, "q"), R("q")],
+    [N(0, "q"), R("hd")],
+    [N(2, "q"), R("q"), N(1, "q"), R("q")],
+    [N(0, "q"), R("hd")],
+    [N(0, "q"), N(0, "q"), N(0, "q"), N(0, "q")],
+    [N(1, "q"), N(1, "q"), N(1, "q"), N(1, "q")],
+    [N(2, "q"), R("q"), N(1, "q"), R("q")],
+    [N(0, "q")],
   ] },
 };
 
@@ -125,6 +186,9 @@ const SONGS = [
     // pass (measures 0-15), then the one-half-note-per-note pass (16-23)
     [{ from: 0, to: UPDOWN.length - 1 }, { from: UPDOWN.length, to: UPDOWN.length + UPDOWN.length / 2 - 1 }]),
 
+  HOT_CROSS_BUNS,
+  JINGLE_BELLS,
+  OLD_MACDONALD,
   AULD_LANG_SYNE,
 ];
 

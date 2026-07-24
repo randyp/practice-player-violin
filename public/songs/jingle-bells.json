@@ -1,0 +1,326 @@
+{
+  "group": "Introductory songs",
+  "title": "Jingle Bells",
+  "sub": "traditional",
+  "defaultTempo": 120,
+  "keys": [
+    "D"
+  ],
+  "defaultKey": "D",
+  "pickup": 0,
+  "repeats": [],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "hd"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "hd"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ]
+    ]
+  }
+}

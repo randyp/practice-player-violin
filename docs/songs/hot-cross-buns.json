@@ -1,0 +1,150 @@
+{
+  "group": "Introductory songs",
+  "title": "Hot Cross Buns",
+  "sub": "with rests",
+  "defaultTempo": 100,
+  "keys": [
+    "D"
+  ],
+  "defaultKey": "D",
+  "pickup": 0,
+  "repeats": [],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "hd"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "hd"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ]
+    ]
+  }
+}
