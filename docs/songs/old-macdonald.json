@@ -1,12 +1,14 @@
 {
   "group": "Introductory songs",
   "title": "Old MacDonald",
-  "sub": "traditional",
+  "source": "Essential Elements",
   "defaultTempo": 110,
   "keys": [
-    "D"
+    "D4",
+    "G3",
+    "A4"
   ],
-  "defaultKey": "D",
+  "defaultKey": "D4",
   "pickup": 0,
   "repeats": [
     {

@@ -4,11 +4,12 @@
   "sub": null,
   "defaultTempo": 120,
   "keys": [
-    "G",
-    "D",
-    "A"
+    "G3",
+    "D4",
+    "A4"
   ],
-  "defaultKey": "G",
+  "defaultKey": "G3",
+  "showDefaultKeyStar": false,
   "pickup": 0,
   "repeats": [
     {

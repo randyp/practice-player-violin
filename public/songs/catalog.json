@@ -18,20 +18,56 @@
     "group": "Introductory songs",
     "title": "Hot Cross Buns",
     "sub": "with rests",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "carolina-breeze",
+    "group": "Introductory songs",
+    "title": "Carolina Breeze",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "matthews-march",
+    "group": "Introductory songs",
+    "title": "Matthew's March",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "christophers-tune",
+    "group": "Introductory songs",
+    "title": "Christopher's Tune",
+    "source": "Essential Elements",
     "timeSignature": "4/4"
   },
   {
     "id": "jingle-bells",
     "group": "Introductory songs",
     "title": "Jingle Bells",
-    "sub": "traditional",
+    "source": "Essential Elements",
     "timeSignature": "4/4"
   },
   {
     "id": "old-macdonald",
     "group": "Introductory songs",
     "title": "Old MacDonald",
-    "sub": "traditional",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "mozart-melody",
+    "group": "Introductory songs",
+    "title": "A Mozart Melody",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "buckeye-salute",
+    "group": "Introductory songs",
+    "title": "Buckeye Salute",
+    "source": "Essential Elements",
     "timeSignature": "4/4"
   },
   {

@@ -15,9 +15,12 @@ const LINE_H = 96;
 function buildNotes(measure, tonic) {
   return measure.map((ev) => {
     const { base, dotted } = splitDur(ev.dur);
+    // Without autoStem, VexFlow defaults every stem to point up regardless of
+    // pitch — autoStem makes it follow the standard convention (down for
+    // notes on/above the middle line, up below).
     const note = ev.rest
       ? new StaveNote({ keys: ["b/4"], duration: base + "r" })
-      : new StaveNote({ keys: [midiVf(degToMidi(tonic, ev.deg))], duration: base });
+      : new StaveNote({ keys: [midiVf(degToMidi(tonic, ev.deg))], duration: base, autoStem: true });
     if (dotted) Dot.buildAndAttach([note], { all: true });
     return note;
   });
@@ -126,11 +129,18 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
 
       const fmtW = w - extraHere - (c === 0 ? extra + 18 : 22);
       if (voices.length) new Formatter().joinVoices(voices).format(voices, Math.max(40, fmtW));
+
+      // Beams must be generated before the voice is drawn: Beam's constructor
+      // recomputes and takes over each of its notes' stems (so the beam and
+      // stem slant match) — generating beams after v.draw() has already drawn
+      // independent per-note stems produces two overlapping stems per note.
+      const beamsByNotes = [melodyNotes, harmonyNotes].map((notes) => {
+        try { return Beam.generateBeams(notes); } catch (e) { return []; }
+      });
+
       voices.forEach((v) => v.draw(ctx, stave));
 
-      [melodyNotes, harmonyNotes].forEach((notes) => {
-        let beams = [];
-        try { beams = Beam.generateBeams(notes); } catch (e) { beams = []; }
+      beamsByNotes.forEach((beams) => {
         beams.forEach((b) => { try { b.setContext(ctx).draw(); } catch (e) { /* skip unbeamable */ } });
       });
 

@@ -4,9 +4,9 @@
   "sub": "traditional",
   "defaultTempo": 80,
   "keys": [
-    "D"
+    "D4"
   ],
-  "defaultKey": "D",
+  "defaultKey": "D4",
   "pickup": 1,
   "repeats": [],
   "timeSignature": "4/4",

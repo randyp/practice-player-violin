@@ -2,11 +2,15 @@
   "group": "Introductory songs",
   "title": "Hot Cross Buns",
   "sub": "with rests",
+  "source": "Essential Elements",
   "defaultTempo": 100,
   "keys": [
-    "D"
+    "G3",
+    "D4",
+    "A4",
+    "E5"
   ],
-  "defaultKey": "D",
+  "defaultKey": "A4",
   "pickup": 0,
   "repeats": [],
   "timeSignature": "4/4",

@@ -1,11 +1,11 @@
 {
   "group": "Introductory songs",
-  "title": "Jingle Bells",
+  "title": "A Mozart Melody",
   "source": "Essential Elements",
-  "defaultTempo": 120,
+  "defaultTempo": 100,
   "keys": [
-    "D4",
     "G3",
+    "D4",
     "A4"
   ],
   "defaultKey": "D4",
@@ -16,54 +16,7 @@
     "measures": [
       [
         {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 4,
+          "deg": 0,
           "dur": "q",
           "slur": false
         },
@@ -73,97 +26,26 @@
           "slur": false
         },
         {
-          "deg": 1,
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
           "dur": "q",
           "slur": false
         }
       ],
       [
         {
-          "deg": 2,
+          "deg": 5,
           "dur": "q",
           "slur": false
         },
         {
-          "rest": true,
-          "dur": "hd"
-        }
-      ],
-      [
-        {
-          "deg": 3,
+          "deg": 5,
           "dur": "q",
           "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
         },
         {
           "deg": 4,
@@ -177,7 +59,12 @@
       ],
       [
         {
-          "deg": 2,
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
           "dur": "q",
           "slur": false
         },
@@ -190,41 +77,16 @@
           "deg": 2,
           "dur": "q",
           "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
         }
       ],
       [
         {
-          "deg": 2,
+          "deg": 1,
           "dur": "q",
           "slur": false
         },
         {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 4,
+          "deg": 1,
           "dur": "q",
           "slur": false
         },
@@ -234,7 +96,28 @@
           "slur": false
         },
         {
-          "deg": 1,
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
           "dur": "q",
           "slur": false
         }
@@ -242,56 +125,22 @@
       [
         {
           "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
           "dur": "q",
           "slur": false
         },
         {
           "rest": true,
-          "dur": "hd"
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -307,6 +156,23 @@
         },
         {
           "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
           "dur": "q",
           "slur": false
         },
@@ -314,9 +180,88 @@
           "deg": 1,
           "dur": "q",
           "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
         }
       ],
       [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
         {
           "deg": 0,
           "dur": "q",

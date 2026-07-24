@@ -1,8 +1,8 @@
 {
   "group": "Introductory songs",
-  "title": "Jingle Bells",
+  "title": "Buckeye Salute",
   "source": "Essential Elements",
-  "defaultTempo": 120,
+  "defaultTempo": 100,
   "keys": [
     "D4",
     "G3",
@@ -16,55 +16,119 @@
     "measures": [
       [
         {
-          "deg": 2,
+          "deg": 7,
           "dur": "q",
           "slur": false
         },
         {
-          "deg": 2,
-          "dur": "q",
+          "deg": 7,
+          "dur": "8",
           "slur": false
         },
         {
-          "deg": 2,
-          "dur": "q",
+          "deg": 7,
+          "dur": "8",
           "slur": false
         },
         {
-          "rest": true,
-          "dur": "q"
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "q",
+          "slur": false
         }
       ],
       [
         {
-          "deg": 2,
-          "dur": "q",
+          "deg": 5,
+          "dur": "8",
           "slur": false
         },
         {
-          "deg": 2,
-          "dur": "q",
+          "deg": 5,
+          "dur": "8",
           "slur": false
         },
         {
-          "deg": 2,
-          "dur": "q",
+          "deg": 5,
+          "dur": "8",
           "slur": false
         },
         {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
+          "deg": 5,
+          "dur": "8",
           "slur": false
         },
         {
           "deg": 4,
           "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
           "slur": false
         },
         {
@@ -73,247 +137,8 @@
           "slur": false
         },
         {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "hd"
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        },
-        {
           "rest": true,
           "dur": "q"
-        },
-        {
-          "deg": 4,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "q"
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 4,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 0,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "rest": true,
-          "dur": "hd"
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 2,
-          "dur": "q",
-          "slur": false
-        }
-      ],
-      [
-        {
-          "deg": 4,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 4,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 3,
-          "dur": "q",
-          "slur": false
-        },
-        {
-          "deg": 1,
-          "dur": "q",
-          "slur": false
         }
       ],
       [
@@ -321,6 +146,126 @@
           "deg": 0,
           "dur": "q",
           "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 7,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 7,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
         }
       ]
     ]

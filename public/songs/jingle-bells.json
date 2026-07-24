@@ -1,12 +1,14 @@
 {
   "group": "Introductory songs",
   "title": "Jingle Bells",
-  "sub": "traditional",
+  "source": "Essential Elements",
   "defaultTempo": 120,
   "keys": [
-    "D"
+    "D4",
+    "G3",
+    "A4"
   ],
-  "defaultKey": "D",
+  "defaultKey": "D4",
   "pickup": 0,
   "repeats": [],
   "timeSignature": "4/4",

@@ -6,6 +6,7 @@ const DEFAULTS = {
   version: 1,
   countInMeasures: 1, // 0 = off, 1 or 2 measures of count-in
   lastSongId: null, // last-selected song's catalog id, or null (use the default first song)
+  songKeys: {}, // per-song last-used key, keyed by catalog id (e.g. { "hot-cross-buns": "A4" })
 };
 
 export function loadPrefs() {

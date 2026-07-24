@@ -10,7 +10,7 @@ import { N, R } from "../src/lib/theory.js";
 const outDir = join(dirname(fileURLToPath(import.meta.url)), "../public/songs");
 
 const UPDOWN = [0, 1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1, 0];
-const SCALE_KEYS = ["G", "D", "A"];
+const SCALE_KEYS = ["G3", "D4", "A4"];
 
 // Open-string degrees relative to a C-major tonic (degToMidi(60, deg)):
 // G3=-3, D4=1, A4=5, E5=9.
@@ -22,7 +22,10 @@ const THIRD_BELOW = (d) => d - 2;
 function scaleSong(id, title, sub, melodyMeasures, harmonyMeasures, repeats) {
   return {
     id, group: "Scale variations", title, sub,
-    defaultTempo: 120, keys: SCALE_KEYS, defaultKey: "G", pickup: 0, repeats,
+    // Every key here is equally suited to scale practice, so there's no
+    // "preferred" key worth starring — unlike a tune, which usually has one
+    // key it's best played in.
+    defaultTempo: 120, keys: SCALE_KEYS, defaultKey: "G3", showDefaultKeyStar: false, pickup: 0, repeats,
     timeSignature: "4/4",
     melody: { measures: melodyMeasures },
     harmony: { measures: harmonyMeasures },
@@ -35,7 +38,7 @@ function scaleSong(id, title, sub, melodyMeasures, harmonyMeasures, repeats) {
 // audio-transcription attempt.
 const AULD_LANG_SYNE = {
   id: "auld-lang-syne", group: "Tunes", title: "Auld Lang Syne", sub: "traditional",
-  defaultTempo: 80, keys: ["D"], defaultKey: "D", pickup: 1, repeats: [],
+  defaultTempo: 80, keys: ["D4"], defaultKey: "D4", pickup: 1, repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
     [N(-3, "q")], // pickup
@@ -58,9 +61,72 @@ const AULD_LANG_SYNE = {
   ] },
 };
 
+const CAROLINA_BREEZE = {
+  id: "carolina-breeze", group: "Introductory songs", title: "Carolina Breeze", source: "Essential Elements",
+  defaultTempo: 120, keys: ["G3", "D4", "A4", "E5"], defaultKey: "D4",
+  pickup: 0, repeats: [{ from: 0, to: 3 }],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(3, "q"), N(3, "q"), N(2, "q"), N(2, "q")],
+    [N(1, "q"), N(1, "q"), N(0, "q"), R("q")],
+    [N(3, "q"), N(3, "q"), N(2, "q"), N(2, "q")],
+    [N(1, "q"), N(2, "q"), N(3, "q"), R("q")],
+  ] },
+};
+
+const MATTHEWS_MARCH = {
+  id: "matthews-march", group: "Introductory songs", title: "Matthew's March", source: "Essential Elements",
+  defaultTempo: 100, keys: ["G3", "D4", "A4"], defaultKey: "D4",
+  pickup: 0, repeats: [{ from: 0, to: 7 }],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(7, "q"), N(7, "q"), N(6, "q"), N(6, "q")],
+    [N(7, "q"), N(7, "q"), N(4, "q"), R("q")],
+    [N(7, "q"), N(7, "q"), N(6, "q"), N(6, "q")],
+    [N(7, "q"), N(5, "q"), N(4, "q"), R("q")],
+    [N(3, "q"), N(3, "q"), N(4, "q"), N(3, "q")],
+    [N(2, "q"), N(2, "q"), N(3, "q"), N(2, "q")],
+    [N(1, "q"), N(1, "q"), N(4, "q"), N(1, "q")],
+    [N(0, "q"), N(0, "q"), N(0, "q"), R("q")],
+  ] },
+};
+
+const CHRISTOPHERS_TUNE = {
+  id: "christophers-tune", group: "Introductory songs", title: "Christopher's Tune", source: "Essential Elements",
+  defaultTempo: 100, keys: ["G3", "D4", "A4"], defaultKey: "D4",
+  pickup: 0, repeats: [{ from: 0, to: 7 }],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(0, "q"), N(2, "q"), N(0, "q"), N(2, "q")],
+    [N(1, "q"), N(2, "q"), N(3, "q"), R("q")],
+    [N(1, "q"), N(3, "q"), N(1, "q"), N(3, "q")],
+    [N(2, "q"), N(3, "q"), N(4, "q"), R("q")],
+    [N(2, "q"), N(4, "q"), N(2, "q"), N(4, "q")],
+    [N(3, "q"), N(4, "q"), N(5, "q"), R("q")],
+    [N(4, "q"), N(4, "q"), N(5, "q"), N(4, "q")],
+    [N(5, "q"), N(6, "q"), N(7, "q"), R("q")],
+  ] },
+};
+
+const BUCKEYE_SALUTE = {
+  id: "buckeye-salute", group: "Introductory songs", title: "Buckeye Salute", source: "Essential Elements",
+  defaultTempo: 100, keys: ["D4", "G3", "A4"], defaultKey: "D4", pickup: 0, repeats: [],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(7, "q"), N(7, "8"), N(7, "8"), N(6, "8"), N(6, "8"), N(6, "q")],
+    [N(5, "8"), N(5, "8"), N(5, "8"), N(5, "8"), N(4, "q"), N(2, "q")],
+    [N(3, "q"), N(3, "8"), N(3, "8"), N(2, "8"), N(2, "8"), N(0, "q")],
+    [N(1, "8"), N(1, "8"), N(1, "8"), N(1, "8"), N(0, "q"), R("q")],
+    [N(0, "q"), N(0, "8"), N(0, "8"), N(1, "8"), N(1, "8"), N(1, "q")],
+    [N(2, "8"), N(2, "8"), N(2, "8"), N(2, "8"), N(3, "q"), N(5, "q")],
+    [N(4, "q"), N(4, "8"), N(4, "8"), N(5, "8"), N(5, "8"), N(7, "q")],
+    [N(6, "8"), N(6, "8"), N(6, "8"), N(6, "8"), N(7, "q"), R("q")],
+  ] },
+};
+
 const JINGLE_BELLS = {
-  id: "jingle-bells", group: "Introductory songs", title: "Jingle Bells", sub: "traditional",
-  defaultTempo: 120, keys: ["D"], defaultKey: "D", pickup: 0, repeats: [],
+  id: "jingle-bells", group: "Introductory songs", title: "Jingle Bells", source: "Essential Elements",
+  defaultTempo: 120, keys: ["D4", "G3", "A4"], defaultKey: "D4", pickup: 0, repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
     [N(2, "q"), N(2, "q"), N(2, "q"), R("q")],
@@ -83,8 +149,8 @@ const JINGLE_BELLS = {
 };
 
 const OLD_MACDONALD = {
-  id: "old-macdonald", group: "Introductory songs", title: "Old MacDonald", sub: "traditional",
-  defaultTempo: 110, keys: ["D"], defaultKey: "D", pickup: 0,
+  id: "old-macdonald", group: "Introductory songs", title: "Old MacDonald", source: "Essential Elements",
+  defaultTempo: 110, keys: ["D4", "G3", "A4"], defaultKey: "D4", pickup: 0,
   repeats: [{ from: 0, to: 3 }],
   timeSignature: "4/4",
   melody: { measures: [
@@ -104,8 +170,8 @@ const OLD_MACDONALD = {
 };
 
 const HOT_CROSS_BUNS = {
-  id: "hot-cross-buns", group: "Introductory songs", title: "Hot Cross Buns", sub: "with rests",
-  defaultTempo: 100, keys: ["D"], defaultKey: "D", pickup: 0, repeats: [],
+  id: "hot-cross-buns", group: "Introductory songs", title: "Hot Cross Buns", sub: "with rests", source: "Essential Elements",
+  defaultTempo: 100, keys: ["G3", "D4", "A4", "E5"], defaultKey: "A4", pickup: 0, repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
     [N(2, "q"), R("q"), N(1, "q"), R("q")],
@@ -119,9 +185,29 @@ const HOT_CROSS_BUNS = {
   ] },
 };
 
+const MOZART_MELODY = {
+  id: "mozart-melody", group: "Introductory songs", title: "A Mozart Melody", source: "Essential Elements",
+  defaultTempo: 100, keys: ["G3", "D4", "A4"], defaultKey: "D4", pickup: 0, repeats: [],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(0, "q"), N(0, "q"), N(4, "q"), N(4, "q")],
+    [N(5, "q"), N(5, "q"), N(4, "q"), R("q")],
+    [N(3, "q"), N(3, "q"), N(2, "q"), N(2, "q")],
+    [N(1, "q"), N(1, "q"), N(0, "q"), R("q")],
+    [N(4, "q"), N(4, "q"), N(3, "q"), N(3, "q")],
+    [N(2, "q"), N(2, "q"), N(1, "q"), R("q")],
+    [N(4, "q"), N(4, "q"), N(3, "q"), N(3, "q")],
+    [N(2, "q"), N(2, "q"), N(1, "q"), R("q")],
+    [N(0, "q"), N(0, "q"), N(4, "q"), N(4, "q")],
+    [N(5, "q"), N(5, "q"), N(4, "q"), R("q")],
+    [N(3, "q"), N(3, "q"), N(2, "q"), N(2, "q")],
+    [N(1, "q"), N(1, "q"), N(0, "q")],
+  ] },
+};
+
 const BOW_WARMUP = {
   id: "bow-warmup", group: "Warmups", title: "Beginner Bow Warmup", sub: "open strings only",
-  defaultTempo: 120, keys: ["C"], defaultKey: "C", pickup: 0, repeats: [],
+  defaultTempo: 120, keys: ["C4"], defaultKey: "C4", pickup: 0, repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
     // whole notes: G G D D A A E E
@@ -187,8 +273,13 @@ const SONGS = [
     [{ from: 0, to: UPDOWN.length - 1 }, { from: UPDOWN.length, to: UPDOWN.length + UPDOWN.length / 2 - 1 }]),
 
   HOT_CROSS_BUNS,
+  CAROLINA_BREEZE,
+  MATTHEWS_MARCH,
+  CHRISTOPHERS_TUNE,
   JINGLE_BELLS,
   OLD_MACDONALD,
+  MOZART_MELODY,
+  BUCKEYE_SALUTE,
   AULD_LANG_SYNE,
 ];
 
@@ -211,7 +302,7 @@ for (const s of SONGS) {
 
 mkdirSync(outDir, { recursive: true });
 
-const catalog = SONGS.map(({ id, group, title, sub, timeSignature }) => ({ id, group, title, sub, timeSignature }));
+const catalog = SONGS.map(({ id, group, title, sub, source, timeSignature }) => ({ id, group, title, sub, source, timeSignature }));
 writeFileSync(join(outDir, "catalog.json"), JSON.stringify(catalog, null, 2) + "\n");
 
 for (const song of SONGS) {

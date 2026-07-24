@@ -16,7 +16,7 @@
   let song = $state(null);
   let si = $state(0);
   let songReqId = 0; // guards against an in-flight fetch resolving after a newer selection
-  let key = $state("G");
+  let key = $state("G3");
   let notationVoice = $state("melody");
   let bpm = $state(120);
   let playing = $state(false);
@@ -165,7 +165,8 @@
     if (reqId !== songReqId) return; // a newer selectSong() call superseded this one
 
     song = loaded;
-    if (song.keys.indexOf(key) === -1) key = song.defaultKey;
+    const savedKey = loadPrefs().songKeys[entry.id];
+    key = savedKey && song.keys.indexOf(savedKey) !== -1 ? savedKey : song.defaultKey;
     if (notationVoice === "harmony" && !song.harmony) notationVoice = "melody";
     bpm = song.defaultTempo;
     setStatus("ready");
@@ -183,6 +184,10 @@
     stop();
     key = e.target.value;
     doRenderScore();
+    if (song) {
+      const p = loadPrefs();
+      savePrefs({ ...p, songKeys: { ...p.songKeys, [catalog[si].id]: key } });
+    }
   }
 
   function onNotationVoiceChange(e) {
@@ -301,7 +306,7 @@
         {#each songGroups as { group, items }}
           <optgroup label={group}>
             {#each items as s}
-              <option value={s.i}>{s.title}{s.sub ? ` · ${s.sub}` : ""}</option>
+              <option value={s.i}>{s.title}{s.source ? ` · ${s.source}` : (s.sub ? ` · ${s.sub}` : "")}</option>
             {/each}
           </optgroup>
         {/each}
@@ -318,7 +323,7 @@
       <label for="key">Key</label>
       <select id="key" value={key} onchange={onKeyChange} disabled={!song}>
         {#each song?.keys ?? [] as k}
-          <option value={k}>{KEYS[k].name}</option>
+          <option value={k}>{KEYS[k].name}{k === song.defaultKey && song.showDefaultKeyStar !== false ? " ★" : ""}</option>
         {/each}
       </select>
     </div>

@@ -4,9 +4,9 @@
   "sub": "open strings only",
   "defaultTempo": 120,
   "keys": [
-    "C"
+    "C4"
   ],
-  "defaultKey": "C",
+  "defaultKey": "C4",
   "pickup": 0,
   "repeats": [],
   "timeSignature": "4/4",
