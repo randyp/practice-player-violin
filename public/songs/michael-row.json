@@ -10,12 +10,15 @@
     "A4"
   ],
   "defaultKey": "D4",
-  "pickup": 2,
   "repeats": [],
   "timeSignature": "4/4",
   "melody": {
     "measures": [
       [
+        {
+          "rest": true,
+          "dur": "h"
+        },
         {
           "deg": 0,
           "dur": "q"

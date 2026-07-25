@@ -10,7 +10,6 @@
     "A4"
   ],
   "defaultKey": "D4",
-  "pickup": 0,
   "repeats": [],
   "timeSignature": "4/4",
   "melody": {
@@ -273,6 +272,10 @@
         {
           "deg": 0,
           "dur": "q"
+        },
+        {
+          "rest": true,
+          "dur": "hd"
         }
       ]
     ]

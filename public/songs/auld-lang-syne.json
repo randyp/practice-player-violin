@@ -8,12 +8,15 @@
     "D4"
   ],
   "defaultKey": "D4",
-  "pickup": 1,
   "repeats": [],
   "timeSignature": "4/4",
   "melody": {
     "measures": [
       [
+        {
+          "rest": true,
+          "dur": "hd"
+        },
         {
           "deg": -3,
           "dur": "q"
@@ -278,6 +281,10 @@
         {
           "deg": 0,
           "dur": "hd"
+        },
+        {
+          "rest": true,
+          "dur": "q"
         }
       ]
     ]

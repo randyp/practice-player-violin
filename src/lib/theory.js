@@ -61,3 +61,21 @@ export function R(dur = "q") {
 export function measureBeats(measure) {
   return measure.reduce((sum, ev) => sum + BEATS[ev.dur], 0);
 }
+
+// Every measure (including a pickup or a trailing rest before a repeat/end)
+// must sum to exactly one measure's worth of beats — see song-format.md's
+// "Why every measure must sum to a full measure" for why there's no separate
+// pickup field to keep in sync with the measure's actual length instead.
+export function assertFullMeasures(song) {
+  const bpMeasure = beatsPerMeasure(song.timeSignature);
+  for (const partName of ["melody", "harmony"]) {
+    const part = song[partName];
+    if (!part) continue;
+    part.measures.forEach((measure, i) => {
+      const beats = measureBeats(measure);
+      if (beats !== bpMeasure) {
+        throw new Error(`Song "${song.title}" [${partName}] measure ${i} has ${beats} beats, expected ${bpMeasure} (${song.timeSignature}) — pad with a leading/trailing rest`);
+      }
+    });
+  }
+}

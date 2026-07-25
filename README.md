@@ -41,6 +41,10 @@ make songs     # regenerates public/songs/ from scripts/generate-songs.mjs
 Edit the song definitions in `scripts/generate-songs.mjs`, run
 `make songs`, then commit the regenerated `public/songs/` output.
 
+```sh
+make test      # validates every generated song (full measures, repeats, keys)
+```
+
 ## Build
 
 ```sh

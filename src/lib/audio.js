@@ -98,26 +98,17 @@ export function buildEventQueue({
   const now = Tone.now() + 0.12;
   const bpMeasure = beatsPerMeasure(song.timeSignature);
   const countInBeats = countInMeasures * bpMeasure;
-  const leadBeats = countInBeats ? (countInBeats - song.pickup) : 0;
-  const startAt = now + leadBeats * sec;
+  const startAt = now + countInBeats * sec;
   const queue = [];
 
   if (countInBeats && metronome) {
-    // The pickup note plays over the count-in's final song.pickup beats (see
-    // leadBeats above) — click there too and the two audibly collide, so
-    // those beats get silence instead of a click.
-    const clickBeats = countInBeats - song.pickup;
-    for (let i = 0; i < clickBeats; i++) {
+    for (let i = 0; i < countInBeats; i++) {
       queue.push({ t: now + i * sec, kind: "click", freq: i % bpMeasure === 0 ? 1760 : 1320 });
     }
   }
   if (metronome) {
-    // Beats before song.pickup are the pickup note itself playing (see
-    // startAt above) — clicking there collides with it audibly, so the
-    // ongoing metronome only starts once the pickup has played out.
-    for (let b = song.pickup; b < Math.ceil(totalBeats); b++) {
-      const isDown = ((b - song.pickup) % bpMeasure + bpMeasure) % bpMeasure === 0;
-      queue.push({ t: startAt + b * sec, kind: "click", freq: isDown ? 1760 : 1320 });
+    for (let b = 0; b < Math.ceil(totalBeats); b++) {
+      queue.push({ t: startAt + b * sec, kind: "click", freq: b % bpMeasure === 0 ? 1760 : 1320 });
     }
   }
   if (playMelody) schedulePartNotes(queue, melodyTimeline, tonic, startAt, sec, "melody");

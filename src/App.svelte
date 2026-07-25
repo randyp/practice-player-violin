@@ -88,8 +88,7 @@
 
     if (elapsed < 0) {
       const countInBeats = countInMeasures * bpMeasure;
-      const lead = countInBeats ? (countInBeats - song.pickup) : 0;
-      const ci = Math.floor((elapsed + lead * sec) / sec);
+      const ci = Math.floor(elapsed / sec + countInBeats);
       activeBeat = ((Math.max(0, ci) % bpMeasure) + bpMeasure) % bpMeasure;
       rafId = requestAnimationFrame(tick);
       return;
@@ -100,7 +99,7 @@
       stop();
       return;
     }
-    activeBeat = ((Math.floor(beat) - song.pickup) % bpMeasure + bpMeasure) % bpMeasure;
+    activeBeat = (Math.floor(beat) % bpMeasure + bpMeasure) % bpMeasure;
 
     // Highlight follows the part that's on the staff, which need not be the
     // (or an) audible one — the sheet is the practice reference either way.

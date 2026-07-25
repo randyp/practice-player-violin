@@ -54,7 +54,6 @@ Song = {
 
   // -- form --
   timeSignature: string,  // e.g. "4/4" — only "N/4" signatures are implemented, see below
-  pickup: number,         // beats of pickup before beat 1 (0 = none)
   repeats: { from: number, to: number }[],
                           // repeated sections as inclusive measure-index ranges, ascending
                           // and non-overlapping; each plays twice (both parts repeat together)
@@ -69,7 +68,11 @@ Part = {
   recording?: Recording,  // present if a professional recording exists for this part
 }
 
-Measure = NoteEvent[]     // { deg, dur, slur?: true } | { rest: true, dur }
+Measure = NoteEvent[]     // { deg, dur, slur?: true } | { rest: true, dur } — every measure's
+                          // durations must sum to exactly timeSignature's beats per measure
+                          // (assertFullMeasures fails loudly otherwise, see below); a pickup
+                          // is written as a short phrase padded with a leading rest to fill
+                          // the measure, not as a separate field
                           // slur means "slurred to the following note" and is only
                           // present when true
 
@@ -121,8 +124,28 @@ whole note under a moving melodic line, a different rest pattern, etc).
 Attaching a harmony note to each melody event would force them to share
 durations, which is wrong more often than it's right. Each part is a
 complete, independent sequence of measures; the player is responsible
-for playing them on a shared clock (shared tempo, shared pickup, shared
-repeats), not for aligning their internal event counts.
+for playing them on a shared clock (shared tempo, shared repeats), not
+for aligning their internal event counts.
+
+### Why every measure must sum to a full measure (no separate `pickup` field)
+
+Earlier this schema had a `pickup: number` field, and a pickup measure
+was authored short (just the pickup note, no leading rest) — e.g.
+`[N(-3, "q")]` in a 4/4 song. That meant two representations of the same
+fact (the field, and the measure's own short length) had to stay in
+sync, and every consumer that cared where the "real" beat 1 fell
+(count-in scheduling, the metronome, the beat-dot display) needed
+pickup-aware offset math layered on top of an otherwise uniform
+per-beat clock.
+
+Now a pickup is authored the way it actually sounds: a rest for the
+beats before the pickup note, e.g. `[R("hd"), N(-3, "q")]` in 4/4. Every
+measure — pickup or not, first or last — always sums to exactly
+`beatsPerMeasure(timeSignature)`. `assertFullMeasures` (theory.js) fails
+loudly if one doesn't. This removed the pickup-offset math from
+audio.js and App.svelte entirely: count-in, metronome, and beat-dot
+tracking are now a plain per-beat clock starting at measure 0, beat 0,
+with no song-specific adjustment.
 
 ### Why `Recording` lives on the `Part`, not the `Song`
 

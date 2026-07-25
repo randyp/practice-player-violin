@@ -12,7 +12,6 @@
     "E5"
   ],
   "defaultKey": "A4",
-  "pickup": 0,
   "repeats": [],
   "timeSignature": "4/4",
   "melody": {
@@ -131,6 +130,10 @@
         {
           "deg": 0,
           "dur": "q"
+        },
+        {
+          "rest": true,
+          "dur": "hd"
         }
       ]
     ]
