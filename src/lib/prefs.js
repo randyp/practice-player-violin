@@ -7,6 +7,8 @@ const DEFAULTS = {
   countInMeasures: 1, // 0 = off, 1 or 2 measures of count-in
   lastSongId: null, // last-selected song's catalog id, or null (use the default first song)
   songKeys: {}, // per-song last-used key, keyed by catalog id (e.g. { "hot-cross-buns": "A4" })
+  library: [], // catalog ids the user has added from the marketplace — what the Player's
+               // Song dropdown lists, as opposed to the full marketplace catalog
 };
 
 export function loadPrefs() {
@@ -35,4 +37,15 @@ export function updatePrefs(patch) {
 export function saveSongKey(songId, key) {
   const prefs = loadPrefs();
   savePrefs({ ...prefs, songKeys: { ...prefs.songKeys, [songId]: key } });
+}
+
+export function addToLibrary(songId) {
+  const prefs = loadPrefs();
+  if (prefs.library.includes(songId)) return;
+  savePrefs({ ...prefs, library: [...prefs.library, songId] });
+}
+
+export function removeFromLibrary(songId) {
+  const prefs = loadPrefs();
+  savePrefs({ ...prefs, library: prefs.library.filter((id) => id !== songId) });
 }

@@ -2,13 +2,42 @@
 
 This doc scopes the first two marketplace stages: **browsing** a catalog
 of songs beyond what ships in `public/songs/`, and **adding** one to a
-signed-in user's personal library. It builds on the Google Drive sign-in
-already implemented (`src/lib/drive-auth.js`) and the existing song JSON
-shape (`design/song-format.md`).
+user's personal library. It builds on the Google Drive sign-in already
+implemented (`src/lib/drive-auth.js`) and the existing song JSON shape
+(`design/song-format.md`).
 
-Not covered here: authoring/uploading custom songs, editing a saved song,
-removing songs from a library, or any marketplace UI beyond a basic list —
-those are later stages, noted at the end.
+**Status:** Stage 1 (browse, add, remove) is implemented — see below,
+this section stays as the design record. The library is currently
+`localStorage`-only (`src/lib/prefs.js`'s `library` array), not yet
+Drive-backed; that gap is stage 2, still open.
+
+Not covered here: authoring/uploading custom songs, or editing the
+contents of a song already in the library — those are later stages,
+noted at the end.
+
+## Implemented: three pages
+
+The app is a hash-routed (`svelte-spa-router`) 3-page SPA:
+
+- **Player** (`/`, `src/pages/Player.svelte`) — today's player, unchanged
+  except its Song dropdown now lists only the user's **library**
+  (`catalog` filtered by `prefs.library`), not the full marketplace
+  catalog. An empty library shows a message linking to the Marketplace
+  page instead of the dropdown. Footer nav links to the other two pages.
+- **My Library** (`/library`, `src/pages/Library.svelte`) — lists the
+  user's library, grouped the same way the Player's dropdown used to
+  (`song.group`), with a Remove button per song.
+- **Marketplace** (`/marketplace`, `src/pages/Marketplace.svelte`) —
+  lists every song in the catalog, same grouping, with an "Add to
+  library" button (or "In your library" if already added).
+
+`prefs.js` gained `library: string[]` (catalog ids) plus
+`addToLibrary(id)`/`removeFromLibrary(id)` helpers, following the same
+read-modify-write pattern as `saveSongKey`.
+
+Both new pages fetch `loadCatalog()` independently (each page mounts
+fresh under the router, so there's no shared parent state to lift this
+into without more machinery than three read-only listings warrant).
 
 ## Design principles
 
@@ -64,12 +93,10 @@ copy needs to remember it came from the marketplace, not local authoring).
 
 ### UI
 
-A new view/section lists marketplace entries (title, sub, group — same
-fields the existing Song dropdown already groups by) with an "Add to
-library" action per song. This can reuse the existing `songGroups`
-grouping logic in `App.svelte` against the marketplace catalog instead of
-the local one. Exact layout (modal vs. inline panel vs. new route) is an
-open question — this doc scopes data flow, not visual design.
+Implemented as its own route (`/marketplace`, see "Implemented: three
+pages" above) rather than a modal/inline panel — a real page, header nav
+matching the Library page, distinct from the Player's own dropdown/
+footer-nav UI.
 
 ## Stage 2: adding a song to the user's library
 
@@ -144,21 +171,37 @@ Copying wins on every axis that matters given this project's constraints
 (backend-free, minimal consent scope, no app verification) except "stays
 in sync with marketplace edits" — which isn't a stated goal here.
 
+## Resolved
+
+- **Where the catalog lives:** `public/songs/` itself, bundled with the
+  app — not a separate Drive-hosted or externally-hosted catalog. A
+  Drive-backed marketplace catalog was prototyped (public "anyone with
+  the link" sharing + direct-download URLs) but real-browser `fetch()`
+  hit inconsistent/undocumented CORS behavior on Drive's consumer
+  download endpoints (curl saw permissive CORS headers; Chromium didn't,
+  see conversation history if this is revisited) — the Drive API v3
+  `alt=media` endpoint does CORS correctly but needs a Google Cloud API
+  key, which was deferred as unnecessary complexity given the catalog is
+  ~112 KB total. Bundling it in the app sidesteps the problem entirely.
+- **Marketplace UI:** a separate page/route, not a modal — see
+  "Implemented: three pages" above.
+- **Library vs. marketplace listing:** separate pages/lists (My Library,
+  Marketplace), not merged into one dropdown with mixed state.
+- **Removing a library song:** implemented (Library page's Remove
+  button), not deferred.
+
 ## Open questions
 
-- Where the marketplace catalog is actually hosted (a public Drive
-  folder under Randy's account, GitHub Pages under a different repo,
-  something else) — affects the base URL in `loadMarketplaceCatalog`/
-  `loadMarketplaceSong` but not their shape.
-- Marketplace UI: modal, separate panel, or something else; how it
-  relates to the existing Song dropdown.
-- Duplicate-add handling (see above).
-- Whether "my library" songs appear merged into the existing Song
-  dropdown, or as a separate list/section.
+- Duplicate-add handling: `addToLibrary` is a no-op if the id's already
+  present (see prefs.js), so this is actually resolved for the
+  localStorage implementation — revisit once library storage moves to
+  Drive (stage 2), where a duplicate `files.create` is possible again.
+- Stage 2 (Drive-backed library) itself: still not implemented — the
+  library is `localStorage` only, so it doesn't sync across devices or
+  survive a cleared browser profile.
 
 ## Explicitly not covered by this doc
 
 - Authoring or uploading a custom (non-marketplace) song.
-- Editing or removing a song already added to the library.
 - Marketplace search/filtering beyond the existing group-based listing.
 - Any change to the `Song` schema itself (none needed — see Stage 1).

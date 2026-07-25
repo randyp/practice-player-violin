@@ -17,6 +17,7 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
+    "svelte-spa-router": "^5.1.1",
     "tone": "^15.1.22",
     "vexflow": "^5.0.0"
   }
