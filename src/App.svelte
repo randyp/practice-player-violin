@@ -313,21 +313,25 @@
         {/each}
       </select>
     </div>
-    <div class="pick notationpick">
-      <label for="notation">Sheet music</label>
-      <select id="notation" value={notationVoice} onchange={onNotationVoiceChange} disabled={!song}>
-        <option value="melody">Melody</option>
-        <option value="harmony" disabled={!song?.harmony}>Harmony</option>
-      </select>
-    </div>
+    {#if song?.harmony}
+      <div class="pick notationpick">
+        <label for="notation">Part</label>
+        <select id="notation" value={notationVoice} onchange={onNotationVoiceChange}>
+          <option value="melody">Melody</option>
+          <option value="harmony">Harmony</option>
+        </select>
+      </div>
+    {/if}
+    {#if song && song.keys.length > 1}
     <div class="pick keypick">
       <label for="key">Key</label>
-      <select id="key" value={key} onchange={onKeyChange} disabled={!song}>
-        {#each song?.keys ?? [] as k}
+      <select id="key" value={key} onchange={onKeyChange}>
+        {#each song.keys as k}
           <option value={k}>{KEYS[k].name}{k === song.defaultKey && song.showDefaultKeyStar !== false ? " ★" : ""}</option>
         {/each}
       </select>
     </div>
+    {/if}
   </div>
 
   <div class="paper">
