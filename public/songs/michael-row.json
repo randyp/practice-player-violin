@@ -1,0 +1,297 @@
+{
+  "group": "Introductory songs",
+  "title": "Michael Row The Boat Ashore",
+  "source": "Essential Elements",
+  "defaultTempo": 100,
+  "keys": [
+    "D4",
+    "G3",
+    "A4"
+  ],
+  "defaultKey": "D4",
+  "pickup": 2,
+  "repeats": [],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "h",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "h",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "h"
+        }
+      ]
+    ]
+  }
+}

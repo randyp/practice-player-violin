@@ -29,9 +29,12 @@ export const KEYS = {
 
 export const BEATS = { w: 4, h: 2, q: 1, "8": 0.5, qd: 1.5, hd: 3 };
 
-// Only 4/4 is implemented (see songs.js's timeSignature validation), so
-// beats-per-measure is a constant rather than derived per-song.
-export const BEATS_PER_MEASURE = 4;
+// "4/4" -> 4, "2/4" -> 2, etc — only the numerator matters since every
+// duration above is already expressed in quarter-note beats (see songs.js's
+// timeSignature validation for which signatures are actually supported).
+export function beatsPerMeasure(timeSignature) {
+  return +timeSignature.split("/")[0];
+}
 
 export function N(d, u, slur) {
   return { deg: d, dur: u || "q", slur: !!slur };

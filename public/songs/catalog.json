@@ -71,6 +71,55 @@
     "timeSignature": "4/4"
   },
   {
+    "id": "for-petes-sake",
+    "group": "Introductory songs",
+    "title": "For Pete's Sake",
+    "source": "Essential Elements",
+    "timeSignature": "2/4"
+  },
+  {
+    "id": "grandparents-day",
+    "group": "Introductory songs",
+    "title": "Grandparent's Day",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "michael-row",
+    "group": "Introductory songs",
+    "title": "Michael Row The Boat Ashore",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "texas-two-string",
+    "group": "Introductory songs",
+    "title": "Texas Two-String",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "ode-to-joy",
+    "group": "Introductory songs",
+    "title": "Ode to Joy",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "frere-jacques",
+    "group": "Introductory songs",
+    "title": "Frère Jacques",
+    "source": "Essential Elements",
+    "timeSignature": "2/4"
+  },
+  {
+    "id": "boil-em-cabbage-down",
+    "group": "Introductory songs",
+    "title": "Boil 'Em Cabbage Down",
+    "source": "Essential Elements",
+    "timeSignature": "4/4"
+  },
+  {
     "id": "auld-lang-syne",
     "group": "Tunes",
     "title": "Auld Lang Syne",

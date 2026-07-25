@@ -1,0 +1,175 @@
+{
+  "group": "Introductory songs",
+  "title": "Texas Two-String",
+  "source": "Essential Elements",
+  "defaultTempo": 100,
+  "keys": [
+    "D4",
+    "A4",
+    "E5"
+  ],
+  "defaultKey": "D4",
+  "pickup": 0,
+  "repeats": [
+    {
+      "from": 0,
+      "to": 7
+    }
+  ],
+  "note": "Use your 4th finger for both notes.",
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ]
+    ]
+  }
+}

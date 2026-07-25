@@ -1,5 +1,5 @@
 import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline, Dot, Curve } from "vexflow";
-import { degToMidi, midiVf, measureBeats } from "./theory.js";
+import { degToMidi, midiVf, measureBeats, beatsPerMeasure } from "./theory.js";
 
 // VexFlow durations don't have a "dotted" letter of their own (our "qd"/"hd")
 // — the base duration and the augmentation dot are separate: a duration
@@ -66,7 +66,12 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
   const melodyMeasures = song.melody.measures;
   const harmonyMeasures = showHarmony && song.harmony ? song.harmony.measures : null;
   const width = Math.max(320, host.clientWidth || 800);
-  const perLine = width < 660 ? 2 : 4;
+  // Target a constant number of beats per line — 4/4's usual 4 measures/line
+  // is 16 beats/line — rather than a fixed measure count, so a lighter time
+  // signature like 2/4 fits proportionally more measures per line instead of
+  // looking sparse.
+  const targetBeatsPerLine = (width < 660 ? 2 : 4) * 4;
+  const perLine = Math.max(1, Math.round(targetBeatsPerLine / beatsPerMeasure(song.timeSignature || "4/4")));
   const lines = [];
   for (let i = 0; i < melodyMeasures.length; i += perLine) lines.push(melodyMeasures.slice(i, i + perLine));
 
@@ -102,7 +107,7 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
       const stave = new Stave(x, y, w);
       if (c === 0) {
         stave.addClef("treble").addKeySignature(key.sig);
-        if (L === 0) stave.addTimeSignature("4/4");
+        if (L === 0) stave.addTimeSignature(song.timeSignature);
       }
       for (const r of song.repeats) {
         if (mi === r.from) stave.setBegBarType(Barline.type.REPEAT_BEGIN);
@@ -127,7 +132,13 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
         voices.push(v);
       }
 
-      const fmtW = w - extraHere - (c === 0 ? extra + 18 : 22);
+      // w already includes extraHere (clef/key/time-sig/repeat-glyph budget)
+      // on top of the note area, so only a small fixed margin needs
+      // subtracting here — not extraHere a second time, which over-subtracted
+      // and left barely any room for notes in a first measure that only got
+      // a small proportional share of the line's width (e.g. a first 2/4
+      // measure sharing width with 7 others on the same line).
+      const fmtW = w - extraHere - 22;
       if (voices.length) new Formatter().joinVoices(voices).format(voices, Math.max(40, fmtW));
 
       // Beams must be generated before the voice is drawn: Beam's constructor

@@ -1,0 +1,529 @@
+{
+  "group": "Introductory songs",
+  "title": "Boil 'Em Cabbage Down",
+  "source": "Essential Elements",
+  "defaultTempo": 120,
+  "keys": [
+    "D4",
+    "G3",
+    "A4",
+    "E5"
+  ],
+  "defaultKey": "D4",
+  "pickup": 0,
+  "repeats": [
+    {
+      "from": 0,
+      "to": 7
+    }
+  ],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ]
+    ]
+  },
+  "harmony": {
+    "measures": [
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ]
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { degToMidi, midiSci, BEATS, BEATS_PER_MEASURE } from "./theory.js";
+import { degToMidi, midiSci, BEATS, beatsPerMeasure } from "./theory.js";
 
 export function log(...args) {
   try { console.log("[player]", ...args); } catch (e) { /* no console */ }
@@ -98,7 +98,8 @@ function scheduleVoiceNotes(evq, voiceTimeline, tonic, startAt, sec, kind) {
 export function buildEventQueue({ song, tonic, bpm, countInMeasures, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline }) {
   const sec = 60 / bpm;
   const now = Tone.now() + 0.12;
-  const countInBeats = countInMeasures * BEATS_PER_MEASURE;
+  const bpMeasure = beatsPerMeasure(song.timeSignature);
+  const countInBeats = countInMeasures * bpMeasure;
   const leadBeats = countInBeats ? (countInBeats - song.pickup) : 0;
   const startAt = now + leadBeats * sec;
   const evq = [];
@@ -109,7 +110,7 @@ export function buildEventQueue({ song, tonic, bpm, countInMeasures, metro, melo
     // those beats get silence instead of a click.
     const clickBeats = countInBeats - song.pickup;
     for (let i = 0; i < clickBeats; i++) {
-      evq.push({ t: now + i * sec, kind: "click", freq: i % BEATS_PER_MEASURE === 0 ? 1760 : 1320 });
+      evq.push({ t: now + i * sec, kind: "click", freq: i % bpMeasure === 0 ? 1760 : 1320 });
     }
   }
   if (metro) {
@@ -119,7 +120,7 @@ export function buildEventQueue({ song, tonic, bpm, countInMeasures, metro, melo
     // startAt above) — clicking there collides with it audibly, so the
     // ongoing metronome only starts once the pickup has played out.
     for (let b = song.pickup; b < nb; b++) {
-      const isDown = ((b - song.pickup) % BEATS_PER_MEASURE + BEATS_PER_MEASURE) % BEATS_PER_MEASURE === 0;
+      const isDown = ((b - song.pickup) % bpMeasure + bpMeasure) % bpMeasure === 0;
       evq.push({ t: startAt + b * sec, kind: "click", freq: isDown ? 1760 : 1320 });
     }
   }

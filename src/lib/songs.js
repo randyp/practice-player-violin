@@ -15,12 +15,12 @@ export async function loadSong(id) {
   const res = await fetch(`${base}songs/${id}.json`);
   if (!res.ok) throw new Error(`failed to load song "${id}": HTTP ${res.status}`);
   const song = await res.json();
-  // Only 4/4 is implemented today — the notation renderer's line-breaking, the
-  // transport's beat-dot indicator, and the beat_value passed to VexFlow's Voice
-  // all hardcode a quarter-note beat and 4 beats/measure. Fail loudly rather than
-  // silently mis-render or mis-count a song authored in another time signature.
-  if (song.timeSignature !== "4/4") {
-    throw new Error(`Song "${song.title}" has unsupported time signature "${song.timeSignature}" — only "4/4" is implemented`);
+  // Only simple time signatures with a quarter-note beat are implemented —
+  // the notation renderer's beat_value passed to VexFlow's Voice and every
+  // duration in BEATS are both quarter-note-based. Fail loudly rather than
+  // silently mis-render or mis-count a song authored in, say, 6/8.
+  if (!/^[0-9]+\/4$/.test(song.timeSignature)) {
+    throw new Error(`Song "${song.title}" has unsupported time signature "${song.timeSignature}" — only "N/4" signatures are implemented`);
   }
   cache.set(id, song);
   return song;

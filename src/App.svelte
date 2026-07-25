@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import * as Tone from "tone";
-  import { KEYS, BEATS_PER_MEASURE } from "./lib/theory.js";
+  import { KEYS, beatsPerMeasure } from "./lib/theory.js";
   import { loadCatalog, loadSong } from "./lib/songs.js";
   import { buildAudio, buildTimeline, buildEventQueue, pump, log } from "./lib/audio.js";
   import { renderScore, highlight } from "./lib/notation.js";
@@ -32,6 +32,7 @@
   let driveIdentity = $state(driveAuth.getIdentity());
 
   const tonic = $derived(song && song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key]?.tonic);
+  const bpMeasure = $derived(song ? beatsPerMeasure(song.timeSignature) : 4);
   const songGroups = $derived.by(() => {
     const groups = [];
     const byName = new Map();
@@ -91,10 +92,10 @@
     const sec = spb(), elapsed = Tone.now() - startAt;
 
     if (elapsed < 0) {
-      const countInBeats = countInMeasures * BEATS_PER_MEASURE;
+      const countInBeats = countInMeasures * bpMeasure;
       const lead = countInBeats ? (countInBeats - song.pickup) : 0;
       const ci = Math.floor((elapsed + lead * sec) / sec);
-      activeBeat = ((Math.max(0, ci) % BEATS_PER_MEASURE) + BEATS_PER_MEASURE) % BEATS_PER_MEASURE;
+      activeBeat = ((Math.max(0, ci) % bpMeasure) + bpMeasure) % bpMeasure;
       rafId = requestAnimationFrame(tick);
       return;
     }
@@ -104,7 +105,7 @@
       stop();
       return;
     }
-    activeBeat = ((Math.floor(beat) - song.pickup) % BEATS_PER_MEASURE + BEATS_PER_MEASURE) % BEATS_PER_MEASURE;
+    activeBeat = ((Math.floor(beat) - song.pickup) % bpMeasure + bpMeasure) % bpMeasure;
 
     let cur = null;
     for (let i = timeline.length - 1; i >= 0; i--) {
@@ -329,12 +330,15 @@
     </div>
   </div>
 
-  <div class="paper"><div id="score" bind:this={scoreHost}><div id="hl" bind:this={hlEl}></div></div></div>
+  <div class="paper">
+    {#if song?.note}<p class="songnote">{song.note}</p>{/if}
+    <div id="score" bind:this={scoreHost}><div id="hl" bind:this={hlEl}></div></div>
+  </div>
 
   <div class="stage">
     <button class="play" class:stop={playing} disabled={!song} onclick={handlePlayClick}>{playing ? "Stop" : "Play"}</button>
     <div class="beats">
-      {#each [0, 1, 2, 3] as i}
+      {#each { length: bpMeasure } as _, i}
         <div class="beat" class:one={i === 0} class:hit={i === activeBeat}></div>
       {/each}
     </div>

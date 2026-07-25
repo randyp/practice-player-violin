@@ -1,0 +1,452 @@
+{
+  "group": "Introductory songs",
+  "title": "For Pete's Sake",
+  "source": "Essential Elements",
+  "defaultTempo": 100,
+  "keys": [
+    "D4",
+    "G3",
+    "A4"
+  ],
+  "defaultKey": "D4",
+  "pickup": 0,
+  "repeats": [],
+  "timeSignature": "2/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 7,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 3,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 2,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 5,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 6,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 7,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 4,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "q",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 0,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        },
+        {
+          "deg": 1,
+          "dur": "8",
+          "slur": false
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q",
+          "slur": false
+        },
+        {
+          "rest": true,
+          "dur": "q"
+        }
+      ]
+    ]
+  }
+}
