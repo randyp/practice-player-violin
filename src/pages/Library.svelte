@@ -31,7 +31,9 @@
 </script>
 
 <div class="wrap page">
-  <PageHeader title="My Library" current="library" />
+  <PageHeader current="library" />
+
+  <h1>My Library</h1>
 
   {#if loadError}
     <p class="err">Failed to load the song catalog: {loadError}</p>

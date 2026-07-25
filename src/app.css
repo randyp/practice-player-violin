@@ -31,10 +31,9 @@ body {
 .empty-library a { color: var(--string); }
 
 .pagehead {
-  display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
-  border-bottom: 1px solid var(--edge); padding-bottom: 14px; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--edge); padding-bottom: 14px; margin-bottom: 20px; flex-shrink: 0;
 }
-.pagehead h1 { font-size: 17px; font-weight: 600; margin: 0; flex: 1; }
 .pagenav { display: flex; gap: 4px; margin-left: auto; }
 .pagenav a {
   color: var(--muted); text-decoration: none; font-size: 13px;
@@ -42,6 +41,7 @@ body {
 }
 .pagenav a:hover { color: var(--paper); }
 .pagenav a.active { color: var(--paper); border-color: var(--edge); background: var(--ebony2); }
+h1 { font-size: 17px; font-weight: 600; margin: 0 0 18px; }
 
 .grp { margin-bottom: 24px; }
 .grp h2 {
@@ -117,11 +117,6 @@ body {
 .beat.hit { background: var(--string); border-color: var(--string); transform: scale(1.25); }
 .beat.one.hit { background: var(--rosin); border-color: var(--rosin); }
 
-.footbar {
-  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
-  background: var(--ebony2); border: 1px solid var(--edge); border-radius: var(--r);
-  padding: 14px 15px; margin-top: 12px; flex-shrink: 0;
-}
 .field { display: flex; align-items: center; gap: 10px; }
 .field .lbl { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .bpm { font-size: 20px; font-variant-numeric: tabular-nums; min-width: 40px; text-align: right; }
@@ -158,20 +153,13 @@ input[type=range]::-moz-range-thumb { width: 13px; height: 13px; border: 0; bord
 
 .foot {
   margin-top: 16px; font-size: 12px; color: var(--muted); line-height: 1.6;
-  border-top: 1px solid var(--edge); padding-top: 13px;
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; flex-shrink: 0;
+  flex-shrink: 0;
 }
 .brand {
   font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; color: var(--paper);
   line-height: 1; white-space: nowrap;
 }
 .brand em { font-style: italic; color: var(--rosin); }
-.hint { flex: 1; min-width: 220px; }
-.astat {
-  font-size: 11px; letter-spacing: .06em; color: var(--string);
-  border: 1px solid var(--edge); border-radius: var(--r); padding: 3px 8px; white-space: nowrap;
-}
-.astat.bad { color: var(--rosin); border-color: var(--rosin); }
 .account { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .avatar { width: 22px; height: 22px; border-radius: 50%; }
 .email { font-size: 11.5px; color: var(--muted); white-space: nowrap; }

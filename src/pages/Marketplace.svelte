@@ -29,7 +29,9 @@
 </script>
 
 <div class="wrap page">
-  <PageHeader title="Marketplace" current="marketplace" />
+  <PageHeader current="marketplace" />
+
+  <h1>Marketplace</h1>
 
   {#if loadError}
     <p class="err">Failed to load the song catalog: {loadError}</p>
