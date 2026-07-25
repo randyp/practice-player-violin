@@ -31,10 +31,6 @@ const STORAGE_KEY = "practice-player-violin:drive-token";
 // mid-request.
 const EXPIRY_BUFFER_MS = 60_000;
 
-function log(...args) {
-  try { console.log("[drive-auth]", ...args); } catch (e) { /* no console */ }
-}
-
 export const driveAuth = createDriveAuthState();
 
 function loadCached() {
@@ -94,39 +90,30 @@ function createDriveAuthState() {
   // requestAccessToken() opens a real popup, which browsers block if it's
   // not synchronously within a click handler's call stack.
   function signIn() {
-    log("signIn() called, origin =", window.location.origin);
     return new Promise((resolve, reject) => {
       let client;
       try {
         client = ensureTokenClient();
       } catch (e) {
-        log("ensureTokenClient threw:", e);
         reject(e);
         return;
       }
       client.callback = (resp) => {
-        log("token-client callback fired, resp =", resp);
         if (resp.error) { reject(new Error(`Google sign-in failed: ${resp.error}`)); return; }
         token = resp.access_token;
         fetchIdentity(token)
           .then((info) => {
             identity = info;
-            log("fetched identity =", identity);
             saveCached(token, resp.expires_in, identity);
             resolve(identity);
           })
-          .catch((e) => {
-            log("fetchIdentity threw:", e);
-            reject(e);
-          });
+          .catch(reject);
       };
       client.requestAccessToken();
-      log("requestAccessToken() called");
     });
   }
 
   function signOut() {
-    log("signOut() called");
     if (token && window.google?.accounts?.oauth2) {
       window.google.accounts.oauth2.revoke(token, () => {});
     }
@@ -150,6 +137,8 @@ function createDriveAuthState() {
   return { signIn, signOut, getToken, getIdentity, isSignedIn };
 }
 
+// Groundwork for the marketplace's "my library" listing — see
+// design/marketplace.md (stage 2) for the appProperties filter this will grow.
 export async function listDriveFiles() {
   const token = driveAuth.getToken();
   if (!token) throw new Error("not signed in to Google");

@@ -1,5 +1,5 @@
 import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline, Dot, Curve } from "vexflow";
-import { degToMidi, midiVf, measureBeats, beatsPerMeasure } from "./theory.js";
+import { degToMidi, midiToVexKey, measureBeats, beatsPerMeasure } from "./theory.js";
 
 // VexFlow durations don't have a "dotted" letter of their own (our "qd"/"hd")
 // — the base duration and the augmentation dot are separate: a duration
@@ -20,15 +20,15 @@ function buildNotes(measure, tonic) {
     // notes on/above the middle line, up below).
     const note = ev.rest
       ? new StaveNote({ keys: ["b/4"], duration: base + "r" })
-      : new StaveNote({ keys: [midiVf(degToMidi(tonic, ev.deg))], duration: base, autoStem: true });
+      : new StaveNote({ keys: [midiToVexKey(degToMidi(tonic, ev.deg))], duration: base, autoStem: true });
     if (dotted) Dot.buildAndAttach([note], { all: true });
     return note;
   });
 }
 
 // Slurs connect a note to the next one (ev.slur means "slurred to the note
-// that follows"), so they're built from a flat, in-order note list per
-// voice rather than per-measure — a slur can span a measure/line break.
+// that follows"), so they're built from a flat, in-order note list rather
+// than per-measure — a slur can span a measure/line break.
 function buildSlurs(events, notes, ctx) {
   const curves = [];
   for (let i = 0; i < events.length - 1; i++) {
@@ -54,30 +54,30 @@ function noteBox(note, lineY) {
   return { x: x0, y: yTop, w: x1 - x0, h: yBottom - yTop };
 }
 
-// Renders `song` in `key` into `host` (with a `hl` highlight div child preserved).
-// showMelody/showHarmony control which voice(s) appear on the staff.
-// Harmony is assumed to share melody's measure/beat layout (see design/song-format.md).
-// Returns an array of bounding boxes, one per melody note/rest event in playback order.
-export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony) {
-  Array.from(host.children).forEach((c) => { if (c !== hl) host.removeChild(c); });
-  hl.classList.remove("on");
+// Renders one part of `song` in `key` into `host` (with a `highlightEl`
+// highlight div child preserved). `part` is "melody" or "harmony" — exactly
+// one part is on the staff at a time, matching the Part dropdown.
+// Returns an array of bounding boxes, one per rendered note/rest event, in
+// the same order that part's timeline indexes them (see audio.js).
+export function renderScore(host, highlightEl, { song, key, tonic, part }) {
+  Array.from(host.children).forEach((c) => { if (c !== highlightEl) host.removeChild(c); });
+  highlightEl.classList.remove("on");
   const placed = [];
 
-  const melodyMeasures = song.melody.measures;
-  const harmonyMeasures = showHarmony && song.harmony ? song.harmony.measures : null;
+  const measures = (part === "harmony" ? song.harmony : song.melody).measures;
   const width = Math.max(320, host.clientWidth || 800);
   // Target a constant number of beats per line — 4/4's usual 4 measures/line
   // is 16 beats/line — rather than a fixed measure count, so a lighter time
   // signature like 2/4 fits proportionally more measures per line instead of
   // looking sparse.
   const targetBeatsPerLine = (width < 660 ? 2 : 4) * 4;
-  const perLine = Math.max(1, Math.round(targetBeatsPerLine / beatsPerMeasure(song.timeSignature || "4/4")));
+  const perLine = Math.max(1, Math.round(targetBeatsPerLine / beatsPerMeasure(song.timeSignature)));
   const lines = [];
-  for (let i = 0; i < melodyMeasures.length; i += perLine) lines.push(melodyMeasures.slice(i, i + perLine));
+  for (let i = 0; i < measures.length; i += perLine) lines.push(measures.slice(i, i + perLine));
 
   const padX = 8, topPad = 14, bottomPad = 28;
   const holder = document.createElement("div");
-  host.insertBefore(holder, hl);
+  host.insertBefore(holder, highlightEl);
   const renderer = new Renderer(holder, Renderer.Backends.SVG);
   renderer.resize(width, lines.length * LINE_H + topPad + bottomPad);
   const ctx = renderer.getContext();
@@ -115,22 +115,10 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
       }
       stave.setContext(ctx).draw();
 
-      const melodyNotes = showMelody ? buildNotes(row[c], tonic) : [];
-      const harmonyNotes = harmonyMeasures ? buildNotes(harmonyMeasures[mi], tonic) : [];
-
-      const voices = [];
-      if (melodyNotes.length) {
-        const v = new Voice({ num_beats: mb, beat_value: 4 });
-        v.setStrict(false);
-        v.addTickables(melodyNotes);
-        voices.push(v);
-      }
-      if (harmonyNotes.length) {
-        const v = new Voice({ num_beats: mb, beat_value: 4 });
-        v.setStrict(false);
-        v.addTickables(harmonyNotes);
-        voices.push(v);
-      }
+      const notes = buildNotes(row[c], tonic);
+      const voice = new Voice({ num_beats: mb, beat_value: 4 });
+      voice.setStrict(false);
+      voice.addTickables(notes);
 
       // w already includes extraHere (clef/key/time-sig/repeat-glyph budget)
       // on top of the note area, so only a small fixed margin needs
@@ -139,30 +127,21 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
       // a small proportional share of the line's width (e.g. a first 2/4
       // measure sharing width with 7 others on the same line).
       const fmtW = w - extraHere - 22;
-      if (voices.length) new Formatter().joinVoices(voices).format(voices, Math.max(40, fmtW));
+      new Formatter().joinVoices([voice]).format([voice], Math.max(40, fmtW));
 
       // Beams must be generated before the voice is drawn: Beam's constructor
       // recomputes and takes over each of its notes' stems (so the beam and
-      // stem slant match) — generating beams after v.draw() has already drawn
-      // independent per-note stems produces two overlapping stems per note.
-      const beamsByNotes = [melodyNotes, harmonyNotes].map((notes) => {
-        try { return Beam.generateBeams(notes); } catch (e) { return []; }
-      });
+      // stem slant match) — generating beams after voice.draw() has already
+      // drawn independent per-note stems produces two overlapping stems per
+      // note.
+      let beams = [];
+      try { beams = Beam.generateBeams(notes); } catch (e) { /* unbeamable measure */ }
 
-      voices.forEach((v) => v.draw(ctx, stave));
+      voice.draw(ctx, stave);
+      beams.forEach((b) => { try { b.setContext(ctx).draw(); } catch (e) { /* skip unbeamable */ } });
+      buildSlurs(row[c], notes, ctx).forEach((curve) => { try { curve.draw(); } catch (e) { /* skip */ } });
 
-      beamsByNotes.forEach((beams) => {
-        beams.forEach((b) => { try { b.setContext(ctx).draw(); } catch (e) { /* skip unbeamable */ } });
-      });
-
-      if (showMelody) {
-        buildSlurs(row[c], melodyNotes, ctx).forEach((curve) => { try { curve.draw(); } catch (e) { /* skip */ } });
-      }
-      if (harmonyMeasures) {
-        buildSlurs(harmonyMeasures[mi], harmonyNotes, ctx).forEach((curve) => { try { curve.draw(); } catch (e) { /* skip */ } });
-      }
-
-      melodyNotes.forEach((nt) => {
+      notes.forEach((nt) => {
         placed.push({ ...noteBox(nt, y), lineY: y });
       });
       x += w;
@@ -171,15 +150,15 @@ export function renderScore(host, hl, song, key, tonic, showMelody, showHarmony)
   return placed;
 }
 
-export function highlight(hl, placed, i) {
+export function highlight(highlightEl, placed, i) {
   const p = placed[i];
-  if (!p) { hl.classList.remove("on"); return; }
-  hl.style.left = (p.x - 5) + "px";
-  hl.style.top = (p.y - 6) + "px";
-  hl.style.width = (p.w + 10) + "px";
-  hl.style.height = (p.h + 12) + "px";
-  hl.classList.add("on");
-  const paper = hl.parentElement.parentElement;
+  if (!p) { highlightEl.classList.remove("on"); return; }
+  highlightEl.style.left = (p.x - 5) + "px";
+  highlightEl.style.top = (p.y - 6) + "px";
+  highlightEl.style.width = (p.w + 10) + "px";
+  highlightEl.style.height = (p.h + 12) + "px";
+  highlightEl.classList.add("on");
+  const paper = highlightEl.closest(".paper");
   // Only scroll if the sheet doesn't already fit entirely on screen. Otherwise
   // center the current *line* — using lineY (constant for every note on that
   // line) rather than the note's own y/h, which varies note-to-note by pitch

@@ -25,3 +25,14 @@ export function savePrefs(prefs) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
   } catch (e) { /* storage unavailable (private mode, quota) — prefs just won't persist */ }
 }
+
+// Merge a partial update into the stored prefs. Always re-reads storage so a
+// long-lived page doesn't clobber prefs written since it last loaded them.
+export function updatePrefs(patch) {
+  savePrefs({ ...loadPrefs(), ...patch });
+}
+
+export function saveSongKey(songId, key) {
+  const prefs = loadPrefs();
+  savePrefs({ ...prefs, songKeys: { ...prefs.songKeys, [songId]: key } });
+}

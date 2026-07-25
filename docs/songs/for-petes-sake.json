@@ -1,4 +1,5 @@
 {
+  "id": "for-petes-sake",
   "group": "Introductory songs",
   "title": "For Pete's Sake",
   "source": "Essential Elements",
@@ -17,49 +18,41 @@
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -69,49 +62,41 @@
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 3,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -121,107 +106,89 @@
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 5,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 6,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 6,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 5,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -231,49 +198,41 @@
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -283,49 +242,41 @@
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 3,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -335,112 +286,93 @@
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 5,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 6,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 6,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,

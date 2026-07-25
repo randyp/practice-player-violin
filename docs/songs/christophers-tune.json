@@ -1,4 +1,5 @@
 {
+  "id": "christophers-tune",
   "group": "Introductory songs",
   "title": "Christopher's Tune",
   "source": "Essential Elements",
@@ -22,40 +23,33 @@
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -65,40 +59,33 @@
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -108,40 +95,33 @@
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -151,40 +131,33 @@
       [
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 6,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,

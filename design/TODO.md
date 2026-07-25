@@ -27,7 +27,7 @@ constraint on every other item here, not a standalone feature.
 ## 3. Recordings with client-side tempo/key resampling
 
 Songs should be able to ship a real (professional) recording per
-voice, per [song-format.md](song-format.md)'s deferred `Recording`
+part, per [song-format.md](song-format.md)'s deferred `Recording`
 type, and have the frontend pitch-shift/time-stretch that recording to
 match the user's chosen key/tempo at playback — instead of, or as an
 alternative to, synth playback. **Decided:** key/tempo changes are

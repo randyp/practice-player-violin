@@ -1,8 +1,27 @@
 # Violin Practice Player
 
-A scale/tune practice player: renders notation with VexFlow, plays a
-sampled violin tone via Tone.js, and follows along with a bow-direction
-and beat indicator. Built with Vite + Svelte 5.
+A practice player for violin students: sheet music rendered with
+VexFlow, synth playback and a metronome via Tone.js, count-in, per-song
+keys and tempo, and a highlight that follows the score as it plays.
+Built with Vite + Svelte 5.
+
+## Vision
+
+A lightweight, mostly free, client-side practice tool:
+
+- **No server of our own.** Everything — notation, playback,
+  preferences — runs in the browser, hosted as static files (GitHub
+  Pages today). This is a hard constraint on every feature, not an
+  implementation detail (see `design/TODO.md`).
+- **Users bring their own backend.** Signing in with Google lets each
+  user's personal song library live in their own Google Drive, using
+  the narrow `drive.file` scope so the app can only see files it
+  created itself. The project never operates or pays for storage.
+- **A free marketplace of curated music.** A public, static catalog of
+  songs that anyone can browse without an account and add to their
+  library with one click — designed in `design/marketplace.md`.
+
+Design notes, the song format, and the roadmap live in `design/`.
 
 ## Development
 

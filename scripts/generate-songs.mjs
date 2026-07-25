@@ -5,7 +5,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { N, R, beatsPerMeasure, measureBeats } from "../src/lib/theory.js";
+import { N, R, beatsPerMeasure, measureBeats, assertSupportedTimeSignature } from "../src/lib/theory.js";
 
 const outDir = join(dirname(fileURLToPath(import.meta.url)), "../public/songs");
 
@@ -33,9 +33,7 @@ function scaleSong(id, title, sub, melodyMeasures, harmonyMeasures, repeats) {
 }
 
 // Traditional Scottish air, transcribed in MuseScore (D major) and
-// converted from its MusicXML export — see design/marketplace.md's
-// sibling transcription notes for how this differs from the earlier
-// audio-transcription attempt.
+// converted from its MusicXML export.
 const AULD_LANG_SYNE = {
   id: "auld-lang-syne", group: "Tunes", title: "Auld Lang Syne", sub: "traditional",
   defaultTempo: 80, keys: ["D4"], defaultKey: "D4", pickup: 1, repeats: [],
@@ -472,9 +470,7 @@ const ids = new Set();
 for (const s of SONGS) {
   if (ids.has(s.id)) throw new Error(`duplicate song id "${s.id}"`);
   ids.add(s.id);
-  if (!/^[0-9]+\/4$/.test(s.timeSignature)) {
-    throw new Error(`Song "${s.title}" has unsupported time signature "${s.timeSignature}" — only "N/4" signatures are implemented`);
-  }
+  assertSupportedTimeSignature(s);
   const bpMeasure = beatsPerMeasure(s.timeSignature);
   for (const m of [...s.melody.measures, ...(s.harmony?.measures ?? [])]) {
     if (measureBeats(m) > bpMeasure) {
@@ -493,12 +489,16 @@ for (const s of SONGS) {
 
 mkdirSync(outDir, { recursive: true });
 
-const catalog = SONGS.map(({ id, group, title, sub, source, timeSignature }) => ({ id, group, title, sub, source, timeSignature }));
-writeFileSync(join(outDir, "catalog.json"), JSON.stringify(catalog, null, 2) + "\n");
+// Drops fields a song simply doesn't have (e.g. a null `sub`) from the output.
+const dropNulls = (k, v) => v ?? undefined;
 
+const catalog = SONGS.map(({ id, group, title, sub, source, timeSignature }) => ({ id, group, title, sub, source, timeSignature }));
+writeFileSync(join(outDir, "catalog.json"), JSON.stringify(catalog, dropNulls, 2) + "\n");
+
+// `id` stays in the song file (not just the filename) — the app uses it for
+// per-song preferences after the song is loaded.
 for (const song of SONGS) {
-  const { id, ...rest } = song;
-  writeFileSync(join(outDir, `${id}.json`), JSON.stringify(rest, null, 2) + "\n");
+  writeFileSync(join(outDir, `${song.id}.json`), JSON.stringify(song, dropNulls, 2) + "\n");
 }
 
 console.log(`wrote catalog.json + ${SONGS.length} song file(s) to ${outDir}`);

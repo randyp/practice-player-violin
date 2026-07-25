@@ -1,4 +1,5 @@
 {
+  "id": "grandparents-day",
   "group": "Introductory songs",
   "title": "Grandparent's Day",
   "source": "Essential Elements",
@@ -22,182 +23,149 @@
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "h",
-          "slur": false
+          "dur": "h"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "h",
-          "slur": false
+          "dur": "h"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "h",
-          "slur": false
+          "dur": "h"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 0,
-          "dur": "h",
-          "slur": false
+          "dur": "h"
         }
       ]
     ]

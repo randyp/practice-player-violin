@@ -3,33 +3,33 @@
   import * as Tone from "tone";
   import { KEYS, beatsPerMeasure } from "./lib/theory.js";
   import { loadCatalog, loadSong } from "./lib/songs.js";
-  import { buildAudio, buildTimeline, buildEventQueue, pump, log } from "./lib/audio.js";
+  import { buildAudio, buildTimeline, buildEventQueue, pump } from "./lib/audio.js";
   import { renderScore, highlight } from "./lib/notation.js";
-  import { loadPrefs, savePrefs } from "./lib/prefs.js";
-  import { driveAuth, listDriveFiles } from "./lib/drive-auth.js";
+  import { loadPrefs, updatePrefs, saveSongKey } from "./lib/prefs.js";
+  import { driveAuth } from "./lib/drive-auth.js";
+  import { log } from "./lib/log.js";
 
   const prefs = loadPrefs();
 
-  let scoreHost, hlEl;
+  let scoreHost, highlightEl;
 
   let catalog = $state([]);
   let song = $state(null);
-  let si = $state(0);
+  let songIndex = $state(0);
   let songReqId = 0; // guards against an in-flight fetch resolving after a newer selection
   let key = $state("G3");
-  let notationVoice = $state("melody");
+  let sheetPart = $state("melody"); // which part is on the staff: "melody" | "harmony"
   let bpm = $state(120);
   let playing = $state(false);
-  let metro = $state(true);
-  let melodyPlay = $state(true);
-  let harmonyPlay = $state(false);
+  let metronome = $state(true);
+  let playMelody = $state(true);
+  let playHarmony = $state(false);
   let countInMeasures = $state(prefs.countInMeasures);
   let loop = $state(false);
   let activeBeat = $state(-1);
   let statusText = $state("starting audio");
   let statusBad = $state(false);
-  let driveSignedIn = $state(driveAuth.isSignedIn());
-  let driveIdentity = $state(driveAuth.getIdentity());
+  let driveUser = $state(driveAuth.isSignedIn() ? driveAuth.getIdentity() : null);
 
   const tonic = $derived(song && song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key]?.tonic);
   const bpMeasure = $derived(song ? beatsPerMeasure(song.timeSignature) : 4);
@@ -45,14 +45,15 @@
   });
 
   let placed = [];
-  let timeline = [];
+  let melodyTimeline = [];
+  let harmonyTimeline = [];
   let totalBeats = 0;
   let audio = null;
   let startAt = 0;
   let rafId = null;
   let schedTimer = null;
-  let evq = [];
-  const evi = { i: 0 };
+  let eventQueue = [];
+  let nextEvent = 0;
 
   function setStatus(txt, bad) {
     statusText = txt;
@@ -60,22 +61,16 @@
     log("status:", txt);
   }
 
-  function spb() {
-    return 60 / bpm;
-  }
-
   function doRenderScore() {
-    if (!scoreHost || !hlEl || !song) return;
-    const showMelody = notationVoice === "melody";
-    const showHarmony = notationVoice === "harmony";
-    placed = renderScore(scoreHost, hlEl, song, KEYS[key], tonic, showMelody, showHarmony);
+    if (!scoreHost || !highlightEl || !song) return;
+    placed = renderScore(scoreHost, highlightEl, { song, key: KEYS[key], tonic, part: sheetPart });
   }
 
   function stop() {
     playing = false;
     if (schedTimer) { clearInterval(schedTimer); schedTimer = null; }
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-    evq = []; evi.i = 0;
+    eventQueue = []; nextEvent = 0;
     if (audio) {
       try { audio.melody.releaseAll(); } catch (e) { /* not ready yet */ }
       try { audio.harmony.releaseAll(); } catch (e) { /* not ready yet */ }
@@ -83,13 +78,13 @@
       try { audio.master.gain.rampTo(0, 0.02); }
       catch (e) { try { audio.master.gain.value = 0; } catch (e2) { /* no-op */ } }
     }
-    hlEl?.classList.remove("on");
+    highlightEl?.classList.remove("on");
     activeBeat = -1;
   }
 
   function tick() {
     if (!playing) return;
-    const sec = spb(), elapsed = Tone.now() - startAt;
+    const sec = 60 / bpm, elapsed = Tone.now() - startAt;
 
     if (elapsed < 0) {
       const countInBeats = countInMeasures * bpMeasure;
@@ -107,30 +102,34 @@
     }
     activeBeat = ((Math.floor(beat) - song.pickup) % bpMeasure + bpMeasure) % bpMeasure;
 
+    // Highlight follows the part that's on the staff, which need not be the
+    // (or an) audible one — the sheet is the practice reference either way.
+    const timeline = sheetPart === "harmony" ? harmonyTimeline : melodyTimeline;
     let cur = null;
     for (let i = timeline.length - 1; i >= 0; i--) {
       if (beat >= timeline[i].t) { cur = timeline[i]; break; }
     }
-    if (cur) highlight(hlEl, placed, cur.idx);
+    if (cur) highlight(highlightEl, placed, cur.idx);
     rafId = requestAnimationFrame(tick);
   }
 
   function play() {
     if (!audio) audio = buildAudio(setStatus);
-    let harmonyTimeline;
-    ({ timeline, totalBeats, harmonyTimeline } = buildTimeline(song));
-    ({ evq, startAt } = buildEventQueue({
-      song, tonic, bpm, countInMeasures, metro, melodyPlay, harmonyPlay, timeline, harmonyTimeline,
+    ({ melodyTimeline, harmonyTimeline, totalBeats } = buildTimeline(song));
+    ({ queue: eventQueue, startAt } = buildEventQueue({
+      song, tonic, bpm, countInMeasures, metronome, playMelody, playHarmony,
+      melodyTimeline, harmonyTimeline, totalBeats,
     }));
-    evi.i = 0;
+    nextEvent = 0;
     try { audio.master.gain.cancelScheduledValues(Tone.now()); } catch (e) { /* no-op */ }
     try { audio.master.gain.value = 1; } catch (e) { /* no-op */ }
 
     playing = true;
 
     if (schedTimer) clearInterval(schedTimer);
-    schedTimer = setInterval(() => pump(audio, evq, evi), 50);
-    pump(audio, evq, evi);
+    const pumpNow = () => { nextEvent = pump(audio, eventQueue, nextEvent); };
+    schedTimer = setInterval(pumpNow, 50);
+    pumpNow();
     tick();
   }
 
@@ -150,8 +149,8 @@
 
   async function selectSong(i) {
     stop();
-    const prevSi = si;
-    si = i;
+    const prevIndex = songIndex;
+    songIndex = i;
     const entry = catalog[i];
     const reqId = ++songReqId;
     setStatus(`loading "${entry.title}"…`);
@@ -159,20 +158,20 @@
     try {
       loaded = await loadSong(entry.id);
     } catch (e) {
-      if (reqId === songReqId) si = prevSi; // keep the dropdown in sync with the song actually loaded
+      if (reqId === songReqId) songIndex = prevIndex; // keep the dropdown in sync with the song actually loaded
       setStatus(`failed to load "${entry.title}": ${e.message}`, true);
       return;
     }
     if (reqId !== songReqId) return; // a newer selectSong() call superseded this one
 
     song = loaded;
-    const savedKey = loadPrefs().songKeys[entry.id];
+    const savedKey = loadPrefs().songKeys[song.id];
     key = savedKey && song.keys.indexOf(savedKey) !== -1 ? savedKey : song.defaultKey;
-    if (notationVoice === "harmony" && !song.harmony) notationVoice = "melody";
+    if (sheetPart === "harmony" && !song.harmony) sheetPart = "melody";
     bpm = song.defaultTempo;
     setStatus("ready");
     doRenderScore();
-    savePrefs({ ...loadPrefs(), lastSongId: entry.id });
+    updatePrefs({ lastSongId: song.id });
   }
 
   function onSongChange(e) {
@@ -185,16 +184,13 @@
     stop();
     key = e.target.value;
     doRenderScore();
-    if (song) {
-      const p = loadPrefs();
-      savePrefs({ ...p, songKeys: { ...p.songKeys, [catalog[si].id]: key } });
-    }
+    saveSongKey(song.id, key);
   }
 
-  function onNotationVoiceChange(e) {
+  function onSheetPartChange(e) {
     e.target.blur();
-    notationVoice = e.target.value;
-    doRenderScore();
+    sheetPart = e.target.value;
+    doRenderScore(); // playback keeps going — the highlight just follows the newly shown part
   }
 
   function onTempoInput(e) {
@@ -207,23 +203,32 @@
     bpm = song.defaultTempo;
   }
 
-  function toggle(field) {
-    return () => {
-      stop();
-      switch (field) {
-        case "metro": metro = !metro; break;
-        case "loop": loop = !loop; break;
-      }
-    };
+  function toggleMetronome() {
+    stop();
+    metronome = !metronome;
+  }
+
+  function toggleLoop() {
+    stop();
+    loop = !loop;
+  }
+
+  function togglePlayMelody(e) {
+    e.target.blur(); // otherwise the checkbox keeps focus and Space re-toggles it instead of playing
+    stop();
+    playMelody = !playMelody;
+  }
+
+  function togglePlayHarmony(e) {
+    e.target.blur();
+    stop();
+    playHarmony = !playHarmony;
   }
 
   async function handleDriveSignIn() {
     setStatus("signing in with Google…");
     try {
-      const identity = await driveAuth.signIn();
-      driveSignedIn = true;
-      driveIdentity = identity;
-      await listDriveFiles();
+      driveUser = await driveAuth.signIn();
       setStatus("ready");
     } catch (e) {
       setStatus(`Google sign-in failed: ${e.message}`, true);
@@ -232,33 +237,21 @@
 
   function handleDriveSignOut() {
     driveAuth.signOut();
-    driveSignedIn = false;
-    driveIdentity = null;
+    driveUser = null;
     setStatus("signed out of Google");
   }
 
   function cycleCountIn() {
     stop();
     countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
-    savePrefs({ ...loadPrefs(), countInMeasures });
-  }
-
-  function toggleVoice(field) {
-    return (e) => {
-      e.target.blur(); // otherwise the checkbox keeps focus and Space re-toggles it instead of playing
-      stop();
-      switch (field) {
-        case "melodyPlay": melodyPlay = !melodyPlay; break;
-        case "harmonyPlay": harmonyPlay = !harmonyPlay; break;
-      }
-    };
+    updatePrefs({ countInMeasures });
   }
 
   function onKeydown(e) {
     if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
     if (e.code === "Space") { e.preventDefault(); handlePlayClick(); }
-    if (e.key === "ArrowRight" && si < catalog.length - 1) selectSong(si + 1);
-    if (e.key === "ArrowLeft" && si > 0) selectSong(si - 1);
+    if (e.key === "ArrowRight" && songIndex < catalog.length - 1) selectSong(songIndex + 1);
+    if (e.key === "ArrowLeft" && songIndex > 0) selectSong(songIndex - 1);
   }
 
   let resizeTimer;
@@ -303,7 +296,7 @@
   <div class="controls">
     <div class="pick">
       <label for="song">Song</label>
-      <select id="song" value={si} onchange={onSongChange}>
+      <select id="song" value={songIndex} onchange={onSongChange}>
         {#each songGroups as { group, items }}
           <optgroup label={group}>
             {#each items as s}
@@ -314,29 +307,29 @@
       </select>
     </div>
     {#if song?.harmony}
-      <div class="pick notationpick">
-        <label for="notation">Part</label>
-        <select id="notation" value={notationVoice} onchange={onNotationVoiceChange}>
+      <div class="pick partpick">
+        <label for="part">Part</label>
+        <select id="part" value={sheetPart} onchange={onSheetPartChange}>
           <option value="melody">Melody</option>
           <option value="harmony">Harmony</option>
         </select>
       </div>
     {/if}
     {#if song && song.keys.length > 1}
-    <div class="pick keypick">
-      <label for="key">Key</label>
-      <select id="key" value={key} onchange={onKeyChange}>
-        {#each song.keys as k}
-          <option value={k}>{KEYS[k].name}{k === song.defaultKey && song.showDefaultKeyStar !== false ? " ★" : ""}</option>
-        {/each}
-      </select>
-    </div>
+      <div class="pick keypick">
+        <label for="key">Key</label>
+        <select id="key" value={key} onchange={onKeyChange}>
+          {#each song.keys as k}
+            <option value={k}>{KEYS[k].name}{k === song.defaultKey && song.showDefaultKeyStar !== false ? " ★" : ""}</option>
+          {/each}
+        </select>
+      </div>
     {/if}
   </div>
 
   <div class="paper">
     {#if song?.note}<p class="songnote">{song.note}</p>{/if}
-    <div id="score" bind:this={scoreHost}><div id="hl" bind:this={hlEl}></div></div>
+    <div id="score" bind:this={scoreHost}><div id="highlight" bind:this={highlightEl}></div></div>
   </div>
 
   <div class="stage">
@@ -352,14 +345,14 @@
       <span class="bpm">{bpm}</span>
       <button class="reset" hidden={!song || bpm === song.defaultTempo} onclick={resetTempo}>Default {song?.defaultTempo}</button>
     </div>
-    <div class="voices">
+    <div class="parts">
       <span class="lbl">Play</span>
-      <label><input type="checkbox" tabindex="-1" checked={melodyPlay} onchange={toggleVoice("melodyPlay")} /> Melody</label>
-      <label><input type="checkbox" tabindex="-1" checked={harmonyPlay} disabled={!song?.harmony} onchange={toggleVoice("harmonyPlay")} /> Harmony</label>
+      <label><input type="checkbox" tabindex="-1" checked={playMelody} onchange={togglePlayMelody} /> Melody</label>
+      <label><input type="checkbox" tabindex="-1" checked={playHarmony} disabled={!song?.harmony} onchange={togglePlayHarmony} /> Harmony</label>
     </div>
     <div class="toggles">
-      <button class="tg" aria-pressed={metro} onclick={toggle("metro")}>Metronome</button>
-      <button class="tg" aria-pressed={loop} onclick={toggle("loop")}>Loop</button>
+      <button class="tg" aria-pressed={metronome} onclick={toggleMetronome}>Metronome</button>
+      <button class="tg" aria-pressed={loop} onclick={toggleLoop}>Loop</button>
     </div>
   </div>
 
@@ -375,9 +368,9 @@
     <span class="hint"><kbd>Space</kbd> play or stop · <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change song ·
     changing any setting stops playback.</span>
     <div class="account">
-      {#if driveSignedIn && driveIdentity}
-        <img class="avatar" src={driveIdentity.picture} alt="" referrerpolicy="no-referrer" />
-        <span class="email">{driveIdentity.email}</span>
+      {#if driveUser}
+        <img class="avatar" src={driveUser.picture} alt="" referrerpolicy="no-referrer" />
+        <span class="email">{driveUser.email}</span>
         <button class="signout" onclick={handleDriveSignOut}>Sign out</button>
       {:else}
         <button class="google-signin" onclick={handleDriveSignIn}>

@@ -1,4 +1,5 @@
 {
+  "id": "auld-lang-syne",
   "group": "Tunes",
   "title": "Auld Lang Syne",
   "sub": "traditional",
@@ -15,8 +16,7 @@
       [
         {
           "deg": -3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -27,18 +27,15 @@
         },
         {
           "deg": -1,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -49,74 +46,61 @@
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "qd",
-          "slur": false
+          "dur": "qd"
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "hd",
-          "slur": false
+          "dur": "hd"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 4,
-          "dur": "qd",
-          "slur": false
+          "dur": "qd"
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -127,18 +111,15 @@
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -149,30 +130,25 @@
         },
         {
           "deg": -2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": -2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": -3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "hd",
-          "slur": false
+          "dur": "hd"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -183,18 +159,15 @@
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -205,18 +178,15 @@
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -227,30 +197,25 @@
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 5,
-          "dur": "hd",
-          "slur": false
+          "dur": "hd"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -261,18 +226,15 @@
         },
         {
           "deg": 2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
@@ -283,47 +245,39 @@
         },
         {
           "deg": 0,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "qd",
-          "slur": false
+          "dur": "qd"
         },
         {
           "deg": -2,
-          "dur": "8",
-          "slur": false
+          "dur": "8"
         },
         {
           "deg": -2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": -3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "hd",
-          "slur": false
+          "dur": "hd"
         }
       ]
     ]

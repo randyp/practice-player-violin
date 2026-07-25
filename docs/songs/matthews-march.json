@@ -1,4 +1,5 @@
 {
+  "id": "matthews-march",
   "group": "Introductory songs",
   "title": "Matthew's March",
   "source": "Essential Elements",
@@ -22,40 +23,33 @@
       [
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 6,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 6,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -65,40 +59,33 @@
       [
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 6,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 6,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 7,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 5,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
@@ -108,84 +95,69 @@
       [
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 3,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 2,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 4,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 1,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         }
       ],
       [
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "deg": 0,
-          "dur": "q",
-          "slur": false
+          "dur": "q"
         },
         {
           "rest": true,
