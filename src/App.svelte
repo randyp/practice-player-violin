@@ -175,12 +175,10 @@
   }
 
   function onSongChange(e) {
-    e.target.blur(); // otherwise focus stays on the select and Space reopens it instead of playing
     selectSong(+e.target.value);
   }
 
   function onKeyChange(e) {
-    e.target.blur();
     stop();
     key = e.target.value;
     doRenderScore();
@@ -188,7 +186,6 @@
   }
 
   function onSheetPartChange(e) {
-    e.target.blur();
     sheetPart = e.target.value;
     doRenderScore(); // playback keeps going — the highlight just follows the newly shown part
   }
@@ -213,14 +210,12 @@
     loop = !loop;
   }
 
-  function togglePlayMelody(e) {
-    e.target.blur(); // otherwise the checkbox keeps focus and Space re-toggles it instead of playing
+  function togglePlayMelody() {
     stop();
     playMelody = !playMelody;
   }
 
-  function togglePlayHarmony(e) {
-    e.target.blur();
+  function togglePlayHarmony() {
     stop();
     playHarmony = !playHarmony;
   }
@@ -245,6 +240,16 @@
     stop();
     countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
     updatePrefs({ countInMeasures });
+  }
+
+  // Keyboard shortcuts only fire when no control has focus (see onKeydown's
+  // guard), so every control must give focus up once the interaction is done.
+  // Delegated at the document: `change` covers selects, checkboxes, and the
+  // tempo slider (fires on release); `click` covers buttons. Selects must not
+  // blur on click — that would close their dropdown before a choice is made.
+  function blurAfterInteraction(e) {
+    if (e.type === "change") e.target.closest("input, select")?.blur();
+    else e.target.closest("button")?.blur();
   }
 
   function onKeydown(e) {
@@ -279,9 +284,13 @@
 
     window.addEventListener("resize", onResize);
     document.addEventListener("keydown", onKeydown);
+    document.addEventListener("change", blurAfterInteraction);
+    document.addEventListener("click", blurAfterInteraction);
     return () => {
       window.removeEventListener("resize", onResize);
       document.removeEventListener("keydown", onKeydown);
+      document.removeEventListener("change", blurAfterInteraction);
+      document.removeEventListener("click", blurAfterInteraction);
     };
   });
 

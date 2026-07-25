@@ -32,6 +32,23 @@ function scaleSong(id, title, sub, melodyMeasures, harmonyMeasures, repeats) {
   };
 }
 
+// The three passes of the quarter-note scale variation, built from one
+// degree sequence so melody and harmony (thirds below) share the shape:
+// two quarters per note, then quarter+rest per note, then one quarter per note.
+function quarterNoteSections(degrees) {
+  const measures = [];
+  for (let i = 0; i < degrees.length; i += 2) {
+    measures.push([N(degrees[i]), N(degrees[i]), N(degrees[i + 1]), N(degrees[i + 1])]);
+  }
+  for (let i = 0; i < degrees.length; i += 2) {
+    measures.push([N(degrees[i]), R(), N(degrees[i + 1]), R()]);
+  }
+  for (let i = 0; i < degrees.length; i += 4) {
+    measures.push([N(degrees[i]), N(degrees[i + 1]), N(degrees[i + 2]), N(degrees[i + 3])]);
+  }
+  return measures;
+}
+
 // Traditional Scottish air, transcribed in MuseScore (D major) and
 // converted from its MusicXML export.
 const AULD_LANG_SYNE = {
@@ -447,6 +464,17 @@ const SONGS = [
     // two independent repeated sections: the double-half-notes-per-note
     // pass (measures 0-15), then the one-half-note-per-note pass (16-23)
     [{ from: 0, to: UPDOWN.length - 1 }, { from: UPDOWN.length, to: UPDOWN.length + UPDOWN.length / 2 - 1 }]),
+
+  scaleSong("var2", "Quarter Notes Var. 2", null,
+    quarterNoteSections(UPDOWN),
+    quarterNoteSections(UPDOWN.map(THIRD_BELOW)),
+    // each section repeats: two-quarters-per-note (0-7), note-then-rest (8-15),
+    // one-quarter-per-note (16-19)
+    [
+      { from: 0, to: UPDOWN.length / 2 - 1 },
+      { from: UPDOWN.length / 2, to: UPDOWN.length - 1 },
+      { from: UPDOWN.length, to: UPDOWN.length + UPDOWN.length / 4 - 1 },
+    ]),
 
   HOT_CROSS_BUNS,
   CAROLINA_BREEZE,
