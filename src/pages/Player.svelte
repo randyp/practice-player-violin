@@ -6,7 +6,7 @@
   import { loadCatalog, loadSong } from "../lib/songs.js";
   import { buildAudio, buildTimeline, buildEventQueue, pump } from "../lib/audio.js";
   import { renderScore, highlight } from "../lib/notation.js";
-  import { loadPrefs, updatePrefs, saveSongKey } from "../lib/prefs.js";
+  import { loadPrefs, updatePrefs, saveSongKey, countInFor, saveSongCountIn } from "../lib/prefs.js";
   import { driveAuth } from "../lib/drive-auth.js";
   import { log } from "../lib/log.js";
 
@@ -26,7 +26,7 @@
   let metronome = $state(true);
   let playMelody = $state(true);
   let playHarmony = $state(false);
-  let countInMeasures = $state(prefs.countInMeasures);
+  let countInMeasures = $state(1);
   let loop = $state(false);
   let activeBeat = $state(-1);
   let statusText = $state("starting audio");
@@ -169,10 +169,12 @@
     if (reqId !== songReqId) return; // a newer selectSong() call superseded this one
 
     song = loaded;
-    const savedKey = loadPrefs().songKeys[song.id];
+    const freshPrefs = loadPrefs();
+    const savedKey = freshPrefs.songKeys[song.id];
     key = savedKey && song.keys.indexOf(savedKey) !== -1 ? savedKey : song.defaultKey;
     if (sheetPart === "harmony" && !song.harmony) sheetPart = "melody";
     bpm = song.defaultTempo;
+    countInMeasures = countInFor(freshPrefs, song.id);
     setStatus("ready");
     doRenderScore();
     updatePrefs({ lastSongId: song.id });
@@ -187,6 +189,12 @@
     key = e.target.value;
     doRenderScore();
     saveSongKey(song.id, key);
+  }
+
+  function onCountInChange(e) {
+    stop();
+    countInMeasures = +e.target.value;
+    saveSongCountIn(song.id, countInMeasures);
   }
 
   function onSheetPartChange(e) {
@@ -238,12 +246,6 @@
     driveAuth.signOut();
     driveUser = null;
     setStatus("signed out of Google");
-  }
-
-  function cycleCountIn() {
-    stop();
-    countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
-    updatePrefs({ countInMeasures });
   }
 
   // Keyboard shortcuts only fire when no control has focus (see onKeydown's
@@ -345,6 +347,16 @@
           </select>
         </div>
       {/if}
+      {#if song}
+        <div class="pick countinpick">
+          <label for="countin">Count-in</label>
+          <select id="countin" value={countInMeasures} onchange={onCountInChange}>
+            <option value={0}>Off</option>
+            <option value={1}>1 measure</option>
+            <option value={2}>2 measures</option>
+          </select>
+        </div>
+      {/if}
     </div>
 
     <div class="paper">
@@ -378,9 +390,6 @@
   {/if}
 
   <div class="footbar">
-    <div class="toggles">
-      <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
-    </div>
     <nav class="pagenav">
       <a href="/library" use:link>My Library</a>
       <a href="/marketplace" use:link>Marketplace</a>

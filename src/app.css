@@ -35,7 +35,7 @@ body {
   border-bottom: 1px solid var(--edge); padding-bottom: 14px; margin-bottom: 20px;
 }
 .pagehead h1 { font-size: 17px; font-weight: 600; margin: 0; flex: 1; }
-.pagenav { display: flex; gap: 4px; }
+.pagenav { display: flex; gap: 4px; margin-left: auto; }
 .pagenav a {
   color: var(--muted); text-decoration: none; font-size: 13px;
   padding: 7px 12px; border-radius: var(--r); border: 1px solid transparent;
