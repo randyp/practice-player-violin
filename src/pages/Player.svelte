@@ -186,9 +186,9 @@
     saveSongKey(song.id, key);
   }
 
-  function onCountInChange(e) {
+  function cycleCountIn() {
     stop();
-    countInMeasures = +e.target.value;
+    countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
     saveSongCountIn(song.id, countInMeasures);
   }
 
@@ -327,16 +327,6 @@
           </select>
         </div>
       {/if}
-      {#if song}
-        <div class="pick countinpick">
-          <label for="countin">Count-in</label>
-          <select id="countin" value={countInMeasures} onchange={onCountInChange}>
-            <option value={0}>Off</option>
-            <option value={1}>1 measure</option>
-            <option value={2}>2 measures</option>
-          </select>
-        </div>
-      {/if}
     </div>
 
     <div class="paper">
@@ -365,6 +355,7 @@
       <div class="toggles">
         <button class="tg" aria-pressed={metronome} onclick={toggleMetronome}>Metronome</button>
         <button class="tg" aria-pressed={loop} onclick={toggleLoop}>Loop</button>
+        <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
       </div>
     </div>
   {/if}
