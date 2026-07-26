@@ -64,10 +64,9 @@ h1 { font-size: 17px; font-weight: 600; margin: 0 0 18px; }
 .remove:hover { color: var(--rosin); border-color: var(--rosin); }
 .err { color: var(--rosin); }
 
-.controls { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
-.pick { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 230px; }
+.controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
+.pick { display: flex; flex: 1; min-width: 230px; }
 .pick.keypick, .pick.partpick { flex: 0 1 172px; min-width: 140px; }
-.pick label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .pick select {
   appearance: none; -webkit-appearance: none; width: 100%;
   background-color: var(--ebony2); color: var(--paper); border: 1px solid var(--edge); border-radius: var(--r);

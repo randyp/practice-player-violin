@@ -297,8 +297,7 @@
   {:else}
     <div class="controls">
       <div class="pick">
-        <label for="song">Song</label>
-        <select id="song" value={songIndex} onchange={onSongChange}>
+        <select id="song" aria-label="Song" value={songIndex} onchange={onSongChange}>
           {#each songGroups as { group, items }}
             <optgroup label={group}>
               {#each items as s}
@@ -310,8 +309,7 @@
       </div>
       {#if song?.harmony}
         <div class="pick partpick">
-          <label for="part">Part</label>
-          <select id="part" value={sheetPart} onchange={onSheetPartChange}>
+          <select id="part" aria-label="Part" value={sheetPart} onchange={onSheetPartChange}>
             <option value="melody">Melody</option>
             <option value="harmony">Harmony</option>
           </select>
@@ -319,8 +317,7 @@
       {/if}
       {#if song && song.keys.length > 1}
         <div class="pick keypick">
-          <label for="key">Key</label>
-          <select id="key" value={key} onchange={onKeyChange}>
+          <select id="key" aria-label="Key" value={key} onchange={onKeyChange}>
             {#each song.keys as k}
               <option value={k}>{KEYS[k].name}{k === song.defaultKey && song.showDefaultKeyStar !== false ? " ★" : ""}</option>
             {/each}
