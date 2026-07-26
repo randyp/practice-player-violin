@@ -12,7 +12,7 @@
 
   const prefs = loadPrefs();
 
-  let scoreHost, highlightEl;
+  let scoreHost = $state(), highlightEl = $state();
 
   let catalog = $state([]);
   let library = $state(prefs.library);
