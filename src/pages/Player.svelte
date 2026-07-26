@@ -186,6 +186,16 @@
     saveSongKey(song.id, key);
   }
 
+  function changeKey(delta) {
+    const i = song.keys.indexOf(key);
+    const next = song.keys[i + delta];
+    if (next === undefined) return;
+    stop();
+    key = next;
+    doRenderScore();
+    saveSongKey(song.id, key);
+  }
+
   function cycleCountIn() {
     stop();
     countInMeasures = (countInMeasures + 1) % 3; // 0 -> 1 -> 2 -> 0
@@ -242,6 +252,8 @@
     if (e.code === "Space") { e.preventDefault(); handlePlayClick(); }
     if (e.key === "ArrowRight" && songIndex < libSongs.length - 1) selectSong(songIndex + 1);
     if (e.key === "ArrowLeft" && songIndex > 0) selectSong(songIndex - 1);
+    if (e.key === "ArrowUp" && song) { e.preventDefault(); changeKey(1); }
+    if (e.key === "ArrowDown" && song) { e.preventDefault(); changeKey(-1); }
   }
 
   let resizeTimer;
@@ -351,14 +363,15 @@
       </div>
       <div class="toggles">
         <button class="tg" aria-pressed={metronome} onclick={toggleMetronome}>Metronome</button>
-        <button class="tg" aria-pressed={loop} onclick={toggleLoop}>Loop</button>
         <button class="tg" aria-pressed={countInMeasures > 0} onclick={cycleCountIn}>Count-in{countInMeasures > 0 ? ` ${countInMeasures}` : ""}</button>
+        <button class="tg" aria-pressed={loop} onclick={toggleLoop}>Loop</button>
       </div>
     </div>
   {/if}
 
   <div class="foot">
     <span class="hint"><kbd>Space</kbd> play or stop · <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change song ·
+    <kbd>&uarr;</kbd> <kbd>&darr;</kbd> change key ·
     changing any setting stops playback.</span>
   </div>
 </div>
