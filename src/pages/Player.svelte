@@ -307,20 +307,20 @@
           {/each}
         </select>
       </div>
-      {#if song?.harmony}
-        <div class="pick partpick">
-          <select id="part" aria-label="Part" value={sheetPart} onchange={onSheetPartChange}>
-            <option value="melody">Melody</option>
-            <option value="harmony">Harmony</option>
-          </select>
-        </div>
-      {/if}
       {#if song && song.keys.length > 1}
         <div class="pick keypick">
           <select id="key" aria-label="Key" value={key} onchange={onKeyChange}>
             {#each song.keys as k}
               <option value={k}>{KEYS[k].name}{k === song.defaultKey && song.showDefaultKeyStar !== false ? " ★" : ""}</option>
             {/each}
+          </select>
+        </div>
+      {/if}
+      {#if song?.harmony}
+        <div class="pick partpick">
+          <select id="part" aria-label="Part" value={sheetPart} onchange={onSheetPartChange}>
+            <option value="melody">Melody</option>
+            <option value="harmony">Harmony</option>
           </select>
         </div>
       {/if}
