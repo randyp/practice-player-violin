@@ -31,11 +31,11 @@ export function buildAudio(onStatus) {
 
 /* ---------- timeline ---------- */
 // Builds a flat, repeat-expanded event list for one part's measures. Each
-// {from, to} in `repeats` replays that measure range again immediately after
-// it's first played — idx is reused from the original pass (rather than
-// counting up past it) so highlight() keeps pointing at the same
-// notation.js-rendered noteheads on the repeat instead of running off the
-// end of `placed`.
+// {from, to, times?} in `repeats` plays that measure range `times` times
+// total (default 2, i.e. a normal repeat-once) — idx is reused from the
+// original pass (rather than counting up past it) so highlight() keeps
+// pointing at the same notation.js-rendered noteheads on every pass instead
+// of running off the end of `placed`.
 function buildPartTimeline(measures, repeats) {
   const timeline = [];
   let t = 0;
@@ -54,8 +54,8 @@ function buildPartTimeline(measures, repeats) {
   let m = 0;
   for (const r of repeats) {
     if (m < r.from) playMeasures(m, r.from - 1);
-    playMeasures(r.from, r.to);
-    playMeasures(r.from, r.to);
+    const times = r.times ?? 2;
+    for (let n = 0; n < times; n++) playMeasures(r.from, r.to);
     m = r.to + 1;
   }
   if (m < measures.length) playMeasures(m, measures.length - 1);

@@ -1,0 +1,279 @@
+{
+  "id": "lightly-row",
+  "group": "Introductory songs",
+  "title": "Lightly Row",
+  "source": "Suzuki",
+  "defaultTempo": 110,
+  "keys": [
+    "D4",
+    "G3",
+    "A4"
+  ],
+  "defaultKey": "A4",
+  "repeats": [],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 3,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 3,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "h"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "h"
+        }
+      ]
+    ]
+  }
+}

@@ -29,7 +29,7 @@ export const KEYS = {
   E5: { name: "E Major", sig: "E", tonic: 76 },
 };
 
-export const BEATS = { w: 4, h: 2, q: 1, "8": 0.5, qd: 1.5, hd: 3 };
+export const BEATS = { w: 4, h: 2, q: 1, "8": 0.5, "16": 0.25, qd: 1.5, hd: 3 };
 
 // "4/4" -> 4, "2/4" -> 2, etc — only the numerator matters since every
 // duration above is already expressed in quarter-note beats (see

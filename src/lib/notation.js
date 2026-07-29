@@ -1,4 +1,4 @@
-import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline, Dot, Curve } from "vexflow";
+import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline, Dot, Curve, StaveText, StaveModifierPosition } from "vexflow";
 import { degToMidi, midiToVexKey, measureBeats, beatsPerMeasure } from "./theory.js";
 
 // VexFlow durations don't have a "dotted" letter of their own (our "qd"/"hd")
@@ -111,7 +111,14 @@ export function renderScore(host, highlightEl, { song, key, tonic, part }) {
       }
       for (const r of song.repeats) {
         if (mi === r.from) stave.setBegBarType(Barline.type.REPEAT_BEGIN);
-        if (mi === r.to) stave.setEndBarType(Barline.type.REPEAT_END);
+        if (mi === r.to) {
+          stave.setEndBarType(Barline.type.REPEAT_END);
+          // A bare repeat barline conventionally means "play twice" — a
+          // times > 2 range needs an explicit "×N" marking or it reads wrong.
+          if (r.times > 2) {
+            stave.addModifier(new StaveText(`×${r.times}`, StaveModifierPosition.ABOVE));
+          }
+        }
       }
       stave.setContext(ctx).draw();
 
@@ -120,14 +127,12 @@ export function renderScore(host, highlightEl, { song, key, tonic, part }) {
       voice.setStrict(false);
       voice.addTickables(notes);
 
-      // w already includes extraHere (clef/key/time-sig/repeat-glyph budget)
-      // on top of the note area, so only a small fixed margin needs
-      // subtracting here — not extraHere a second time, which over-subtracted
-      // and left barely any room for notes in a first measure that only got
-      // a small proportional share of the line's width (e.g. a first 2/4
-      // measure sharing width with 7 others on the same line).
-      const fmtW = w - extraHere - 22;
-      new Formatter().joinVoices([voice]).format([voice], Math.max(40, fmtW));
+      // formatToStave measures the actual stave geometry (clef/key/time-sig/
+      // repeat-glyph/barline) for the available width, rather than a manually
+      // guessed budget — a fixed guess left uneven trailing space in measures
+      // with an asymmetric duration mix (e.g. a run of eighths ending in two
+      // quarters), crowding the last note against the barline.
+      new Formatter().joinVoices([voice]).formatToStave([voice], stave);
 
       // Beams must be generated before the voice is drawn: Beam's constructor
       // recomputes and takes over each of its notes' stems (so the beam and

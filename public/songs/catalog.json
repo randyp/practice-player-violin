@@ -19,6 +19,12 @@
     "timeSignature": "4/4"
   },
   {
+    "id": "hello-pinky",
+    "group": "Scale variations",
+    "title": "Hello Pinky",
+    "timeSignature": "4/4"
+  },
+  {
     "id": "hot-cross-buns",
     "group": "Introductory songs",
     "title": "Hot Cross Buns",
@@ -116,6 +122,20 @@
     "title": "Frère Jacques",
     "source": "Essential Elements",
     "timeSignature": "2/4"
+  },
+  {
+    "id": "lightly-row",
+    "group": "Introductory songs",
+    "title": "Lightly Row",
+    "source": "Suzuki",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "twinkle-variations",
+    "group": "Introductory songs",
+    "title": "Twinkle Twinkle Little Star Variations",
+    "source": "Suzuki",
+    "timeSignature": "4/4"
   },
   {
     "id": "boil-em-cabbage-down",

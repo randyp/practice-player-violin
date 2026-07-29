@@ -54,9 +54,12 @@ Song = {
 
   // -- form --
   timeSignature: string,  // e.g. "4/4" — only "N/4" signatures are implemented, see below
-  repeats: { from: number, to: number }[],
+  repeats: { from: number, to: number, times?: number }[],
                           // repeated sections as inclusive measure-index ranges, ascending
-                          // and non-overlapping; each plays twice (both parts repeat together)
+                          // and non-overlapping; each plays `times` times total (both parts
+                          // repeat together), default 2 — a bare repeat barline. times > 2
+                          // renders as a "×N" marking above the repeat-end barline, since a
+                          // plain repeat barline conventionally means "twice"
 
   // -- parts (fixed: exactly these two keys, harmony optional) --
   melody: Part,

@@ -36,6 +36,7 @@ describe("public/songs/*.json", () => {
           expect(r.from).toBeLessThanOrEqual(r.to);
           expect(r.from).toBeGreaterThan(prevTo);
           expect(r.to).toBeLessThanOrEqual(lastMeasure);
+          if (r.times !== undefined) expect(r.times).toBeGreaterThanOrEqual(2);
           prevTo = r.to;
         }
       });
