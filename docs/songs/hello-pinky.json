@@ -1,0 +1,80 @@
+{
+  "id": "hello-pinky",
+  "group": "Scale variations",
+  "title": "Hello Pinky",
+  "defaultTempo": 60,
+  "keys": [
+    "G3",
+    "D4",
+    "A4",
+    "E5"
+  ],
+  "defaultKey": "G3",
+  "showDefaultKeyStar": false,
+  "timeSignature": "4/4",
+  "repeats": [
+    {
+      "from": 0,
+      "to": 2,
+      "times": 4
+    }
+  ],
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 0,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 3,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "q"
+        }
+      ]
+    ]
+  }
+}

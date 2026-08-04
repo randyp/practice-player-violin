@@ -42,7 +42,7 @@
         <ul class="songlist">
           {#each items as s}
             <li>
-              <span class="title">{s.title}{s.source ? ` · ${s.source}` : (s.sub ? ` · ${s.sub}` : "")}</span>
+              <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
               {#if library.includes(s.id)}
                 <span class="added">In your library</span>
               {:else}

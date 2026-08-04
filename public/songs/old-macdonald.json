@@ -216,11 +216,11 @@
       [
         {
           "deg": 3,
-          "dur": "q"
+          "dur": "h"
         },
         {
-          "deg": 3,
-          "dur": "hd"
+          "rest": true,
+          "dur": "h"
         }
       ]
     ]

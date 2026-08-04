@@ -131,9 +131,26 @@
     "timeSignature": "4/4"
   },
   {
-    "id": "twinkle-variations",
+    "id": "twinkle-8888qq",
     "group": "Introductory songs",
-    "title": "Twinkle Twinkle Little Star Variations",
+    "title": "Twinkle Twinkle Little Star",
+    "sub": "8888QQ",
+    "source": "Suzuki",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "twinkle-88r8",
+    "group": "Introductory songs",
+    "title": "Twinkle Twinkle Little Star",
+    "sub": "88R8",
+    "source": "Suzuki",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "twinkle-8ss",
+    "group": "Introductory songs",
+    "title": "Twinkle Twinkle Little Star",
+    "sub": "8SS",
     "source": "Suzuki",
     "timeSignature": "4/4"
   },

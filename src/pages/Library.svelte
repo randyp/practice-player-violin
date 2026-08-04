@@ -49,7 +49,7 @@
         <ul class="songlist">
           {#each items as s}
             <li>
-              <span class="title">{s.title}{s.source ? ` · ${s.source}` : (s.sub ? ` · ${s.sub}` : "")}</span>
+              <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
               <button class="remove" onclick={() => handleRemove(s.id)}>Remove</button>
             </li>
           {/each}

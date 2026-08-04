@@ -1,0 +1,428 @@
+{
+  "id": "twinkle-88r8",
+  "group": "Introductory songs",
+  "title": "Twinkle Twinkle Little Star",
+  "sub": "88R8",
+  "source": "Suzuki",
+  "defaultTempo": 100,
+  "keys": [
+    "A4",
+    "G3",
+    "D4"
+  ],
+  "defaultKey": "A4",
+  "repeats": [],
+  "timeSignature": "4/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "8"
+        },
+        {
+          "deg": 5,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 5,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "8"
+        },
+        {
+          "deg": 5,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 5,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 0,
+          "dur": "8"
+        }
+      ]
+    ]
+  }
+}
