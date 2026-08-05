@@ -39,21 +39,46 @@
 
   // A folder header is a drop target for two different drag types: a song
   // (append to the end of that folder) or another folder's drag handle
-  // (reorder folders — targetIndex is the position within prefs.folders;
-  // Unfiled is index 0 and is never a target since folder rows only render
-  // for index > 0). Dropping on the handle still bubbles dragover/drop up
-  // to this same header, so one handler covers both without a separate
-  // listener on the handle itself.
-  function onFolderHeaderDrop(e, targetFolderId, targetSongCount, targetIndex) {
+  // (reorder folders — dropping on the top half of the header places it
+  // above, the bottom half places it below). Dropping on the handle still
+  // bubbles dragover/drop up to this same header, so one handler covers
+  // both without a separate listener on the handle itself.
+  function onFolderHeaderDrop(e, targetFolderId, targetSongCount, folderIndex) {
     e.preventDefault();
     if (!dragging) return;
     if (dragging.type === "song") {
       moveSong(dragging.songId, targetFolderId, targetSongCount);
     } else {
-      reorderFolders(dragging.fromIndex, targetIndex);
+      const beforeIndex = folderIndex + (dropOnTopHalf(e) ? 0 : 1);
+      reorderFolders(dragging.fromIndex, resolveFolderIndex(dragging.fromIndex, beforeIndex));
     }
     refresh();
     dragging = null;
+  }
+
+  // Dropping a folder onto a song row places that folder directly after the
+  // song's own folder — "best effort" so a folder drag isn't limited to
+  // landing precisely on another folder's header. Unfiled (folderIndex 0)
+  // can't be reordered relative to, so a folder dropped on an Unfiled song
+  // is a no-op.
+  function onSongDropForFolderDrag(folderIndex) {
+    if (!dragging || dragging.type !== "folder" || folderIndex === 0) return;
+    reorderFolders(dragging.fromIndex, resolveFolderIndex(dragging.fromIndex, folderIndex + 1));
+    refresh();
+    dragging = null;
+  }
+
+  // reorderFolders removes `fromIndex` first, then inserts — so a target
+  // computed against the pre-removal array must shift left by one when the
+  // dragged folder started before it, the same "resolve against the
+  // post-removal array" reasoning moveSong uses for songIds.
+  function resolveFolderIndex(fromIndex, beforeIndex) {
+    return fromIndex < beforeIndex ? beforeIndex - 1 : beforeIndex;
+  }
+
+  function dropOnTopHalf(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    return e.clientY < rect.top + rect.height / 2;
   }
 
   function allowDrop(e) {
@@ -139,7 +164,7 @@
                 ondragstart={() => onSongDragStart(s.id)}
                 ondragend={onDragEnd}
                 ondragover={allowDrop}
-                ondrop={(e) => onSongDrop(e, f.id, i)}
+                ondrop={(e) => { onSongDrop(e, f.id, i); onSongDropForFolderDrag(folderIndex); }}
               >
                 <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
                 <button class="remove" onclick={() => handleRemove(s.id)}>Remove</button>
@@ -188,7 +213,7 @@
                 ondragstart={() => onSongDragStart(s.id)}
                 ondragend={onDragEnd}
                 ondragover={allowDrop}
-                ondrop={(e) => onSongDrop(e, f.id, i)}
+                ondrop={(e) => { onSongDrop(e, f.id, i); onSongDropForFolderDrag(folderIndex); }}
               >
                 <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
                 <button class="remove" onclick={() => handleRemove(s.id)}>Remove</button>
