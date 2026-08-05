@@ -1,10 +1,10 @@
 <script>
   import { loadCatalog } from "../lib/songs.js";
-  import { loadPrefs, addToLibrary } from "../lib/prefs.js";
+  import { loadPrefs, addToLibrary, isInLibrary } from "../lib/prefs.js";
   import PageHeader from "./PageHeader.svelte";
 
   let catalog = $state([]);
-  let library = $state(loadPrefs().library);
+  let prefs = $state(loadPrefs());
   let loadError = $state(null);
 
   const groups = $derived.by(() => {
@@ -20,7 +20,7 @@
 
   function handleAdd(songId) {
     addToLibrary(songId);
-    library = loadPrefs().library;
+    prefs = loadPrefs();
   }
 
   loadCatalog()
@@ -43,7 +43,7 @@
           {#each items as s}
             <li>
               <span class="title">{s.title}{s.sub ? ` · ${s.sub}` : ""}</span>
-              {#if library.includes(s.id)}
+              {#if isInLibrary(prefs, s.id)}
                 <span class="added">In your library</span>
               {:else}
                 <button class="add" onclick={() => handleAdd(s.id)}>Add to library</button>
