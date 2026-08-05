@@ -41,8 +41,9 @@
   // (append to the end of that folder) or another folder's drag handle
   // (reorder folders — targetIndex is the position within prefs.folders;
   // Unfiled is index 0 and is never a target since folder rows only render
-  // for index > 0). The handle's dragstart bubbles up to this same header,
-  // so one handler covers both without a separate listener on the handle.
+  // for index > 0). Dropping on the handle still bubbles dragover/drop up
+  // to this same header, so one handler covers both without a separate
+  // listener on the handle itself.
   function onFolderHeaderDrop(e, targetFolderId, targetSongCount, targetIndex) {
     e.preventDefault();
     if (!dragging) return;
