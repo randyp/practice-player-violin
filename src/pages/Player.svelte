@@ -10,12 +10,12 @@
   import { log } from "../lib/log.js";
   import PageHeader from "./PageHeader.svelte";
 
-  const prefs = loadPrefs();
+  const initialPrefs = loadPrefs();
 
   let scoreHost = $state(), highlightEl = $state();
 
   let catalog = $state([]);
-  let library = $state(prefs.library);
+  let folders = $state(initialPrefs.folders);
   let song = $state(null);
   let songIndex = $state(0);
   let songReqId = 0; // guards against an in-flight fetch resolving after a newer selection
@@ -32,19 +32,20 @@
 
   const tonic = $derived(song && song.tonics && song.tonics[key] !== undefined ? song.tonics[key] : KEYS[key]?.tonic);
   const bpMeasure = $derived(song ? beatsPerMeasure(song.timeSignature) : 4);
-  // Only songs the user has added to their library — the full marketplace
-  // catalog is browsed/added from the Marketplace page instead.
-  const libSongs = $derived(catalog.filter((s) => library.includes(s.id)));
+  // The Song dropdown mirrors the user's own folder organization from My
+  // Library (folders[0] is always the unnamed "Unfiled" bucket, rendered
+  // as ungrouped options) rather than the catalog's built-in group/source.
   const songGroups = $derived.by(() => {
-    const groups = [];
-    const byName = new Map();
-    libSongs.forEach((s, i) => {
-      let g = byName.get(s.group);
-      if (!g) { g = { group: s.group, items: [] }; byName.set(s.group, g); groups.push(g); }
-      g.items.push({ ...s, i });
-    });
-    return groups;
+    const byId = new Map(catalog.map((s) => [s.id, s]));
+    let i = 0;
+    return folders
+      .map((f) => ({
+        group: f.name,
+        items: f.songIds.map((id) => byId.get(id)).filter(Boolean).map((s) => ({ ...s, i: i++ })),
+      }))
+      .filter((g) => g.items.length > 0);
   });
+  const libSongs = $derived(songGroups.flatMap((g) => g.items));
 
   let placed = [];
   let melodyTimeline = [];
@@ -273,9 +274,9 @@
     loadCatalog()
       .then((entries) => {
         catalog = entries;
-        library = loadPrefs().library; // re-read in case Library/Marketplace changed it this session
+        folders = loadPrefs().folders; // re-read in case Library/Marketplace changed it this session
         if (!libSongs.length) { setStatus("ready"); return; }
-        const lastIdx = libSongs.findIndex((s) => s.id === prefs.lastSongId);
+        const lastIdx = libSongs.findIndex((s) => s.id === initialPrefs.lastSongId);
         return selectSong(lastIdx !== -1 ? lastIdx : 0);
       })
       .catch((e) => setStatus("failed to load song catalog: " + e.message, true));
