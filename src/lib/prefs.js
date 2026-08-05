@@ -11,8 +11,14 @@ const DEFAULTS = {
   songCountIns: {}, // per-song count-in measures (0, 1, or 2), keyed by catalog id — a song
                      // preference, not global, since a fast tune and a slow scale exercise
                      // don't want the same lead-in
-  library: [], // catalog ids the user has added from the marketplace — what the Player's
-               // Song dropdown lists, as opposed to the full marketplace catalog
+  // Library membership *and* organization in one structure — a song's
+  // presence in some folder's songIds *is* library membership, so there's
+  // no separate list that can drift out of sync with it. folders[0] is
+  // always the implicit, unnamed "Unfiled" bucket: always present, always
+  // first, never deleted even when empty, so a newly-added song always has
+  // somewhere to land. Every other entry is a user-named folder. A song id
+  // appears in at most one folder's songIds at a time.
+  folders: [{ id: null, name: null, songIds: [] }],
 };
 
 export function loadPrefs() {
@@ -53,13 +59,67 @@ export function saveSongCountIn(songId, countInMeasures) {
   savePrefs({ ...prefs, songCountIns: { ...prefs.songCountIns, [songId]: countInMeasures } });
 }
 
+export function isInLibrary(prefs, songId) {
+  return prefs.folders.some((f) => f.songIds.includes(songId));
+}
+
 export function addToLibrary(songId) {
   const prefs = loadPrefs();
-  if (prefs.library.includes(songId)) return;
-  savePrefs({ ...prefs, library: [...prefs.library, songId] });
+  if (isInLibrary(prefs, songId)) return;
+  const folders = prefs.folders.map((f, i) => (i === 0 ? { ...f, songIds: [...f.songIds, songId] } : f));
+  savePrefs({ ...prefs, folders });
 }
 
 export function removeFromLibrary(songId) {
   const prefs = loadPrefs();
-  savePrefs({ ...prefs, library: prefs.library.filter((id) => id !== songId) });
+  const folders = prefs.folders
+    .map((f) => ({ ...f, songIds: f.songIds.filter((id) => id !== songId) }))
+    .filter((f) => f.id === null || f.songIds.length > 0);
+  savePrefs({ ...prefs, folders });
+}
+
+export function createFolder(name) {
+  const prefs = loadPrefs();
+  const folder = { id: crypto.randomUUID(), name, songIds: [] };
+  savePrefs({ ...prefs, folders: [...prefs.folders, folder] });
+}
+
+export function renameFolder(folderId, name) {
+  const prefs = loadPrefs();
+  const folders = prefs.folders.map((f) => (f.id === folderId ? { ...f, name } : f));
+  savePrefs({ ...prefs, folders });
+}
+
+export function deleteFolder(folderId) {
+  const prefs = loadPrefs();
+  const target = prefs.folders.find((f) => f.id === folderId);
+  if (!target) return;
+  const folders = prefs.folders
+    .filter((f) => f.id !== folderId)
+    .map((f) => (f.id === null ? { ...f, songIds: [...f.songIds, ...target.songIds] } : f));
+  savePrefs({ ...prefs, folders });
+}
+
+// Handles both moving a song to a different folder and reordering it within
+// its current one: removing first, then inserting means toIndex is always
+// resolved against the post-removal array, which is correct for both cases.
+export function moveSong(songId, toFolderId, toIndex) {
+  const prefs = loadPrefs();
+  const withoutSong = prefs.folders.map((f) => ({ ...f, songIds: f.songIds.filter((id) => id !== songId) }));
+  const folders = withoutSong.map((f) => {
+    if (f.id !== toFolderId) return f;
+    const songIds = [...f.songIds];
+    songIds.splice(toIndex, 0, songId);
+    return { ...f, songIds };
+  });
+  savePrefs({ ...prefs, folders });
+}
+
+// Unfiled (index 0) is excluded from reordering — it's always first.
+export function reorderFolders(fromIndex, toIndex) {
+  const prefs = loadPrefs();
+  const folders = [...prefs.folders];
+  const [moved] = folders.splice(fromIndex, 1);
+  folders.splice(toIndex, 0, moved);
+  savePrefs({ ...prefs, folders });
 }
