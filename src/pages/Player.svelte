@@ -312,11 +312,17 @@
       <div class="pick">
         <select id="song" aria-label="Song" value={songIndex} onchange={onSongChange}>
           {#each songGroups as { group, items }}
-            <optgroup label={group}>
+            {#if group}
+              <optgroup label={group}>
+                {#each items as s}
+                  <option value={s.i}>{s.title}{s.source ? ` · ${s.source}` : (s.sub ? ` · ${s.sub}` : "")}</option>
+                {/each}
+              </optgroup>
+            {:else}
               {#each items as s}
                 <option value={s.i}>{s.title}{s.source ? ` · ${s.source}` : (s.sub ? ` · ${s.sub}` : "")}</option>
               {/each}
-            </optgroup>
+            {/if}
           {/each}
         </select>
       </div>
