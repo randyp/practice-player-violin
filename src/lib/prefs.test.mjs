@@ -4,6 +4,20 @@ import {
   createFolder, renameFolder, deleteFolder, moveSong, reorderFolders,
 } from "./prefs.js";
 
+// Plain `node`/`vitest run` only exposes a working localStorage global when
+// launched with --localstorage-file (Node 26+); a bare in-memory stand-in
+// keeps this file runnable via the project's normal `pnpm run test`, no flag
+// required — prefs.js itself only ever calls getItem/setItem.
+if (typeof globalThis.localStorage === "undefined") {
+  const store = new Map();
+  globalThis.localStorage = {
+    getItem: (k) => (store.has(k) ? store.get(k) : null),
+    setItem: (k, v) => store.set(k, String(v)),
+    removeItem: (k) => store.delete(k),
+    clear: () => store.clear(),
+  };
+}
+
 // prefs.js reads/writes localStorage directly (no injectable storage), so
 // each test clears it first — mirrors how the browser starts fresh per user.
 beforeEach(() => { localStorage.clear(); });
