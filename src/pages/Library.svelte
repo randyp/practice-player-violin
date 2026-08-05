@@ -1,7 +1,7 @@
 <script>
   import { link } from "svelte-spa-router";
   import { loadCatalog } from "../lib/songs.js";
-  import { loadPrefs, removeFromLibrary, createFolder, renameFolder, deleteFolder } from "../lib/prefs.js";
+  import { loadPrefs, removeFromLibrary, createFolder, renameFolder, deleteFolder, moveSong, reorderFolders } from "../lib/prefs.js";
   import PageHeader from "./PageHeader.svelte";
 
   let catalog = $state([]);
@@ -9,6 +9,55 @@
   let loadError = $state(null);
   let newFolderName = $state("");
   let renamingId = $state(null); // folder id currently showing a rename input, or null
+
+  // Drag payload is one of two shapes, distinguished by `type`, so a single
+  // dragover/drop handler pair can serve both songs and folders. Cleared on
+  // dragend so a cancelled drag (e.g. Escape) leaves no stale drag state.
+  let dragging = $state(null); // { type: "song", songId } | { type: "folder", fromIndex } | null
+
+  function onSongDragStart(songId) {
+    dragging = { type: "song", songId };
+  }
+
+  function onFolderDragStart(fromIndex) {
+    dragging = { type: "folder", fromIndex };
+  }
+
+  function onDragEnd() {
+    dragging = null;
+  }
+
+  // Dropping a song onto another song's row: move it to that row's folder,
+  // at that row's index.
+  function onSongDrop(e, targetFolderId, targetIndex) {
+    e.preventDefault();
+    if (!dragging || dragging.type !== "song") return;
+    moveSong(dragging.songId, targetFolderId, targetIndex);
+    refresh();
+    dragging = null;
+  }
+
+  // A folder header is a drop target for two different drag types: a song
+  // (append to the end of that folder) or another folder's drag handle
+  // (reorder folders — targetIndex is the position within prefs.folders;
+  // Unfiled is index 0 and is never a target since folder rows only render
+  // for index > 0). The handle's dragstart bubbles up to this same header,
+  // so one handler covers both without a separate listener on the handle.
+  function onFolderHeaderDrop(e, targetFolderId, targetSongCount, targetIndex) {
+    e.preventDefault();
+    if (!dragging) return;
+    if (dragging.type === "song") {
+      moveSong(dragging.songId, targetFolderId, targetSongCount);
+    } else {
+      reorderFolders(dragging.fromIndex, targetIndex);
+    }
+    refresh();
+    dragging = null;
+  }
+
+  function allowDrop(e) {
+    e.preventDefault();
+  }
 
   const byId = $derived(new Map(catalog.map((s) => [s.id, s])));
   // Each folder's songs resolved from the catalog, in songIds order —
@@ -78,12 +127,19 @@
       <button type="submit">+ New folder</button>
     </form>
 
-    {#each folderSongs as f (f.id ?? "unfiled")}
+    {#each folderSongs as f, folderIndex (f.id ?? "unfiled")}
       {#if f.id === null}
         {#if f.songs.length}
           <ul class="songlist unfiled">
-            {#each f.songs as s (s.id)}
-              <li>
+            {#each f.songs as s, i (s.id)}
+              <li
+                draggable="true"
+                class:dragging={dragging?.type === "song" && dragging.songId === s.id}
+                ondragstart={() => onSongDragStart(s.id)}
+                ondragend={onDragEnd}
+                ondragover={allowDrop}
+                ondrop={(e) => onSongDrop(e, f.id, i)}
+              >
                 <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
                 <button class="remove" onclick={() => handleRemove(s.id)}>Remove</button>
               </li>
@@ -92,8 +148,13 @@
         {/if}
       {:else}
         <section class="folder">
-          <div class="folder-hdr">
-            <span class="dh">≡</span>
+          <div
+            class="folder-hdr"
+            class:dragging={dragging?.type === "folder" && dragging.fromIndex === folderIndex}
+            ondragover={allowDrop}
+            ondrop={(e) => onFolderHeaderDrop(e, f.id, f.songs.length, folderIndex)}
+          >
+            <span class="dh" draggable="true" ondragstart={() => onFolderDragStart(folderIndex)} ondragend={onDragEnd}>≡</span>
             {#if renamingId === f.id}
               <input
                 type="text"
@@ -109,8 +170,15 @@
             <button class="folder-delete" onclick={() => handleDeleteFolder(f.id)} aria-label={`Delete folder ${f.name}`}>Delete</button>
           </div>
           <ul class="songlist">
-            {#each f.songs as s (s.id)}
-              <li>
+            {#each f.songs as s, i (s.id)}
+              <li
+                draggable="true"
+                class:dragging={dragging?.type === "song" && dragging.songId === s.id}
+                ondragstart={() => onSongDragStart(s.id)}
+                ondragend={onDragEnd}
+                ondragover={allowDrop}
+                ondrop={(e) => onSongDrop(e, f.id, i)}
+              >
                 <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
                 <button class="remove" onclick={() => handleRemove(s.id)}>Remove</button>
               </li>

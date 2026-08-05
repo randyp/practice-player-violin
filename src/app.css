@@ -102,6 +102,10 @@ details.grp .songlist { margin-top: 10px; }
 }
 .folder-delete:hover { color: var(--rosin); border-color: var(--rosin); }
 .songlist.unfiled { margin-bottom: 24px; }
+.songlist li[draggable] { cursor: grab; }
+.songlist li.dragging { opacity: .4; }
+.folder-hdr.dragging { opacity: .4; }
+.folder-hdr .dh[draggable] { cursor: grab; }
 
 .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
 .pick { display: flex; flex: 1; min-width: 230px; }
