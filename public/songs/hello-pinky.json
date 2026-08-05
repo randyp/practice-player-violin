@@ -2,6 +2,7 @@
   "id": "hello-pinky",
   "group": "Scale variations",
   "title": "Hello Pinky",
+  "source": "Official",
   "defaultTempo": 60,
   "keys": [
     "G3",

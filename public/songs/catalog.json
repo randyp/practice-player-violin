@@ -4,24 +4,28 @@
     "group": "Warmups",
     "title": "Beginner Bow Warmup",
     "sub": "open strings only",
+    "source": "Official",
     "timeSignature": "4/4"
   },
   {
     "id": "var1",
     "group": "Scale variations",
     "title": "Half Notes Var. 1",
+    "source": "Official",
     "timeSignature": "4/4"
   },
   {
     "id": "var2",
     "group": "Scale variations",
     "title": "Quarter Notes Var. 2",
+    "source": "Official",
     "timeSignature": "4/4"
   },
   {
     "id": "hello-pinky",
     "group": "Scale variations",
     "title": "Hello Pinky",
+    "source": "Official",
     "timeSignature": "4/4"
   },
   {
@@ -124,13 +128,6 @@
     "timeSignature": "2/4"
   },
   {
-    "id": "lightly-row",
-    "group": "Introductory songs",
-    "title": "Lightly Row",
-    "source": "Suzuki",
-    "timeSignature": "4/4"
-  },
-  {
     "id": "twinkle-8888qq",
     "group": "Introductory songs",
     "title": "Twinkle Twinkle Little Star",
@@ -155,6 +152,20 @@
     "timeSignature": "4/4"
   },
   {
+    "id": "lightly-row",
+    "group": "Introductory songs",
+    "title": "Lightly Row",
+    "source": "Suzuki",
+    "timeSignature": "4/4"
+  },
+  {
+    "id": "song-of-the-wind",
+    "group": "Introductory songs",
+    "title": "Song of the Wind",
+    "source": "Suzuki",
+    "timeSignature": "2/4"
+  },
+  {
     "id": "boil-em-cabbage-down",
     "group": "Introductory songs",
     "title": "Boil 'Em Cabbage Down",
@@ -166,6 +177,7 @@
     "group": "Tunes",
     "title": "Auld Lang Syne",
     "sub": "traditional",
+    "source": "Official",
     "timeSignature": "4/4"
   }
 ]

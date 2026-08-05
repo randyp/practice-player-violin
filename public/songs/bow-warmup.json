@@ -3,6 +3,7 @@
   "group": "Warmups",
   "title": "Beginner Bow Warmup",
   "sub": "open strings only",
+  "source": "Official",
   "defaultTempo": 120,
   "keys": [
     "C4"

@@ -3,6 +3,7 @@
   "group": "Tunes",
   "title": "Auld Lang Syne",
   "sub": "traditional",
+  "source": "Official",
   "defaultTempo": 80,
   "keys": [
     "D4"

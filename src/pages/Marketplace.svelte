@@ -11,8 +11,8 @@
     const groups = [];
     const byName = new Map();
     catalog.forEach((s) => {
-      let g = byName.get(s.group);
-      if (!g) { g = { group: s.group, items: [] }; byName.set(s.group, g); groups.push(g); }
+      let g = byName.get(s.source);
+      if (!g) { g = { group: s.source, items: [] }; byName.set(s.source, g); groups.push(g); }
       g.items.push(s);
     });
     return groups;
@@ -37,12 +37,12 @@
     <p class="err">Failed to load the song catalog: {loadError}</p>
   {:else}
     {#each groups as { group, items }}
-      <section class="grp">
-        <h2>{group}</h2>
+      <details class="grp">
+        <summary><h2>{group}</h2></summary>
         <ul class="songlist">
           {#each items as s}
             <li>
-              <span class="title">{s.title}{s.source ? ` · ${s.source}` : ""}{s.sub ? ` · ${s.sub}` : ""}</span>
+              <span class="title">{s.title}{s.sub ? ` · ${s.sub}` : ""}</span>
               {#if library.includes(s.id)}
                 <span class="added">In your library</span>
               {:else}
@@ -51,7 +51,7 @@
             </li>
           {/each}
         </ul>
-      </section>
+      </details>
     {/each}
   {/if}
 </div>

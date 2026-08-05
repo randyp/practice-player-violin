@@ -21,7 +21,7 @@ const THIRD_BELOW = (d) => d - 2;
 
 function scaleSong(id, title, sub, melodyMeasures, harmonyMeasures, repeats) {
   return {
-    id, group: "Scale variations", title, sub,
+    id, group: "Scale variations", title, sub, source: "Official",
     // Every key here is equally suited to scale practice, so there's no
     // "preferred" key worth starring — unlike a tune, which usually has one
     // key it's best played in.
@@ -52,7 +52,7 @@ function quarterNoteSections(degrees) {
 // Traditional Scottish air, transcribed in MuseScore (D major) and
 // converted from its MusicXML export.
 const AULD_LANG_SYNE = {
-  id: "auld-lang-syne", group: "Tunes", title: "Auld Lang Syne", sub: "traditional",
+  id: "auld-lang-syne", group: "Tunes", title: "Auld Lang Syne", sub: "traditional", source: "Official",
   defaultTempo: 80, keys: ["D4"], defaultKey: "D4", repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
@@ -367,6 +367,29 @@ const TWINKLE_8SS = twinkleSong("twinkle-8ss", "8SS", [
   [N(1, "8"), N(1, "16"), N(1, "16"), N(1, "8"), N(1, "16"), N(1, "16"), N(0, "8"), N(0, "16"), N(0, "16"), N(0, "8"), N(0, "16"), N(0, "16")],
 ]);
 
+const SONG_OF_THE_WIND = {
+  id: "song-of-the-wind", group: "Introductory songs", title: "Song of the Wind", source: "Suzuki",
+  defaultTempo: 80, keys: ["A4", "G3", "D4"], defaultKey: "A4",
+  repeats: [{ from: 0, to: 13 }],
+  timeSignature: "2/4",
+  melody: { measures: [
+    [N(0, "8"), N(1, "8"), N(2, "8"), N(3, "8")],
+    [N(4, "8"), N(4, "8"), N(4, "8"), N(4, "8")],
+    [N(5, "8"), N(3, "8"), N(7, "8"), N(5, "8")],
+    [N(4, "q"), R("q")],
+    [N(5, "8"), N(3, "8"), N(7, "8"), N(5, "8")],
+    [N(4, "q"), R("q")],
+    [N(4, "8"), N(3, "8"), N(3, "8"), N(3, "8")],
+    [N(3, "8"), N(2, "8"), N(2, "8"), N(2, "8")],
+    [N(2, "8"), N(1, "8"), N(1, "8"), N(1, "8")],
+    [N(0, "8"), N(2, "8"), N(4, "q")],
+    [N(4, "8"), N(3, "8"), N(3, "8"), N(3, "8")],
+    [N(3, "8"), N(2, "8"), N(2, "8"), N(2, "8")],
+    [N(2, "8"), N(1, "8"), N(1, "8"), N(1, "8")],
+    [N(0, "q"), R("q")],
+  ] },
+};
+
 const FRERE_JACQUES = {
   id: "frere-jacques", group: "Introductory songs", title: "Frère Jacques", source: "Essential Elements",
   defaultTempo: 100, keys: ["D4", "G3", "A4"], defaultKey: "D4",
@@ -454,7 +477,7 @@ const OLD_MACDONALD = {
 };
 
 const HELLO_PINKY = {
-  id: "hello-pinky", group: "Scale variations", title: "Hello Pinky",
+  id: "hello-pinky", group: "Scale variations", title: "Hello Pinky", source: "Official",
   defaultTempo: 60, keys: ["G3", "D4", "A4", "E5"], defaultKey: "G3", showDefaultKeyStar: false,
   timeSignature: "4/4",
   repeats: [{ from: 0, to: 2, times: 4 }],
@@ -502,7 +525,7 @@ const MOZART_MELODY = {
 };
 
 const BOW_WARMUP = {
-  id: "bow-warmup", group: "Warmups", title: "Beginner Bow Warmup", sub: "open strings only",
+  id: "bow-warmup", group: "Warmups", title: "Beginner Bow Warmup", sub: "open strings only", source: "Official",
   defaultTempo: 120, keys: ["C4"], defaultKey: "C4", repeats: [],
   timeSignature: "4/4",
   melody: { measures: [
@@ -595,10 +618,11 @@ const SONGS = [
   TEXAS_TWO_STRING,
   ODE_TO_JOY,
   FRERE_JACQUES,
-  LIGHTLY_ROW,
   TWINKLE_8888QQ,
   TWINKLE_88R8,
   TWINKLE_8SS,
+  LIGHTLY_ROW,
+  SONG_OF_THE_WIND,
   BOIL_EM_CABBAGE_DOWN,
   AULD_LANG_SYNE,
 ];
