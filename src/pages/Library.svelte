@@ -51,6 +51,7 @@
 
   function handleDeleteFolder(folderId) {
     deleteFolder(folderId);
+    if (renamingId === folderId) renamingId = null;
     refresh();
   }
 
