@@ -151,11 +151,21 @@
         <section class="folder">
           <div
             class="folder-hdr"
+            role="group"
+            aria-label={`Folder: ${f.name}`}
             class:dragging={dragging?.type === "folder" && dragging.fromIndex === folderIndex}
             ondragover={allowDrop}
             ondrop={(e) => onFolderHeaderDrop(e, f.id, f.songs.length, folderIndex)}
           >
-            <span class="dh" draggable="true" ondragstart={() => onFolderDragStart(folderIndex)} ondragend={onDragEnd}>≡</span>
+            <span
+              class="dh"
+              role="button"
+              tabindex="0"
+              aria-label={`Reorder folder ${f.name}`}
+              draggable="true"
+              ondragstart={() => onFolderDragStart(folderIndex)}
+              ondragend={onDragEnd}
+            >≡</span>
             {#if renamingId === f.id}
               <input
                 type="text"
