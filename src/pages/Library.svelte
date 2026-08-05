@@ -9,6 +9,16 @@
   let loadError = $state(null);
   let newFolderName = $state("");
   let renamingId = $state(null); // folder id currently showing a rename input, or null
+  // Folders start collapsed by default — tracking *expanded* ids (rather
+  // than collapsed ones) means a newly created folder needs no
+  // initialization to be collapsed; absence from this set already means that.
+  let expandedIds = $state(new Set());
+
+  function toggleExpanded(folderId) {
+    const next = new Set(expandedIds);
+    if (next.has(folderId)) next.delete(folderId); else next.add(folderId);
+    expandedIds = next;
+  }
 
   // Drag payload is one of two shapes, distinguished by `type`, so a single
   // dragover/drop handler pair can serve both songs and folders. Cleared on
@@ -191,6 +201,12 @@
               ondragstart={() => onFolderDragStart(folderIndex)}
               ondragend={onDragEnd}
             >≡</span>
+            <button
+              class="folder-toggle"
+              aria-label={expandedIds.has(f.id) ? `Collapse folder ${f.name}` : `Expand folder ${f.name}`}
+              aria-expanded={expandedIds.has(f.id)}
+              onclick={() => toggleExpanded(f.id)}
+            >{expandedIds.has(f.id) ? "▾" : "▸"}</button>
             {#if renamingId === f.id}
               <input
                 type="text"
@@ -202,9 +218,10 @@
             {:else}
               <button class="folder-name" onclick={() => startRename(f.id)}>{f.name}</button>
             {/if}
-            <span class="folder-count">{f.songs.length}</span>
+            <span class="folder-count">{f.songs.length} sheet{f.songs.length === 1 ? "" : "s"}</span>
             <button class="folder-delete" onclick={() => handleDeleteFolder(f.id)} aria-label={`Delete folder ${f.name}`}>Delete</button>
           </div>
+          {#if expandedIds.has(f.id)}
           <ul class="songlist">
             {#each f.songs as s, i (s.id)}
               <li
@@ -220,6 +237,7 @@
               </li>
             {/each}
           </ul>
+          {/if}
         </section>
       {/if}
     {/each}

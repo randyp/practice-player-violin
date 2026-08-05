@@ -85,7 +85,12 @@ details.grp .songlist { margin-top: 10px; }
 
 .folder { margin-bottom: 24px; }
 .folder-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.folder-hdr .dh { color: var(--muted); cursor: grab; font-size: 14px; user-select: none; }
+.folder-hdr .dh { color: var(--muted); cursor: grab; font-size: 22px; line-height: 1; user-select: none; }
+.folder-toggle {
+  background: transparent; border: 0; color: var(--muted); font-family: inherit;
+  font-size: 12px; padding: 4px; cursor: pointer; line-height: 1;
+}
+.folder-toggle:hover { color: var(--paper); }
 .folder-name {
   background: transparent; border: 0; color: var(--paper); font-family: inherit;
   font-size: 13px; font-weight: 600; padding: 2px 0; cursor: text; text-align: left;
