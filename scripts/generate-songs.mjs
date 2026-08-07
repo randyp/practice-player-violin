@@ -390,6 +390,27 @@ const SONG_OF_THE_WIND = {
   ] },
 };
 
+const GO_TELL_AUNT_RHODY = {
+  id: "go-tell-aunt-rhody", group: "Introductory songs", title: "Go Tell Aunt Rhody", source: "Suzuki",
+  defaultTempo: 88, keys: ["A4", "D4"], defaultKey: "A4",
+  repeats: [],
+  timeSignature: "4/4",
+  melody: { measures: [
+    [N(2, "q"), N(2, "8"), N(1, "8"), N(0, "q"), N(0, "q")],
+    [N(1, "q"), N(1, "q"), N(2, "8"), N(1, "8"), N(0, "q")],
+    [N(4, "q"), N(4, "8"), N(3, "8"), N(2, "q"), N(2, "q")],
+    [N(1, "8"), N(0, "8"), N(1, "8"), N(2, "8"), N(0, "h")],
+    [N(2, "q"), N(2, "8"), N(3, "8"), N(4, "q"), N(4, "q")],
+    [N(5, "q"), N(5, "q"), N(4, "8"), N(3, "8"), N(2, "q")],
+    [N(2, "q"), N(2, "8"), N(3, "8"), N(4, "q"), N(4, "q")],
+    [N(5, "q"), N(5, "q"), N(4, "h")],
+    [N(2, "q"), N(2, "8"), N(1, "8"), N(0, "q"), N(0, "q")],
+    [N(1, "q"), N(1, "q"), N(2, "8"), N(1, "8"), N(0, "q")],
+    [N(4, "q"), N(4, "8"), N(3, "8"), N(2, "q"), N(2, "q")],
+    [N(1, "8"), N(0, "8"), N(1, "8"), N(2, "8"), N(0, "h")],
+  ] },
+};
+
 const FRERE_JACQUES = {
   id: "frere-jacques", group: "Introductory songs", title: "Frère Jacques", source: "Essential Elements",
   defaultTempo: 100, keys: ["D4", "G3", "A4"], defaultKey: "D4",
@@ -623,6 +644,7 @@ const SONGS = [
   TWINKLE_8SS,
   LIGHTLY_ROW,
   SONG_OF_THE_WIND,
+  GO_TELL_AUNT_RHODY,
   BOIL_EM_CABBAGE_DOWN,
   AULD_LANG_SYNE,
 ];
