@@ -411,6 +411,32 @@ const GO_TELL_AUNT_RHODY = {
   ] },
 };
 
+const O_COME_LITTLE_CHILDREN = {
+  id: "o-come-little-children", group: "Introductory songs", title: "O Come, Little Children", source: "Suzuki",
+  defaultTempo: 76, keys: ["A4"], defaultKey: "A4",
+  repeats: [],
+  timeSignature: "2/4",
+  melody: { measures: [
+    [R("q"), N(4, "q")],
+    [N(4, "q"), N(2, "8"), N(4, "8")],
+    [N(4, "q"), N(2, "8"), N(4, "8")],
+    [N(3, "q"), N(1, "8"), N(1, "8")],
+    [N(2, "q"), R("8"), N(4, "8")],
+    [N(4, "q"), N(2, "8"), N(4, "8")],
+    [N(4, "q"), N(2, "8"), N(4, "8")],
+    [N(3, "q"), N(1, "8"), N(1, "8")],
+    [N(2, "q"), R("8"), N(2, "8")],
+    [N(1, "q"), N(1, "8"), N(1, "8")],
+    [N(3, "q"), N(3, "8"), N(3, "8")],
+    [N(2, "q"), N(2, "8"), N(2, "8")],
+    [N(5, "q"), R("8"), N(5, "8")],
+    [N(4, "q"), N(4, "8"), N(4, "8")],
+    [N(7, "q"), N(4, "8"), N(2, "8")],
+    [N(3, "q"), N(1, "8"), N(1, "8")],
+    [N(1, "qd"), R("8")],
+  ] },
+};
+
 const FRERE_JACQUES = {
   id: "frere-jacques", group: "Introductory songs", title: "Frère Jacques", source: "Essential Elements",
   defaultTempo: 100, keys: ["D4", "G3", "A4"], defaultKey: "D4",
@@ -645,6 +671,7 @@ const SONGS = [
   LIGHTLY_ROW,
   SONG_OF_THE_WIND,
   GO_TELL_AUNT_RHODY,
+  O_COME_LITTLE_CHILDREN,
   BOIL_EM_CABBAGE_DOWN,
   AULD_LANG_SYNE,
 ];

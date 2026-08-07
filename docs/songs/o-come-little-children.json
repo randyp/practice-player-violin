@@ -1,0 +1,247 @@
+{
+  "id": "o-come-little-children",
+  "group": "Introductory songs",
+  "title": "O Come, Little Children",
+  "source": "Suzuki",
+  "defaultTempo": 76,
+  "keys": [
+    "A4"
+  ],
+  "defaultKey": "A4",
+  "repeats": [],
+  "timeSignature": "2/4",
+  "melody": {
+    "measures": [
+      [
+        {
+          "rest": true,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "q"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        },
+        {
+          "deg": 3,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 2,
+          "dur": "q"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 5,
+          "dur": "q"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        },
+        {
+          "deg": 5,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 4,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 7,
+          "dur": "q"
+        },
+        {
+          "deg": 4,
+          "dur": "8"
+        },
+        {
+          "deg": 2,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 3,
+          "dur": "q"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        },
+        {
+          "deg": 1,
+          "dur": "8"
+        }
+      ],
+      [
+        {
+          "deg": 1,
+          "dur": "qd"
+        },
+        {
+          "rest": true,
+          "dur": "8"
+        }
+      ]
+    ]
+  }
+}
