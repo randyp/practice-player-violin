@@ -11,6 +11,8 @@ const DEFAULTS = {
   songCountIns: {}, // per-song count-in measures (0, 1, or 2), keyed by catalog id — a song
                      // preference, not global, since a fast tune and a slow scale exercise
                      // don't want the same lead-in
+  songLoops: {}, // per-song loop toggle, keyed by catalog id — a short warmup loops, a
+                  // full piece usually doesn't, so this shouldn't carry over between songs
   // Library membership *and* organization in one structure — a song's
   // presence in some folder's songIds *is* library membership, so there's
   // no separate list that can drift out of sync with it. folders[0] is
@@ -57,6 +59,15 @@ export function countInFor(prefs, songId) {
 export function saveSongCountIn(songId, countInMeasures) {
   const prefs = loadPrefs();
   savePrefs({ ...prefs, songCountIns: { ...prefs.songCountIns, [songId]: countInMeasures } });
+}
+
+export function loopFor(prefs, songId) {
+  return prefs.songLoops[songId] ?? false;
+}
+
+export function saveSongLoop(songId, loop) {
+  const prefs = loadPrefs();
+  savePrefs({ ...prefs, songLoops: { ...prefs.songLoops, [songId]: loop } });
 }
 
 export function isInLibrary(prefs, songId) {

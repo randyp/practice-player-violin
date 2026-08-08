@@ -6,7 +6,7 @@
   import { loadCatalog, loadSong } from "../lib/songs.js";
   import { buildAudio, buildTimeline, buildEventQueue, pump } from "../lib/audio.js";
   import { renderScore, highlight } from "../lib/notation.js";
-  import { loadPrefs, updatePrefs, saveSongKey, countInFor, saveSongCountIn } from "../lib/prefs.js";
+  import { loadPrefs, updatePrefs, saveSongKey, countInFor, saveSongCountIn, loopFor, saveSongLoop } from "../lib/prefs.js";
   import { log } from "../lib/log.js";
   import PageHeader from "./PageHeader.svelte";
 
@@ -171,6 +171,7 @@
     if (sheetPart === "harmony" && !song.harmony) sheetPart = "melody";
     bpm = song.defaultTempo;
     countInMeasures = countInFor(freshPrefs, song.id);
+    loop = loopFor(freshPrefs, song.id);
     setStatus("ready");
     doRenderScore();
     updatePrefs({ lastSongId: song.id });
@@ -226,6 +227,7 @@
   function toggleLoop() {
     stop();
     loop = !loop;
+    saveSongLoop(song.id, loop);
   }
 
   function togglePlayMelody() {
